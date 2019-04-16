@@ -10,5 +10,5 @@ package rampage_2.Juego.Mapas.Terrenos;
  * @author marito
  */
 public class Montaña {
-    
+    private int vida;
 }

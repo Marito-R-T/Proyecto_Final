@@ -5,10 +5,12 @@
  */
 package rampage_2.Juego.Mapas.Terrenos;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author marito
  */
-public class Terreno {
+public class Terreno extends JLabel{
     
 }

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rampage_2.Juego.Mapas.Terrenos;
+package rampage_2.Juego.Armas;
 
 /**
  *
  * @author marito
  */
-public class Agua {
-    private int vida;
+public class Arma {
+    
 }

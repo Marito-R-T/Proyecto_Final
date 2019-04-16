@@ -7,7 +7,6 @@ package rampage_2.Ventanas;
 
 import java.applet.AudioClip;
 import java.awt.Image;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
@@ -19,15 +18,19 @@ public class Inicio extends javax.swing.JFrame {
     /**
      * Creates new form Inicio
      */
-    //private final AudioClip sonido;
+    private AudioClip sonido;
+    private final VisualJuego JUEGO = new VisualJuego(this);
+    private final VisualJugador JUGADOR = new VisualJugador(this);
+    private final VisualReportes REPORTES = new VisualReportes(this);
+    private final VisualTienda TIENDA = new VisualTienda(this);
     public Inicio() {
         initComponents();
         iniciarComponentes();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         btnmusica.setSelected(true);
-        /*sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/musicainicio.wav"));
-        sonido.loop();*/ //ubuntu
+        sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/inicio.mp3"));
+        sonido.loop(); //ubuntu
     }
 
     /**
@@ -47,7 +50,6 @@ public class Inicio extends javax.swing.JFrame {
         lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(900, 700));
         setMinimumSize(new java.awt.Dimension(900, 700));
         setSize(new java.awt.Dimension(900, 700));
 
@@ -63,7 +65,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbljuegonuevo);
-        lbljuegonuevo.setBounds(380, 240, 160, 90);
+        lbljuegonuevo.setBounds(370, 240, 180, 90);
 
         lbljuegocargar.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
         lbljuegocargar.setForeground(new java.awt.Color(153, 153, 255));
@@ -75,7 +77,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         jPanel1.add(lbljuegocargar);
-        lbljuegocargar.setBounds(380, 340, 160, 90);
+        lbljuegocargar.setBounds(370, 340, 180, 90);
 
         lblayuda.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
         lblayuda.setForeground(new java.awt.Color(0, 204, 204));
@@ -123,6 +125,8 @@ public class Inicio extends javax.swing.JFrame {
 
     private void lbljuegonuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbljuegonuevoMouseClicked
         // TODO add your handling code here:
+        this.setVisible(false);
+        JUGADOR.setVisible(true);
     }//GEN-LAST:event_lbljuegonuevoMouseClicked
 
     private void lbljuegocargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbljuegocargarMouseClicked
@@ -149,8 +153,8 @@ public class Inicio extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void iniciarComponentes() {
-        //ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo inicio.jpg")); //Ubuntu
-        ImageIcon fondo = new ImageIcon("C:\\Users\\50254\\Documents\\Proyecto_Final\\RamPaGe_2.0\\src\\Imagenes\\Fondo inicio.jpg"); //Windows
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo inicio.jpg")); //Ubuntu
+        //ImageIcon fondo = new ImageIcon("C:\\Users\\50254\\Documents\\Proyecto_Final\\RamPaGe_2.0\\src\\Imagenes\\Fondo inicio.jpg"); //Windows
         lblFondo.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblFondo.getWidth(), lblFondo.getHeight(), Image.SCALE_SMOOTH)));
     }
 }

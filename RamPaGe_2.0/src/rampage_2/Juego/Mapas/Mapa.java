@@ -5,10 +5,12 @@
  */
 package rampage_2.Juego.Mapas;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author marito
  */
-public class Mapa {
+public class Mapa extends JPanel{
     
 }
