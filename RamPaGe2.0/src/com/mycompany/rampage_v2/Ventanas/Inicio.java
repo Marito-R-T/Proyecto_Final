@@ -30,9 +30,8 @@ public class Inicio extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         btnmusica.setSelected(true);
-        
-        //sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/musicainicio.wav"));
-        //sonido.loop(); //ubuntu
+        sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/musicainicio.wav"));
+        sonido.loop(); //ubuntu
         
 
     }

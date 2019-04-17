@@ -5,6 +5,9 @@
  */
 package com.mycompany.rampage_v2;
 
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa4x4;
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa8x9;
 import java.util.Random;
 
 /**
@@ -13,10 +16,6 @@ import java.util.Random;
  */
 public class Pruebas {
     public static void main(String[] args) {
-        Random random = new Random();
-        System.out.println(random.nextInt(3));
-        if(random.nextInt(3) == 0){
-        System.out.println(random.nextInt(3));
-        }
+        Mapa nuevo = new Mapa4x4();
     }
 }
