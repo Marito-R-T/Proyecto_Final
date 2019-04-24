@@ -9,6 +9,7 @@ import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Llanura;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Terreno;
+import java.awt.Dimension;
 
 /**
  *
@@ -20,7 +21,10 @@ public final class Mapa6x4 extends Mapa {
         FILAS = 6;
         COLUMNAS = 4;
         super.mapa = new Terreno[FILAS][COLUMNAS];
+        this.setLayout(null);
+        this.setPreferredSize(new Dimension(820, 1220));
         ingresarTerrenos();
+        super.colocarCuadros();
     }
 
     public void ingresarTerrenos() {
@@ -74,6 +78,7 @@ public final class Mapa6x4 extends Mapa {
         nuevo.setO(referencia);
         referencia.setE(nuevo);
         referencia = nuevo;
+        this.add(referencia);
         if (nuevo.getO().getN() != null) {
             nuevo.setNO(nuevo.getO().getN());
             nuevo.getNO().setSE(nuevo);

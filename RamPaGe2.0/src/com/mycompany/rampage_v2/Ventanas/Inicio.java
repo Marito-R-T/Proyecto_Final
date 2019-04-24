@@ -19,7 +19,6 @@ public class Inicio extends javax.swing.JFrame {
      * Creates new form Inicio
      */
     private AudioClip sonido;
-    private final VisualJuego JUEGO = new VisualJuego(this);
     private final VisualJugador JUGADOR = new VisualJugador(this);
     private final VisualReportes REPORTES = new VisualReportes(this);
     private final VisualTienda TIENDA = new VisualTienda(this);

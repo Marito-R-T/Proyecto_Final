@@ -5,6 +5,9 @@
  */
 package com.mycompany.rampage_v2.Ventanas;
 
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa6x4;
+
 /**
  *
  * @author marito
@@ -17,8 +20,12 @@ public class VisualJuego extends javax.swing.JFrame {
     private Inicio inicio;
     public VisualJuego(Inicio inicio) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        Mapa mapa = new Mapa6x4();
+        jScrollPane1.setViewportView(mapa);
         this.inicio = inicio;
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,17 +36,26 @@ public class VisualJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(600, 500));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addGap(151, 151, 151))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -48,5 +64,6 @@ public class VisualJuego extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

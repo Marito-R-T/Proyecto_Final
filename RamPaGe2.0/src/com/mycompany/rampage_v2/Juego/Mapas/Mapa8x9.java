@@ -7,6 +7,7 @@ package com.mycompany.rampage_v2.Juego.Mapas;
 
 import java.util.Random;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.*;
+import java.awt.Dimension;
 
 /**
  *
@@ -19,7 +20,10 @@ public final class Mapa8x9 extends Mapa {
         FILAS = 8;
         COLUMNAS = 9;
         super.mapa = new Terreno[FILAS][COLUMNAS];
+        this.setLayout(null);
+        this.setPreferredSize(new Dimension(420, 470));
         ingresarTerrenos();
+        super.colocarCuadros();
     }
 
     public void ingresarTerrenos() {

@@ -6,17 +6,24 @@
 package com.mycompany.rampage_v2.Juego.Mapas.Terrenos;
 
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
+import java.awt.Dimension;
 import javax.swing.JLabel;
+import javax.swing.border.Border;
 
 /**
  *
  * @author marito
  */
-public abstract class Terreno /*extends JLabel*/{
+public abstract class Terreno extends JLabel{
     private Vehiculo vehiculo;
     private Terreno N,S,E,O,NE,NO,SE,SO;
     private int columnas, filas;
 
+    public Terreno(){
+        this.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.gray, java.awt.Color.gray, new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        //this.setBounds((columnas-1)*60 + 10,(filas-1)*60 +10, 60, 60);
+    }
+    
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
@@ -95,6 +102,14 @@ public abstract class Terreno /*extends JLabel*/{
 
     public void setFilas(int filas) {
         this.filas = filas;
+    }
+
+    public int getColumnas() {
+        return columnas;
+    }
+
+    public int getFilas() {
+        return filas;
     }
     
 }
