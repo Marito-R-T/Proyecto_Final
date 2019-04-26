@@ -5,10 +5,14 @@
  */
 package com.mycompany.rampage_v2.Juego.Dados;
 
+import java.util.Random;
+
 /**
  *
  * @author marito
  */
-public class Dado {
+public abstract class Dado {
+    protected Random numero;
     
+    public abstract int obtenerNumero();
 }

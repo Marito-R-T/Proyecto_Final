@@ -11,4 +11,23 @@ package com.mycompany.rampage_v2.Juego.Armas;
  */
 public class Arma {
     
+    private Arma a, p;
+    private int No;
+
+    public Arma getAnterior() {
+        return a;
+    }
+
+    public void setAnterior(Arma a) {
+        this.a = a;
+    }
+
+    public Arma getPosterior() {
+        return p;
+    }
+
+    public void setPosterior(Arma p) {
+        this.p = p;
+    }
+    
 }

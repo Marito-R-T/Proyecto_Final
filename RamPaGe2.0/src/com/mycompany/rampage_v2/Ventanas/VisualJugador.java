@@ -5,6 +5,8 @@
  */
 package com.mycompany.rampage_v2.Ventanas;
 
+import com.mycompany.rampage_v2.Juego.Jugador;
+
 /**
  *
  * @author marito
@@ -15,6 +17,7 @@ public class VisualJugador extends javax.swing.JFrame {
      * Creates new form VisualJugador
      */
     private Inicio inicio;
+    private Jugador jugador;
     private final VisualJuego JUEGO = new VisualJuego(inicio);
     public VisualJugador(Inicio inicio) {
         initComponents();
@@ -128,7 +131,9 @@ public class VisualJugador extends javax.swing.JFrame {
         JUEGO.setVisible(true);
     }//GEN-LAST:event_btnjugarMouseClicked
 
-
+    public void setJugador(Jugador jugador){
+        this.jugador = jugador;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnjugar;
     private javax.swing.JPanel jPanel1;

@@ -5,9 +5,12 @@
  */
 package com.mycompany.rampage_v2.Ventanas;
 
+import com.mycompany.rampage_v2.Juego.Jugador;
+import com.mycompany.rampage_v2.Juego.listado.Listado;
 import java.applet.AudioClip;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +25,8 @@ public class Inicio extends javax.swing.JFrame {
     private final VisualJugador JUGADOR = new VisualJugador(this);
     private final VisualReportes REPORTES = new VisualReportes(this);
     private final VisualTienda TIENDA = new VisualTienda(this);
+    private Listado<Jugador> jugadores = new Listado<>();
+    private final Seleccion seleccion = new Seleccion(jugadores, this);
 
     public Inicio() {
         initComponents();
@@ -127,12 +132,32 @@ public class Inicio extends javax.swing.JFrame {
 
     private void lbljuegonuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbljuegonuevoMouseClicked
         // TODO add your handling code here:
+        String nombre = JOptionPane.showInputDialog(this, "Que nombre tendra su avatar?", "NOMBRE AVATAR", 2);
+        if (nombre != null && !"".equals(nombre)){
+        if(jugadores.getContador() == 0){
+            Jugador nuevo = new Jugador(jugadores.getContador()+1);
+            jugadores.agregar(nuevo);
+            nuevo.perzonalizarlbl();
+        }else{
+            Jugador siguiente = new Jugador(jugadores.getContador()+1);
+            siguiente.setAnterior(jugadores.getUltimo());
+            jugadores.getUltimo().setPosterior(siguiente);
+            jugadores.agregar(siguiente);
+        }
         this.setVisible(false);
         JUGADOR.setVisible(true);
+        JUGADOR.setJugador(jugadores.getUltimo());
+        } else if (!"".equals(nombre)){
+            JOptionPane.showMessageDialog(this, "No puede dejar vacio el nombre", "nombre", 1);
+            lbljuegonuevoMouseClicked(evt);
+        }
     }//GEN-LAST:event_lbljuegonuevoMouseClicked
 
     private void lbljuegocargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbljuegocargarMouseClicked
         // TODO add your handling code here:
+        this.setVisible(false);
+        seleccion.setVisible(true);
+        //JUGADOR.setJugador(jugadores.devolver(1));
     }//GEN-LAST:event_lbljuegocargarMouseClicked
 
     private void lblayudaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblayudaMouseClicked

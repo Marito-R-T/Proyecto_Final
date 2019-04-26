@@ -14,6 +14,8 @@ import javax.swing.JPanel;
  * @author marito
  */
 public class Mapa extends JPanel{
+    private Mapa a, p;
+    private int No;
     protected Terreno[][] mapa;
     protected Random random = new Random();
     protected int agua = 0, montaña = 0;
@@ -30,4 +32,21 @@ public class Mapa extends JPanel{
             }
         }
     }
+
+    public Mapa getAnterior() {
+        return a;
+    }
+
+    public void setAnterior(Mapa a) {
+        this.a = a;
+    }
+
+    public Mapa getPosterior() {
+        return p;
+    }
+
+    public void setPosterior(Mapa p) {
+        this.p = p;
+    }
+    
 }
