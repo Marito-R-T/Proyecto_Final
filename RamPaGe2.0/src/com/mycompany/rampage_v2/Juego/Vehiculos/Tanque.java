@@ -11,7 +11,7 @@ package com.mycompany.rampage_v2.Juego.Vehiculos;
  */
 public class Tanque extends Vehiculo {
 
-    public Tanque(float[] porcentajes) {
+    public Tanque(int[] porcentajes) {
         this.porcentajes = porcentajes;
         vida = 50 * porcentajes[0];
         daño = 12 * porcentajes[1];

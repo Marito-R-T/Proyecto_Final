@@ -11,8 +11,8 @@ import java.util.Random;
  *
  * @author marito
  */
-public class D4 extends Dado{
-    public D4(){
+public class D3 extends Dado{
+    public D3(){
         numero = new Random();
     }
     

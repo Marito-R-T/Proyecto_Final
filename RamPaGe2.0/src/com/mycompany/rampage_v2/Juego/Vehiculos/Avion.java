@@ -11,7 +11,7 @@ package com.mycompany.rampage_v2.Juego.Vehiculos;
  */
 public class Avion extends Vehiculo{
     
-    public Avion(float[] porcentajes){
+    public Avion(int[] porcentajes){
         super.porcentajes = porcentajes;
         vida = 50*porcentajes[0];
         daño = 9*porcentajes[1];

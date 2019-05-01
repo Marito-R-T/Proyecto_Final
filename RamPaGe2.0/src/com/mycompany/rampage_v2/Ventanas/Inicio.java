@@ -137,12 +137,16 @@ public class Inicio extends javax.swing.JFrame {
         if(jugadores.getContador() == 0){
             Jugador nuevo = new Jugador(jugadores.getContador()+1);
             jugadores.agregar(nuevo);
+            JUGADOR.setJugador(nuevo);
             nuevo.perzonalizarlbl();
+            JUGADOR.iniciarPnlVehiculos();
         }else{
             Jugador siguiente = new Jugador(jugadores.getContador()+1);
             siguiente.setAnterior(jugadores.getUltimo());
             jugadores.getUltimo().setPosterior(siguiente);
             jugadores.agregar(siguiente);
+            JUGADOR.setJugador(siguiente);
+            JUGADOR.iniciarPnlVehiculos();
         }
         this.setVisible(false);
         JUGADOR.setVisible(true);
@@ -183,5 +187,6 @@ public class Inicio extends javax.swing.JFrame {
         ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo inicio.jpg")); 
         //ImageIcon fondo = new ImageIcon("C:\\Users\\50254\\Documents\\Proyecto_Final\\RamPaGe_2.0\\src\\Imagenes\\Fondo inicio.jpg"); //Windows
         lblFondo.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblFondo.getWidth(), lblFondo.getHeight(), Image.SCALE_SMOOTH)));
+        this.setIconImage(fondo.getImage());
     }
 }

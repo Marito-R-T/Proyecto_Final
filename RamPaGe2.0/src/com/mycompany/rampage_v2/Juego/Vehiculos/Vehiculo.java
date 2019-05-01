@@ -6,24 +6,25 @@
 package com.mycompany.rampage_v2.Juego.Vehiculos;
 
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author marito
  */
-public abstract class Vehiculo {
+public abstract class Vehiculo extends JLabel{
 
     private Vehiculo a, p;
     protected int nivel = 1;
     protected int experiencia = 0;
     protected int experienciaTope = 200;
     protected int No;
-    protected float vida;
-    protected float daño;
-    protected float defensa;
-    protected float defensaNeta;
-    protected float[] porcentajes;
+    protected float vida, daño, defensa, defensaNeta;
+    private JLabel muestra = new JLabel();
+    protected int[] porcentajes;
     private Arma arma;
+    private String nombre;
 
     public Vehiculo getAnterior() {
         return a;
@@ -53,4 +54,17 @@ public abstract class Vehiculo {
         experienciaTope += 100 * (nivel++);
         vida = (50 * nivel)*porcentajes[0];
     }
+    
+    public void agregarNombre(){
+        this.nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre que desea ponerle a su vehiculo", "Nombre", 1);
+    }
+
+    public JLabel getMuestra() {
+        return muestra;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+    
 }

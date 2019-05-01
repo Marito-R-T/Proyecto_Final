@@ -27,38 +27,38 @@ public class Listado<T> {
     }
 
     public void agregar(T nuevo) {
-        if(contador == 0){
+        if (contador == 0) {
             primero = nuevo;
             ultimo = nuevo;
-        }else{
+        } else {
             ultimo = nuevo;
         }
         contador++;
         /*if (contador == 0) {
-            primero = nuevo;
-            ultimo = nuevo;
-        } else {
-            if (primero instanceof Jugador) {
-                ((Jugador) nuevo).setAnterior((Jugador) ultimo);
-                //((Jugador)nuevo).setNo(contador + 1);
-                ((Jugador) ultimo).setPosterior((Jugador) nuevo);
-            } else if (primero instanceof Arma) {
-                ((Arma) nuevo).setAnterior((Arma) ultimo);
-                //((Jugador)nuevo).setNo(contador + 1);
-                ((Arma) ultimo).setPosterior((Arma) nuevo);
-            } else if (primero instanceof Mapa) {
-                ((Mapa) nuevo).setAnterior((Mapa) ultimo);
-                //((Jugador)nuevo).setNo(contador + 1);
-                ((Mapa) ultimo).setPosterior((Mapa) nuevo);
-            } else if (primero instanceof Vehiculo) {
-                ((Vehiculo) nuevo).setAnterior((Vehiculo) ultimo);
-                //((Jugador)nuevo).setNo(contador + 1);
-                ((Vehiculo) ultimo).setPosterior((Vehiculo) nuevo);
+         primero = nuevo;
+         ultimo = nuevo;
+         } else {
+         if (primero instanceof Jugador) {
+         ((Jugador) nuevo).setAnterior((Jugador) ultimo);
+         //((Jugador)nuevo).setNo(contador + 1);
+         ((Jugador) ultimo).setPosterior((Jugador) nuevo);
+         } else if (primero instanceof Arma) {
+         ((Arma) nuevo).setAnterior((Arma) ultimo);
+         //((Jugador)nuevo).setNo(contador + 1);
+         ((Arma) ultimo).setPosterior((Arma) nuevo);
+         } else if (primero instanceof Mapa) {
+         ((Mapa) nuevo).setAnterior((Mapa) ultimo);
+         //((Jugador)nuevo).setNo(contador + 1);
+         ((Mapa) ultimo).setPosterior((Mapa) nuevo);
+         } else if (primero instanceof Vehiculo) {
+         ((Vehiculo) nuevo).setAnterior((Vehiculo) ultimo);
+         //((Jugador)nuevo).setNo(contador + 1);
+         ((Vehiculo) ultimo).setPosterior((Vehiculo) nuevo);
 
-            }
-            ultimo = nuevo;
-            contador++;
-        }*/
+         }
+         ultimo = nuevo;
+         contador++;
+         }*/
     }
 
     public T devolver(int i) {
@@ -82,15 +82,15 @@ public class Listado<T> {
     public void eliminar(int i) {
         T referencia = primero;
         for (int u = 1; u < i; i++) {
-                if (primero instanceof Jugador) {
-                    referencia = (T) ((Jugador) referencia).getPosterior();
-                } else if (primero instanceof Arma) {
-                    referencia = (T) ((Arma) referencia).getPosterior();
-                } else if (primero instanceof Mapa) {
-                    referencia = (T) ((Mapa) referencia).getPosterior();
-                } else if (primero instanceof Vehiculo) {
-                    referencia = (T) ((Vehiculo) referencia).getPosterior();// seguir aqui eliminando los objetos.
-                }
+            if (primero instanceof Jugador) {
+                referencia = (T) ((Jugador) referencia).getPosterior();
+            } else if (primero instanceof Arma) {
+                referencia = (T) ((Arma) referencia).getPosterior();
+            } else if (primero instanceof Mapa) {
+                referencia = (T) ((Mapa) referencia).getPosterior();
+            } else if (primero instanceof Vehiculo) {
+                referencia = (T) ((Vehiculo) referencia).getPosterior();// seguir aqui eliminando los objetos.
+            }
         }
         contador--;
     }
@@ -101,6 +101,26 @@ public class Listado<T> {
 
     public int getContador() {
         return contador;
+    }
+
+    public void eliminarUltimo() {
+        if (primero instanceof Jugador) {
+            ultimo = (T) ((Jugador) ultimo).getAnterior();
+            ((Jugador) ultimo).setPosterior(null);
+        } else if (primero instanceof Arma) {
+            ultimo = (T) ((Arma) ultimo).getAnterior();
+            ((Arma) ultimo).setPosterior(null);
+        } else if (primero instanceof Mapa) {
+            ultimo = (T) ((Mapa) ultimo).getAnterior();
+            ((Mapa) ultimo).setPosterior(null);
+        } else if (primero instanceof Vehiculo) {
+            ultimo = (T) ((Vehiculo) ultimo).getAnterior();// seguir aqui eliminando los objetos.
+            ((Vehiculo) ultimo).setPosterior(null);
+        }
+    }
+
+    public T getPrimero() {
+        return primero;
     }
     
 }

@@ -17,17 +17,20 @@ import java.awt.Dimension;
  */
 public final class Mapa6x4 extends Mapa {
 
+    private final int TOPECAJAS = 6;
     public Mapa6x4() {
         FILAS = 6;
         COLUMNAS = 4;
+        super.topecajas = TOPECAJAS;
         super.mapa = new Terreno[FILAS][COLUMNAS];
         this.setLayout(null);
         this.setPreferredSize(new Dimension(820, 1220));
-        ingresarTerrenos();
+        //ingresarTerrenos();
+        super.ingresarTerrenos();
         super.colocarCuadros();
     }
 
-    public void ingresarTerrenos() {
+    /*public void ingresarTerrenos() {
         for (int i = 0; i < FILAS; i++) {
             int elegida = super.random.nextInt(3);
             Terreno primero;
@@ -91,5 +94,5 @@ public final class Mapa6x4 extends Mapa {
                 }
             }
         }
-    }
+    }*/
 }

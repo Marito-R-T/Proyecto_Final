@@ -16,18 +16,20 @@ import java.awt.Dimension;
  * @author marito
  */
 public final class Mapa4x4 extends Mapa {
-    
+    private final int TOPECAJAS = 4;
     public Mapa4x4() {
         FILAS = 4;
         COLUMNAS = 4;
+        super.topecajas = TOPECAJAS;
         super.mapa = new Terreno[FILAS][COLUMNAS];
         this.setLayout(null);
         this.setPreferredSize(new Dimension(220, 220));
-        ingresarTerrenos();
+        //ingresarTerrenos();
+        super.ingresarTerrenos();
         super.colocarCuadros();
     }
     
-    public void ingresarTerrenos() {
+    /*public void ingresarTerrenos() {
         for (int i = 0; i < FILAS; i++) {
             int elegida = super.random.nextInt(3);
             Terreno primero;
@@ -89,5 +91,5 @@ public final class Mapa4x4 extends Mapa {
                 }
             }
         }
-    }
+    }*/
 }

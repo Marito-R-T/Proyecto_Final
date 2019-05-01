@@ -5,8 +5,13 @@
  */
 package com.mycompany.rampage_v2.Juego.Mapas.Terrenos;
 
+import com.mycompany.rampage_v2.Juego.Comodines.Comodin;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
@@ -18,12 +23,25 @@ public abstract class Terreno extends JLabel{
     private Vehiculo vehiculo;
     private Terreno N,S,E,O,NE,NO,SE,SO;
     private int columnas, filas;
+    private Comodin caja;
 
     public Terreno(){
         this.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.gray, java.awt.Color.gray, new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
         //this.setBounds((columnas-1)*60 + 10,(filas-1)*60 +10, 60, 60);
+        this.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    accionTerreno(evt);
+                }
+        });
     }
-    
+    private void accionTerreno(MouseEvent evt){
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Terreno.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
@@ -110,6 +128,14 @@ public abstract class Terreno extends JLabel{
 
     public int getFilas() {
         return filas;
+    }
+
+    public Comodin getCaja() {
+        return caja;
+    }
+
+    public void setCaja(int numerocaja, int tope) {
+        this.caja = caja;
     }
     
 }
