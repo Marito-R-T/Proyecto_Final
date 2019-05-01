@@ -5,42 +5,49 @@
  */
 package com.mycompany.rampage_v2.Juego.listado;
 
+import com.mycompany.rampage_v2.Juego.Armas.Arma;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 
 /**
  *
  * @author marito
- * @param <T>
  */
-public class Armeria<T> {
-    private final Listado listado; 
-    
-    public Armeria(Listado listado){
+public class Armeria {
+
+    private final Listado listado;
+    private Arma[] fecha, kills, nivel, muertes, nombre, estado;
+
+    public Armeria(Listado listado) {
         this.listado = listado;
     }
-    public void ordenarPorFecha(){
+
+    public Arma[] ordenarPorFecha() {
+        fecha = new Arma[listado.getContador()];
+        for (int i = 0; i < listado.getContador(); i++) {
+            Arma referencia = (Arma) listado.devolver(i + 1);
+            fecha[i] = referencia;
+        }
+        return fecha;
     }
-    
-    public void ordenarPorKills(){
-        
+
+    public Arma[] ordenarPorNombre() {
+        nombre = new Arma[listado.getContador()];
+        for (int i = 0; i < listado.getContador(); i++) {
+            nombre[i] = (Arma) listado.devolver(i+1);
+        }
+        for (int i = 0; i < nombre.length; i++) {
+            int x = i;
+            Arma referencia = nombre[i];
+            while((x > 0) && (nombre[x - 1].getPrimerLetra() > referencia.getPrimerLetra())){
+                nombre[x] = nombre[x-1];
+                x--;
+            }
+            nombre[x] = referencia;
+        }
+        return nombre;
     }
-    
-    public void ordenarPorNivel(){
-        
-    }
-    
-    public void ordenarPorMuertes(){
-        
-    }
-    
-    public void ordenarPorNombre(){
-        
-    }
-    
-    public void ordenarPorEstado(){
-        
-    }
-    
-    public void ingresarListado(){
+
+
+    public void ingresarListado(Listado listado) {
     }
 }

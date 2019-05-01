@@ -10,6 +10,8 @@ import com.mycompany.rampage_v2.Juego.listado.Listado;
 import java.applet.AudioClip;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +28,7 @@ public class Inicio extends javax.swing.JFrame {
     private final VisualReportes REPORTES = new VisualReportes(this);
     private final VisualTienda TIENDA = new VisualTienda(this);
     private Listado<Jugador> jugadores = new Listado<>();
-    private final Seleccion seleccion = new Seleccion(jugadores, this);
+    //private final Seleccion seleccion = new Seleccion(jugadores, this);
 
     public Inicio() {
         initComponents();
@@ -36,7 +38,6 @@ public class Inicio extends javax.swing.JFrame {
         btnmusica.setSelected(true);
         sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/musicainicio.wav"));
         sonido.loop(); //ubuntu
-        
 
     }
 
@@ -132,35 +133,54 @@ public class Inicio extends javax.swing.JFrame {
 
     private void lbljuegonuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbljuegonuevoMouseClicked
         // TODO add your handling code here:
-        String nombre = JOptionPane.showInputDialog(this, "Que nombre tendra su avatar?", "NOMBRE AVATAR", 2);
-        if (nombre != null && !"".equals(nombre)){
-        if(jugadores.getContador() == 0){
-            Jugador nuevo = new Jugador(jugadores.getContador()+1);
-            jugadores.agregar(nuevo);
-            JUGADOR.setJugador(nuevo);
-            nuevo.perzonalizarlbl();
+        String nombre = "";
+        nombre = JOptionPane.showInputDialog(this, "Que nombre tendra su avatar?", "NOMBRE AVATAR", JOptionPane.QUESTION_MESSAGE);
+        if (nombre != null && !"".equals(nombre)) {
+            if (jugadores.getContador() == 0) {
+                Jugador nuevo = new Jugador(jugadores.getContador() + 1);
+                jugadores.agregar(nuevo);
+                JUGADOR.setJugador(nuevo);
+            } else {
+                Jugador siguiente = new Jugador(jugadores.getContador() + 1);
+                siguiente.setAnterior(jugadores.getUltimo());
+                jugadores.getUltimo().setPosterior(siguiente);
+                jugadores.agregar(siguiente);
+                JUGADOR.setJugador(siguiente);
+            }
             JUGADOR.iniciarPnlVehiculos();
-        }else{
-            Jugador siguiente = new Jugador(jugadores.getContador()+1);
-            siguiente.setAnterior(jugadores.getUltimo());
-            jugadores.getUltimo().setPosterior(siguiente);
-            jugadores.agregar(siguiente);
-            JUGADOR.setJugador(siguiente);
-            JUGADOR.iniciarPnlVehiculos();
-        }
-        this.setVisible(false);
-        JUGADOR.setVisible(true);
-        JUGADOR.setJugador(jugadores.getUltimo());
-        } else if (!"".equals(nombre)){
+            jugadores.getUltimo().setNombre(nombre);
+            jugadores.getUltimo().perzonalizarlbl();
+            this.setVisible(false);
+            JUGADOR.setVisible(true);
+            JUGADOR.setJugador(jugadores.getUltimo());
+            JUGADOR.iniciarComponentes();
+        } else if (nombre != null) {
             JOptionPane.showMessageDialog(this, "No puede dejar vacio el nombre", "nombre", 1);
             lbljuegonuevoMouseClicked(evt);
         }
+        /*else /*if (!"".equals(nombre)) {
+         }*/
     }//GEN-LAST:event_lbljuegonuevoMouseClicked
 
     private void lbljuegocargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbljuegocargarMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
-        seleccion.setVisible(true);
+        if (jugadores.getContador() != 0) {
+            JDialog cargar = new JDialog(this);
+            cargar.setLayout(null);
+            cargar.setSize(400, 60 * jugadores.getContador() + 50);
+            cargar.setResizable(false);
+            cargar.setLocationRelativeTo(this);
+            cargar.setVisible(true);
+            for (int i = 0; i < jugadores.getContador(); i++) {
+                Jugador jugador = jugadores.devolver(i + 1);
+                jugador.setInicio(this);
+                jugador.setIU(JUGADOR);
+                jugador.getLblnombre().setBounds(10, (60 * i) + 10, cargar.getWidth() - 20, 60);
+                cargar.add(jugador.getLblnombre());
+                //cargar.setVisible(false);
+            }
+            //this.setVisible(false);
+        }
         //JUGADOR.setJugador(jugadores.devolver(1));
     }//GEN-LAST:event_lbljuegocargarMouseClicked
 
@@ -184,7 +204,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void iniciarComponentes() {
         //ImageIcon fondo = new ImageIcon("/home/marito/Documentos/Proyecto_Final/RamPaGe_v2/src/main/java/Imagenes/Fondo inicio.jpg"); //Ubuntu
-        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo inicio.jpg")); 
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo inicio.jpg"));
         //ImageIcon fondo = new ImageIcon("C:\\Users\\50254\\Documents\\Proyecto_Final\\RamPaGe_2.0\\src\\Imagenes\\Fondo inicio.jpg"); //Windows
         lblFondo.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblFondo.getWidth(), lblFondo.getHeight(), Image.SCALE_SMOOTH)));
         this.setIconImage(fondo.getImage());

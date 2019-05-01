@@ -12,6 +12,7 @@ import com.mycompany.rampage_v2.Juego.listado.Listado;
 import com.mycompany.rampage_v2.Ventanas.Inicio;
 import com.mycompany.rampage_v2.Ventanas.VisualJugador;
 import java.awt.event.MouseEvent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -19,7 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author marito
  */
-public class Jugador {
+public class Jugador extends JLabel {
 
     private final int NO;
     private Jugador a, p;
@@ -28,17 +29,11 @@ public class Jugador {
     private VisualJugador iu;
     private Inicio inicio;
     private Listado<Vehiculo> vehiculos;
-    private int nivel, experiencia, experienciaTope;
+    private int nivel, experiencia, experienciaTope, kills, muertes;
 
     public Jugador(int no) {
         vehiculos = new Listado<>();
         NO = no;
-        lblnombre.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mouseClicked(evt);
-            }
-        });
         ingresarVehiculos();
         nivel = 1;
         experiencia = 0;
@@ -65,24 +60,22 @@ public class Jugador {
         return NO;
     }
 
-    public void mouseClicked(MouseEvent e) {
-        if (JOptionPane.showConfirmDialog(lblnombre, "Seguro que desea continuar con: " + nombre, "Seguro?", 2) == 1) {
-            iu.setJugador(this);
-            iu.setVisible(true);
-            inicio.setVisible(false);
-        }
-    }
-
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     public void perzonalizarlbl() {
-        lblnombre.setSize(100, 60);
         lblnombre.setFont(new java.awt.Font("Comic Sans MS", 1, 16));
         lblnombre.setText(nombre);
         lblnombre.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         lblnombre.setForeground(new java.awt.Color(0, 204, 204));
+        lblnombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblnombreMouseClicked(evt);
+            }
+        });
     }
 
     public JLabel getLblnombre() {
@@ -106,31 +99,33 @@ public class Jugador {
             JOptionPane.showMessageDialog(null, "Seguidamente seleccionara cuantos puntes le dejara a \n 1. Vida, 2. Ataque, 3. Defensa,  4. Especialidad del tipo de vehiculo");
             int[] porcentajes = new int[4];
             for (int j = 0; j < 4; j++) {
-            int lleva = 0;
+                int lleva = 0;
 
-            for (int l = 0; l < porcentajes.length; l++) {
+                for (int l = 0; l < porcentajes.length; l++) {
                     lleva += porcentajes[l];
                 }
-                Integer[] enteros = new Integer[12 - lleva];
+                Integer[] enteros = new Integer[13 - lleva];
                 for (int k = 0; k < enteros.length; k++) {
-                    enteros[k] = k + 1;
+                    enteros[k] = k;
                 }
-                porcentajes[j] = (int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j+1), 1, null, enteros, enteros[2]);
+                porcentajes[j] = (int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0]);
             }
             if (i == 0) {
-                JOptionPane.showMessageDialog(null, "Se ha creado su avion");
                 Vehiculo primero = new Avion(porcentajes);
                 primero.setNo(1);
                 vehiculos.agregar(primero);
                 primero.agregarNombre();
+                primero.ingresarImagen();
+                JOptionPane.showMessageDialog(null, "Se ha creado su avion");
             } else {
-                JOptionPane.showMessageDialog(null, "Se ha creado su tanque");
                 Vehiculo siguiente = new Tanque(porcentajes);
                 siguiente.setNo(vehiculos.getContador() + 1);
                 siguiente.setAnterior(vehiculos.getUltimo());
                 vehiculos.getUltimo().setPosterior(siguiente);
                 vehiculos.agregar(siguiente);
                 siguiente.agregarNombre();
+                siguiente.ingresarImagen();
+                JOptionPane.showMessageDialog(null, "Se ha creado su tanque");
             }
         }
     }
@@ -160,4 +155,32 @@ public class Jugador {
         return experienciaTope;
     }
 
+    public char getPrimerLetra() {
+        char[] arreglo = nombre.toCharArray();
+        return arreglo[0];
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public int getMuertes() {
+        return muertes;
+    }
+
+    private void lblnombreMouseClicked(MouseEvent evt) {
+        iu.setJugador(this);
+        iu.iniciarPnlVehiculos();
+        iu.iniciarComponentes();
+        inicio.setVisible(false);
+        iu.setVisible(true);
+    }
+
+    public void setIU(VisualJugador iu) {
+        this.iu = iu;
+    }
+    
+    public void setInicio(Inicio inicio){
+        this.inicio = inicio;
+    }
 }

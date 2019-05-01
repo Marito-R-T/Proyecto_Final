@@ -6,6 +6,7 @@
 package com.mycompany.rampage_v2.Juego.Vehiculos;
 
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -13,18 +14,21 @@ import javax.swing.JOptionPane;
  *
  * @author marito
  */
-public abstract class Vehiculo extends JLabel{
+public abstract class Vehiculo extends JLabel {
 
     private Vehiculo a, p;
+    protected ImageIcon imagen;
     protected int nivel = 1;
     protected int experiencia = 0;
     protected int experienciaTope = 200;
     protected int No;
+    private int kills = 0, muertes = 0;
     protected float vida, daño, defensa, defensaNeta;
-    private JLabel muestra = new JLabel();
+    protected JLabel muestra = new JLabel();
     protected int[] porcentajes;
     private Arma arma;
     private String nombre;
+    private boolean estaActivo = true;
 
     public Vehiculo getAnterior() {
         return a;
@@ -52,10 +56,10 @@ public abstract class Vehiculo extends JLabel{
 
     public void revisarSubirNivel() {
         experienciaTope += 100 * (nivel++);
-        vida = (50 * nivel)*porcentajes[0];
+        vida = (50 * nivel) * porcentajes[0];
     }
-    
-    public void agregarNombre(){
+
+    public void agregarNombre() {
         this.nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre que desea ponerle a su vehiculo", "Nombre", 1);
     }
 
@@ -66,5 +70,30 @@ public abstract class Vehiculo extends JLabel{
     public String getNombre() {
         return nombre;
     }
+
+    public char getPrimerLetra() {
+        char[] arreglo = nombre.toCharArray();
+        return arreglo[0];
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public boolean isEstaActivo() {
+        return estaActivo;
+    }
+
+    public int getMuertes() {
+        return muertes;
+    }
+
+    public abstract void iniciarMuestra();
+
+    public abstract void ingresarImagen(); 
     
 }

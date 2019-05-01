@@ -13,6 +13,7 @@ public class Arma {
     
     private Arma a, p;
     private int No;
+    private String nombre;
 
     public Arma getAnterior() {
         return a;
@@ -30,4 +31,12 @@ public class Arma {
         this.p = p;
     }
     
+    public String getNombre(){
+        return nombre;
+    }
+    
+    public char getPrimerLetra(){
+        char[] arreglo = nombre.toCharArray();
+        return arreglo[0];
+    }
 }
