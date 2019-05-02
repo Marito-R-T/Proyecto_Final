@@ -34,7 +34,7 @@ public class Avion extends Vehiculo{
 
     @Override
     public void iniciarMuestra() {
-        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Avion.png"));
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Vehiculos/Avion.png"));
         muestra.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(60, muestra.getHeight(), Image.SCALE_SMOOTH)));
         muestra.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         super.muestra.setFont(new java.awt.Font("Comic Sans MS", 1, 16));

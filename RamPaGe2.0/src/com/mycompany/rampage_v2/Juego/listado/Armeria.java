@@ -14,7 +14,7 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
  */
 public class Armeria {
 
-    private final Listado listado;
+    private final Listado<Arma> listado;
     private Arma[] fecha, kills, nivel, muertes, nombre, estado;
 
     public Armeria(Listado listado) {
@@ -24,7 +24,7 @@ public class Armeria {
     public Arma[] ordenarPorFecha() {
         fecha = new Arma[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            Arma referencia = (Arma) listado.devolver(i + 1);
+            Arma referencia = listado.devolver(i + 1);
             fecha[i] = referencia;
         }
         return fecha;
@@ -33,7 +33,7 @@ public class Armeria {
     public Arma[] ordenarPorNombre() {
         nombre = new Arma[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            nombre[i] = (Arma) listado.devolver(i+1);
+            nombre[i] = listado.devolver(i+1);
         }
         for (int i = 0; i < nombre.length; i++) {
             int x = i;
@@ -48,6 +48,4 @@ public class Armeria {
     }
 
 
-    public void ingresarListado(Listado listado) {
-    }
 }

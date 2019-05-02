@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
  */
 public class Llanura extends Terreno{
     public Llanura(){
-        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/llanura.jpg")); 
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Terrenos/llanura.jpg")); 
         this.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(200, 200, Image.SCALE_FAST)));
     }
 }

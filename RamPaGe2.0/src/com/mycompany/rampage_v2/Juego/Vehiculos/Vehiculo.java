@@ -6,6 +6,8 @@
 package com.mycompany.rampage_v2.Juego.Vehiculos;
 
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
+import com.mycompany.rampage_v2.Juego.listado.Armeria;
+import com.mycompany.rampage_v2.Juego.listado.Listado;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,6 +28,8 @@ public abstract class Vehiculo extends JLabel {
     protected float vida, daño, defensa, defensaNeta;
     protected JLabel muestra = new JLabel();
     protected int[] porcentajes;
+    private final Listado<Arma> armas = new Listado<>();
+    private final Armeria armeria = new Armeria(armas);
     private Arma arma;
     private String nombre;
     private boolean estaActivo = true;

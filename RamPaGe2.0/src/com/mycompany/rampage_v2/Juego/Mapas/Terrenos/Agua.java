@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 public class Agua extends Terreno{
     private int vida;
     public Agua(){
-        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/agua.jpg")); 
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Terrenos/agua.jpg")); 
         this.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
     }
 }

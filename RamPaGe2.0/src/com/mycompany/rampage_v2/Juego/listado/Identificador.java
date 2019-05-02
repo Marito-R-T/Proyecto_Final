@@ -12,7 +12,7 @@ import com.mycompany.rampage_v2.Juego.Jugador;
  * @author marito
  */
 public class Identificador {
-    private final Listado listado;
+    private final Listado<Jugador> listado;
     private Jugador[] fecha, kills, nivel, muertes, nombre;
 
     public Identificador(Listado listado) {
@@ -22,7 +22,7 @@ public class Identificador {
     public Jugador[] ordenarPorFecha() { // ordenar por fecha de cracion
         fecha = new Jugador[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            Jugador referencia = (Jugador) listado.devolver(i + 1);
+            Jugador referencia = listado.devolver(i + 1);
             fecha[i] = referencia;
         }
         return fecha;
@@ -31,7 +31,7 @@ public class Identificador {
     public Jugador[] ordenarPorKills() { // ordenar del menor al mayor por kills
         kills = new Jugador[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            kills[i] = (Jugador) listado.devolver(i + 1);
+            kills[i] =  listado.devolver(i + 1);
         }
         for (int i = 0; i < kills.length; i++) {
             int x = i;
@@ -48,7 +48,7 @@ public class Identificador {
     public Jugador[] ordenarPorNivel() { // ordenar del menor al mayor por nivel
         nivel = new Jugador[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            nivel[i] = (Jugador) listado.devolver(i + 1);
+            nivel[i] = listado.devolver(i + 1);
         }
         for (int i = 0; i < nivel.length; i++) {
             int x = i;
@@ -65,7 +65,7 @@ public class Identificador {
     public Jugador[] ordenarPorMuertes() { // ordenar del menor al mayor por muertes 
         muertes = new Jugador[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            muertes[i] = (Jugador) listado.devolver(i + 1);
+            muertes[i] =  listado.devolver(i + 1);
         }
         for (int i = 0; i < muertes.length; i++) {
             int x = i;
@@ -96,6 +96,4 @@ public class Identificador {
         return nombre;
     }
 
-    public void ingresarListado() {
-    }
 }

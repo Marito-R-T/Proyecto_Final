@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 public class Montaña extends Terreno{
     private int vida;
     public Montaña(){
-        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/montaña.jpg")); 
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Terrenos/montaña.jpg")); 
         this.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
     }
 }

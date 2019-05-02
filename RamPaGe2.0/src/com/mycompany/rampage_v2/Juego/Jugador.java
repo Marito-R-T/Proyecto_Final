@@ -5,9 +5,13 @@
  */
 package com.mycompany.rampage_v2.Juego;
 
+import com.mycompany.rampage_v2.Juego.*;
+import com.mycompany.rampage_v2.Juego.Armas.Arma;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Tanque;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
+import com.mycompany.rampage_v2.Juego.listado.Armeria;
+import com.mycompany.rampage_v2.Juego.listado.Garage;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
 import com.mycompany.rampage_v2.Ventanas.Inicio;
 import com.mycompany.rampage_v2.Ventanas.VisualJugador;
@@ -28,11 +32,17 @@ public class Jugador extends JLabel {
     private String nombre;
     private VisualJugador iu;
     private Inicio inicio;
-    private Listado<Vehiculo> vehiculos;
+    private final Listado<Vehiculo> vehiculos;
+    private final Garage garage;
+    private final Listado<Arma> armas;
+    private final Armeria armeria;
     private int nivel, experiencia, experienciaTope, kills, muertes;
 
     public Jugador(int no) {
         vehiculos = new Listado<>();
+        garage = new Garage(vehiculos);
+        armas = new Listado<>();
+        armeria = new Armeria(armas);
         NO = no;
         ingresarVehiculos();
         nivel = 1;
@@ -108,6 +118,7 @@ public class Jugador extends JLabel {
                 for (int k = 0; k < enteros.length; k++) {
                     enteros[k] = k;
                 }
+
                 porcentajes[j] = (int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0]);
             }
             if (i == 0) {

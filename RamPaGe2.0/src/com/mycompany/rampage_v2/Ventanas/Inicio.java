@@ -6,10 +6,13 @@
 package com.mycompany.rampage_v2.Ventanas;
 
 import com.mycompany.rampage_v2.Juego.Jugador;
+import com.mycompany.rampage_v2.Juego.listado.Identificador;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
 import java.applet.AudioClip;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,10 +30,13 @@ public class Inicio extends javax.swing.JFrame {
     private final VisualJugador JUGADOR = new VisualJugador(this);
     private final VisualReportes REPORTES = new VisualReportes(this);
     private final VisualTienda TIENDA = new VisualTienda(this);
-    private Listado<Jugador> jugadores = new Listado<>();
+    private final Listado<Jugador> jugadores = new Listado<>();
+    private final Identificador posicionamiento;
     //private final Seleccion seleccion = new Seleccion(jugadores, this);
 
     public Inicio() {
+        posicionamiento = new Identificador(jugadores);
+        ordenado = posicionamiento.ordenarPorFecha();
         initComponents();
         iniciarComponentes();
         this.setResizable(false);
@@ -161,18 +167,52 @@ public class Inicio extends javax.swing.JFrame {
         /*else /*if (!"".equals(nombre)) {
          }*/
     }//GEN-LAST:event_lbljuegonuevoMouseClicked
-
+    public Jugador[] ordenado;
     private void lbljuegocargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbljuegocargarMouseClicked
         // TODO add your handling code here:
         if (jugadores.getContador() != 0) {
             JDialog cargar = new JDialog(this);
             cargar.setLayout(null);
-            cargar.setSize(400, 60 * jugadores.getContador() + 50);
+            cargar.setSize(600, 60 * jugadores.getContador() + 120);
             cargar.setResizable(false);
             cargar.setLocationRelativeTo(this);
             cargar.setVisible(true);
-            for (int i = 0; i < jugadores.getContador(); i++) {
-                Jugador jugador = jugadores.devolver(i + 1);
+            JButton[] botones = new JButton[5];
+            for (int i = 0; i < 5; i++) {
+                botones[i] = new JButton();
+                botones[i].addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        botonesMouseClicked(evt);
+                    }
+
+                    public void botonesMouseClicked(MouseEvent evt) {
+                        if (evt.getSource() == botones[0]) {
+                            ordenado = posicionamiento.ordenarPorFecha();
+                        } else if (evt.getSource() == botones[1]) {
+                            ordenado = posicionamiento.ordenarPorKills();
+                        } else if (evt.getSource() == botones[2]) {
+                            ordenado = posicionamiento.ordenarPorMuertes();
+                        } else if (evt.getSource() == botones[3]) {
+                            ordenado = posicionamiento.ordenarPorNivel();
+                        } else if (evt.getSource() == botones[4]) {
+                            ordenado = posicionamiento.ordenarPorNombre();
+                        }
+                        cargar.setVisible(false);
+                        System.gc();
+                        lbljuegocargarMouseClicked(evt);
+                    }
+                });
+                botones[i].setBounds(((cargar.getWidth() / 5) * i) + 5, (60 * jugadores.getContador()) + 20, cargar.getWidth() / 5 - 10, 60);
+                cargar.add(botones[i]);
+            }
+            botones[0].setText("Por \n Fecha");
+            botones[1].setText("Por \n Kills ");
+            botones[2].setText("Por \n Muertes ");
+            botones[3].setText("Por \n Nivel");
+            botones[4].setText("Por \n nombre");
+            for (int i = 0; i < ordenado.length; i++) {
+                Jugador jugador = ordenado[i];
                 jugador.setInicio(this);
                 jugador.setIU(JUGADOR);
                 jugador.getLblnombre().setBounds(10, (60 * i) + 10, cargar.getWidth() - 20, 60);

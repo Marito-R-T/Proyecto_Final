@@ -14,8 +14,10 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -52,12 +54,28 @@ public class VisualJugador extends javax.swing.JFrame {
 
         pnlInfo = new javax.swing.JPanel();
         btnjugar = new javax.swing.JButton();
-        lblInfo = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
+        pnlInfo2 = new javax.swing.JPanel();
+        lblNombre = new javax.swing.JLabel();
+        lblNivel = new javax.swing.JLabel();
+        lblExp = new javax.swing.JLabel();
+        btnTienda = new javax.swing.JButton();
         spnlVehiculos = new javax.swing.JScrollPane();
         pnlVehiculos = new javax.swing.JPanel();
         spnlArmas = new javax.swing.JScrollPane();
         pnlArmas = new javax.swing.JPanel();
+        pnlVcontrolador = new javax.swing.JPanel();
+        pnlcrear = new javax.swing.JButton();
+        btnVestado = new javax.swing.JButton();
+        btnVFecha = new javax.swing.JButton();
+        btnVkills = new javax.swing.JButton();
+        btnVnivel = new javax.swing.JButton();
+        btnVmuertes = new javax.swing.JButton();
+        btnVnombre = new javax.swing.JButton();
+        pnlAcontrolador = new javax.swing.JPanel();
+        btnAfecha = new javax.swing.JButton();
+        btnAnombre = new javax.swing.JButton();
+        btnAcrear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
@@ -77,8 +95,6 @@ public class VisualJugador extends javax.swing.JFrame {
             }
         });
 
-        lblInfo.setBackground(new java.awt.Color(0, 204, 153));
-
         btnSalir.setFont(new java.awt.Font("DejaVu Serif Condensed", 2, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(0, 153, 153));
         btnSalir.setText("S A L I R");
@@ -88,24 +104,55 @@ public class VisualJugador extends javax.swing.JFrame {
             }
         });
 
+        btnTienda.setBackground(new java.awt.Color(153, 153, 0));
+        btnTienda.setText("TIENDA");
+
+        javax.swing.GroupLayout pnlInfo2Layout = new javax.swing.GroupLayout(pnlInfo2);
+        pnlInfo2.setLayout(pnlInfo2Layout);
+        pnlInfo2Layout.setHorizontalGroup(
+            pnlInfo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInfo2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlInfo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblNivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblExp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTienda))
+        );
+        pnlInfo2Layout.setVerticalGroup(
+            pnlInfo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInfo2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlInfo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInfo2Layout.createSequentialGroup()
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblExp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(btnTienda, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))
+        );
+
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
         pnlInfo.setLayout(pnlInfoLayout);
         pnlInfoLayout.setHorizontalGroup(
             pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(lblInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlInfoLayout.createSequentialGroup()
                 .addComponent(btnjugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+            .addComponent(pnlInfo2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlInfoLayout.setVerticalGroup(
             pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInfoLayout.createSequentialGroup()
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnjugar, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                    .addComponent(btnjugar, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                .addComponent(pnlInfo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlVehiculos.setBackground(new java.awt.Color(0, 153, 153));
@@ -114,11 +161,11 @@ public class VisualJugador extends javax.swing.JFrame {
         pnlVehiculos.setLayout(pnlVehiculosLayout);
         pnlVehiculosLayout.setHorizontalGroup(
             pnlVehiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
+            .addGap(0, 466, Short.MAX_VALUE)
         );
         pnlVehiculosLayout.setVerticalGroup(
             pnlVehiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 585, Short.MAX_VALUE)
+            .addGap(0, 596, Short.MAX_VALUE)
         );
 
         spnlVehiculos.setViewportView(pnlVehiculos);
@@ -133,10 +180,101 @@ public class VisualJugador extends javax.swing.JFrame {
         );
         pnlArmasLayout.setVerticalGroup(
             pnlArmasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
+            .addGap(0, 402, Short.MAX_VALUE)
         );
 
         spnlArmas.setViewportView(pnlArmas);
+
+        pnlVcontrolador.setBackground(new java.awt.Color(0, 153, 153));
+
+        pnlcrear.setText("C     R     E     A     R");
+
+        btnVestado.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        btnVestado.setText("Estado");
+
+        btnVFecha.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        btnVFecha.setText("Fecha");
+        btnVFecha.setBorderPainted(false);
+
+        btnVkills.setText("Kills");
+
+        btnVnivel.setText("Nivel");
+
+        btnVmuertes.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        btnVmuertes.setText("Muertes");
+
+        btnVnombre.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        btnVnombre.setText("Nombre");
+
+        javax.swing.GroupLayout pnlVcontroladorLayout = new javax.swing.GroupLayout(pnlVcontrolador);
+        pnlVcontrolador.setLayout(pnlVcontroladorLayout);
+        pnlVcontroladorLayout.setHorizontalGroup(
+            pnlVcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlVcontroladorLayout.createSequentialGroup()
+                .addGroup(pnlVcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlVcontroladorLayout.createSequentialGroup()
+                        .addComponent(pnlcrear, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVestado, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlVcontroladorLayout.createSequentialGroup()
+                        .addComponent(btnVFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVkills, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVnivel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVmuertes, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVnombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pnlVcontroladorLayout.setVerticalGroup(
+            pnlVcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlVcontroladorLayout.createSequentialGroup()
+                .addGroup(pnlVcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pnlcrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVestado, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlVcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnVFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVkills, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVnivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlVcontroladorLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnVnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVmuertes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        pnlAcontrolador.setBackground(new java.awt.Color(204, 204, 204));
+
+        btnAfecha.setText("Fecha");
+
+        btnAnombre.setText(" Nombre");
+
+        btnAcrear.setText("C  R  E  A  R");
+
+        javax.swing.GroupLayout pnlAcontroladorLayout = new javax.swing.GroupLayout(pnlAcontrolador);
+        pnlAcontrolador.setLayout(pnlAcontroladorLayout);
+        pnlAcontroladorLayout.setHorizontalGroup(
+            pnlAcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAcontroladorLayout.createSequentialGroup()
+                .addComponent(btnAfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAcrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnlAcontroladorLayout.setVerticalGroup(
+            pnlAcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAcontroladorLayout.createSequentialGroup()
+                .addGroup(pnlAcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAcrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAfecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAnombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,10 +283,15 @@ public class VisualJugador extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spnlArmas))
+                    .addComponent(spnlArmas, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(pnlAcontrolador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spnlVehiculos)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spnlVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(pnlVcontrolador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -156,12 +299,17 @@ public class VisualJugador extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spnlVehiculos)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlVcontrolador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spnlVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spnlArmas)))
-                .addContainerGap())
+                        .addComponent(spnlArmas, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlAcontrolador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -235,42 +383,88 @@ public class VisualJugador extends javax.swing.JFrame {
         pnlVehiculos.removeAll();
         for (int i = 0; i < jugador.getVehiculos().getContador(); i++) {
             Vehiculo referencia = jugador.getVehiculos().devolver(i + 1);
-            referencia.getMuestra().setBounds(10, (60*i) + 10, pnlVehiculos.getWidth() - 20, 60);
+            referencia.getMuestra().setBounds(10, (60*i) + 10, pnlVehiculos.getWidth() - 70, 60);
             referencia.iniciarMuestra();
             vehiculos[i] = referencia.getMuestra();
             pnlVehiculos.add(vehiculos[i]);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAcrear;
+    private javax.swing.JButton btnAfecha;
+    private javax.swing.JButton btnAnombre;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnTienda;
+    private javax.swing.JButton btnVFecha;
+    private javax.swing.JButton btnVestado;
+    private javax.swing.JButton btnVkills;
+    private javax.swing.JButton btnVmuertes;
+    private javax.swing.JButton btnVnivel;
+    private javax.swing.JButton btnVnombre;
     private javax.swing.JButton btnjugar;
-    private javax.swing.JLabel lblInfo;
+    private javax.swing.JLabel lblExp;
+    private javax.swing.JLabel lblNivel;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JPanel pnlAcontrolador;
     private javax.swing.JPanel pnlArmas;
     private javax.swing.JPanel pnlInfo;
+    private javax.swing.JPanel pnlInfo2;
+    private javax.swing.JPanel pnlVcontrolador;
     private javax.swing.JPanel pnlVehiculos;
+    private javax.swing.JButton pnlcrear;
     private javax.swing.JScrollPane spnlArmas;
     private javax.swing.JScrollPane spnlVehiculos;
     // End of variables declaration//GEN-END:variables
 
     public void iniciarComponentes() {
-        lblInfo.setOpaque(false);
-        lblInfo.setText("Nombre: " + jugador.getNombre() +
-                "\n Nivel: " + jugador.getNivel() +
-                "\n Experiencia: " + jugador.getExperiencia());
+        pnlArmas.setPreferredSize(new Dimension(spnlArmas.getWidth(),spnlArmas.getHeight()));
+        lblNombre.setText("Nombre: " + jugador.getNombre());
+        lblExp.setText("Exp: " + jugador.getExperiencia());
+        lblNivel.setText("Nivel: " + jugador.getNivel());
+        lblNombre.setFont(new java.awt.Font("Comic Sans MS", 1, 20));
+        lblExp.setFont(new java.awt.Font("Comic Sans MS", 1, 14));
+        lblNivel.setFont(new java.awt.Font("Comic Sans MS", 1, 20));
         verificarExperiencia();
     }
 
     private void verificarExperiencia() {
-        JLabel[] experiencia = new JLabel[10];
-        if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.1){  
-        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.2){  
+        lblExp.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.1){ 
+            ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.1.jpg"));
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setText("Exp: " + jugador.getExperiencia());
+        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.2){ 
+            ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.2.jpg"));
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setText("Exp: " + jugador.getExperiencia());
         }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.3){  
+            ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.3.jpg"));
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setText("Exp: " + jugador.getExperiencia());
         }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.4){  
+            ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.4.jpg"));
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setText("Exp: " + jugador.getExperiencia());
         }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.5){  
+            ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.5.jpg"));
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setText("Exp: " + jugador.getExperiencia());
         }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.6){  
+            ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.6.jpg"));
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setText("Exp: " + jugador.getExperiencia());
         }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.7){  
+            ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.7.jpg"));
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setText("Exp: " + jugador.getExperiencia());
         }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.8){  
+            ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.8.jpg"));
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setText("Exp: " + jugador.getExperiencia());
         }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.9){  
+            ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.9.jpg"));
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setText("Exp: " + jugador.getExperiencia());
         }
     }
 }

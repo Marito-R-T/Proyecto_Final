@@ -14,7 +14,7 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
  */
 public class Garage {
 
-    private final Listado listado;
+    private final Listado<Vehiculo> listado;
     private Vehiculo[] fecha, kills, nivel, muertes, nombre, estado;
 
     public Garage(Listado listado) {
@@ -24,7 +24,7 @@ public class Garage {
     public Vehiculo[] ordenarPorFecha() { // ordenar por fecha de cracion
         fecha = new Vehiculo[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            Vehiculo referencia = (Vehiculo) listado.devolver(i + 1);
+            Vehiculo referencia = listado.devolver(i + 1);
             fecha[i] = referencia;
         }
         return fecha;
@@ -33,7 +33,7 @@ public class Garage {
     public Vehiculo[] ordenarPorKills() { // ordenar del menor al mayor por kills
         kills = new Vehiculo[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            kills[i] = (Vehiculo) listado.devolver(i + 1);
+            kills[i] = listado.devolver(i + 1);
         }
         for (int i = 0; i < kills.length; i++) {
             int x = i;
@@ -50,7 +50,7 @@ public class Garage {
     public Vehiculo[] ordenarPorNivel() { // ordenar del menor al mayor por nivel
         nivel = new Vehiculo[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            nivel[i] = (Vehiculo) listado.devolver(i + 1);
+            nivel[i] = listado.devolver(i + 1);
         }
         for (int i = 0; i < nivel.length; i++) {
             int x = i;
@@ -67,7 +67,7 @@ public class Garage {
     public Vehiculo[] ordenarPorMuertes() { // ordenar del menor al mayor por muertes 
         muertes = new Vehiculo[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            muertes[i] = (Vehiculo) listado.devolver(i + 1);
+            muertes[i] = listado.devolver(i + 1);
         }
         for (int i = 0; i < muertes.length; i++) {
             int x = i;
@@ -84,7 +84,7 @@ public class Garage {
     public Vehiculo[] ordenarPorNombre() { // ordenar por orden alfabetico
         nombre = new Vehiculo[listado.getContador()];
         for (int i = 0; i < listado.getContador(); i++) {
-            nombre[i] = (Vehiculo) listado.devolver(i + 1);
+            nombre[i] = listado.devolver(i + 1);
         }
         for (int i = 0; i < nombre.length; i++) {
             int x = i;
@@ -102,7 +102,7 @@ public class Garage {
         estado = new Vehiculo[listado.getContador()];
         int x = 0, y = listado.getContador() - 1;
         for (int u = 0; u < listado.getContador(); u++) {
-            Vehiculo referencia = (Vehiculo) listado.devolver(u + 1);
+            Vehiculo referencia = listado.devolver(u + 1);
             if (referencia.isEstaActivo()) {
                 estado[x] = referencia;
                 x++;
@@ -115,6 +115,4 @@ public class Garage {
         return estado;
     }
 
-    public void ingresarListado() {
-    }
 }
