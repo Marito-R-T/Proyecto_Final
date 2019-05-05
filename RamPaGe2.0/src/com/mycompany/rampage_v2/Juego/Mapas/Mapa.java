@@ -59,10 +59,10 @@ public class Mapa extends JPanel {
         for (int i = 0; i < FILAS; i++) {
             int elegida = random.nextInt(3);
             Terreno primero;
-            if (elegida == 0 && agua < 8) {
+            if (elegida == 0 && agua < topecajas*2) {
                 primero = new Agua();
                 agua++;
-            } else if (elegida == 1 && montaña < 8) {
+            } else if (elegida == 1 && montaña < topecajas*2) {
                 primero = new Montaña();
                 montaña++;
             } else {
@@ -89,10 +89,10 @@ public class Mapa extends JPanel {
             for (int j = 1; j < COLUMNAS; j++) {
                 elegida = random.nextInt(3);
                 Terreno nuevo;
-                if (elegida == 0 && agua < 8) {
+                if (elegida == 0 && agua < topecajas*2) {
                     nuevo = new Agua();
                     agua++;
-                } else if (elegida == 1 && montaña < 8) {
+                } else if (elegida == 1 && montaña < topecajas*2) {
                     nuevo = new Montaña();
                     montaña++;
                 } else {

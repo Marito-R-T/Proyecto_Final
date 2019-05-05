@@ -5,6 +5,7 @@
  */
 package com.mycompany.rampage_v2.Ventanas;
 
+import com.mycompany.rampage_v2.Juego.Armas.Arma;
 import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa4x4;
@@ -12,14 +13,15 @@ import com.mycompany.rampage_v2.Juego.Mapas.Mapa6x4;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa8x9;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -41,6 +43,9 @@ public class VisualJugador extends javax.swing.JFrame {
         //iniciarComponentes();
         this.inicio = inicio;
         this.setLocationRelativeTo(null);
+        iniciarOyentes();
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo inicio.jpg"));
+        this.setIconImage(fondo.getImage());
     }
 
     /**
@@ -316,51 +321,75 @@ public class VisualJugador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private JDialog dialogo;
     private int mapa;
+    private Vehiculo[] elegidos = new Vehiculo[3];
+
+    public void ingresarVehiculo(Vehiculo vehiculo) {
+        int z = 0;
+        while (elegidos[z] != null && z < 3) {
+            x++;
+            if (elegidos[z] == vehiculo) {
+                break;
+            }
+        }
+        if (x < 3) {
+            elegidos[z] = vehiculo;
+        } else {
+            elegidos[0] = elegidos[1];
+            elegidos[1] = elegidos[2];
+            elegidos[2] = vehiculo;
+        }
+    }
     private void btnjugarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnjugarMouseClicked
         // TODO add your handling code here:
-        dialogo = new JDialog(this, true);
-        dialogo.setSize(350, 100);
-        dialogo.setResizable(false);
-        dialogo.setLayout(null);
-        dialogo.setLocationRelativeTo(this);
-        JLabel[] mapas = new JLabel[3];
-        for (int i = 0; i < mapas.length; i++) {
-            mapas[i] = new JLabel();
-            dialogo.add(mapas[i]);
-            mapas[i].setBounds((110 * i) + 10, 10, 100, 60);
-            mapas[i].addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    btnsmapasMouseClicked(evt);
-                }
-
-                private void btnsmapasMouseClicked(MouseEvent evt) {
-                    Mapa mapa;
-                    if (evt.getSource() == mapas[0]) {
-                        mapa = new Mapa4x4();
-                        JUEGO.setVehiculos(jugador.getVehiculos());
-                        JUEGO.setMapa(mapa);
-                    } else if (evt.getSource() == mapas[1]) {
-                        mapa = new Mapa6x4();
-                        JUEGO.setVehiculos(jugador.getVehiculos());
-                        JUEGO.setMapa(mapa);
-                    } else {
-                        mapa = new Mapa8x9();
-                        JUEGO.setVehiculos(jugador.getVehiculos());
-                        JUEGO.setMapa(mapa);
+        if (elegidos[2] != null) {
+            dialogo = new JDialog(this, true);
+            dialogo.setSize(350, 150);
+            dialogo.setResizable(false);
+            dialogo.setLayout(null);
+            dialogo.setLocationRelativeTo(this);
+            JLabel[] mapas = new JLabel[3];
+            for (int i = 0; i < mapas.length; i++) {
+                mapas[i] = new JLabel();
+                dialogo.add(mapas[i]);
+                mapas[i].setBounds((110 * i) + 20, 10, 100, 100);
+                mapas[i].setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+                mapas[i].addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        btnsmapasMouseClicked(evt);
                     }
-                    setVisible(false);
-                    JUEGO.setVisible(true);
-                }
-            });
-        }
-        mapas[0].setText("MAPA 4*4");
-        mapas[1].setText("MAPA 6*4");
-        mapas[2].setText("Mapa 9*8");
-        dialogo.setVisible(true);
+
+                    private void btnsmapasMouseClicked(MouseEvent evt) {
+                        Mapa mapa;
+                        if (evt.getSource() == mapas[0]) {
+                            mapa = new Mapa4x4();
+                            JUEGO.setMapa(mapa);
+                        } else if (evt.getSource() == mapas[1]) {
+                            mapa = new Mapa6x4();
+                            JUEGO.setMapa(mapa);
+                        } else {
+                            mapa = new Mapa8x9();
+                            JUEGO.setMapa(mapa);
+                        }
+                        setVisible(false);
+                        JUEGO.setVisible(true);
+                        JUEGO.setVehiculos(elegidos);
+                    }
+                });
+            }
+            mapas[0].setText(" MAPA 4*4");
+            mapas[1].setText(" MAPA 6*4");
+            mapas[2].setText(" Mapa 9*8");
+            mapas[0].setFont(new java.awt.Font("Comic Sans MS", 1, 13));
+            mapas[1].setFont(new java.awt.Font("Comic Sans MS", 1, 13));
+            mapas[2].setFont(new java.awt.Font("Comic Sans MS", 1, 13));
+            dialogo.setVisible(true);
         //this.setVisible(false);
-        //JUEGO.setVisible(true);
-        //JUEGO.setMapa(new Mapa6x4());
+            //JUEGO.setVisible(true);
+            //JUEGO.setMapa(new Mapa6x4());
+        } else{
+            JOptionPane.showMessageDialog(this, "No puede ingresar, ya que no ha elegido vehiculos", "Error", JOptionPane.OK_OPTION);
+        }
     }//GEN-LAST:event_btnjugarMouseClicked
 
     private void btnjugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnjugarActionPerformed
@@ -377,16 +406,40 @@ public class VisualJugador extends javax.swing.JFrame {
         this.jugador = jugador;
     }
 
+    private int x = 0;
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
     public void iniciarPnlVehiculos() {
-        pnlVehiculos.setPreferredSize(new Dimension(spnlVehiculos.getWidth()-10, jugador.getVehiculos().getContador()*80));
-        JLabel[] vehiculos = new JLabel[jugador.getVehiculos().getContador()];
-        pnlVehiculos.removeAll();
-        for (int i = 0; i < jugador.getVehiculos().getContador(); i++) {
-            Vehiculo referencia = jugador.getVehiculos().devolver(i + 1);
-            referencia.getMuestra().setBounds(10, (60*i) + 10, pnlVehiculos.getWidth() - 70, 60);
-            referencia.iniciarMuestra();
-            vehiculos[i] = referencia.getMuestra();
-            pnlVehiculos.add(vehiculos[i]);
+        pnlVehiculos = new JPanel();
+        spnlVehiculos.setViewportView(pnlVehiculos);
+        pnlVehiculos.setPreferredSize(new Dimension(spnlVehiculos.getWidth() - 10, jugador.getVehiculos().getContador() * 80));
+        pnlVehiculos.setBackground(new java.awt.Color(0, 153, 153));
+        if (x == 0) {
+            for (int i = 0; i < vehiculos.length; i++) {
+                vehiculos[i].getMuestra().setBounds(10, (60 * i) + 10, pnlVehiculos.getWidth() - 10, 60);
+                vehiculos[i].iniciarMuestra();
+                pnlVehiculos.add(vehiculos[i].getMuestra());
+            }
+            x = 5;
+        } else if (x == 5) {
+            int y = vehiculos.length - 1;
+            for (int i = 0; i < vehiculos.length; i++) {
+                vehiculos[y].getMuestra().setBounds(10, (60 * i) + 10, pnlVehiculos.getWidth(), 60);
+                vehiculos[y].iniciarMuestra();
+                pnlVehiculos.add(vehiculos[y].getMuestra());
+                y--;
+            }
+            x = 1;
+        } else {
+            for (int i = 0; i < vehiculos.length; i++) {
+                vehiculos[i].getMuestra().setBounds(10, (60 * i) + 10, pnlVehiculos.getWidth(), 60);
+                vehiculos[i].iniciarMuestra();
+                pnlVehiculos.add(vehiculos[i].getMuestra());
+            }
+            x = 5;
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -416,8 +469,41 @@ public class VisualJugador extends javax.swing.JFrame {
     private javax.swing.JScrollPane spnlVehiculos;
     // End of variables declaration//GEN-END:variables
 
+    int u = 0;
+
+    public void iniciarpnlArmas() {
+        pnlArmas = new JPanel();
+        spnlArmas.setViewportView(pnlArmas);
+        pnlArmas.setPreferredSize(new Dimension(spnlArmas.getWidth() - 10, jugador.getArmas().getContador() * 80));
+        pnlArmas.setBackground(new java.awt.Color(204, 204, 204));
+        if (u == 0) {
+            for (int i = 0; i < armas.length; i++) {
+                armas[i].getMuestra().setBounds(10, (60 * i) + 10, pnlArmas.getWidth() - 10, 60);
+                armas[i].iniciarMuestra();
+                pnlArmas.add(armas[i].getMuestra());
+            }
+            u = 5;
+        } else if (u == 5) {
+            int y = armas.length - 1;
+            for (int i = 0; i < armas.length; i++) {
+                armas[y].getMuestra().setBounds(10, (60 * i) + 10, pnlArmas.getWidth(), 60);
+                armas[y].iniciarMuestra();
+                pnlArmas.add(armas[y].getMuestra());
+                y--;
+            }
+            u = 1;
+        } else {
+            for (int i = 0; i < armas.length; i++) {
+                armas[i].getMuestra().setBounds(10, (60 * i) + 10, pnlArmas.getWidth(), 60);
+                armas[i].iniciarMuestra();
+                pnlArmas.add(armas[i].getMuestra());
+            }
+            u = 5;
+        }
+    }
+
     public void iniciarComponentes() {
-        pnlArmas.setPreferredSize(new Dimension(spnlArmas.getWidth(),spnlArmas.getHeight()));
+        pnlArmas.setPreferredSize(new Dimension(spnlArmas.getWidth(), spnlArmas.getHeight()));
         lblNombre.setText("Nombre: " + jugador.getNombre());
         lblExp.setText("Exp: " + jugador.getExperiencia());
         lblNivel.setText("Nivel: " + jugador.getNivel());
@@ -425,46 +511,119 @@ public class VisualJugador extends javax.swing.JFrame {
         lblExp.setFont(new java.awt.Font("Comic Sans MS", 1, 14));
         lblNivel.setFont(new java.awt.Font("Comic Sans MS", 1, 20));
         verificarExperiencia();
+        vehiculos = jugador.getGarage().ordenarPorFecha();
+        armas = jugador.getArmeria().ordenarPorFecha();
     }
 
     private void verificarExperiencia() {
         lblExp.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.1){ 
+        if (jugador.getExperiencia() / jugador.getExperienciaTope() < 0.1) {
             ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.1.jpg"));
-            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH)));
             lblExp.setText("Exp: " + jugador.getExperiencia());
-        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.2){ 
+        } else if (jugador.getExperiencia() / jugador.getExperienciaTope() < 0.2) {
             ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.2.jpg"));
-            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH)));
             lblExp.setText("Exp: " + jugador.getExperiencia());
-        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.3){  
+        } else if (jugador.getExperiencia() / jugador.getExperienciaTope() < 0.3) {
             ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.3.jpg"));
-            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH)));
             lblExp.setText("Exp: " + jugador.getExperiencia());
-        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.4){  
+        } else if (jugador.getExperiencia() / jugador.getExperienciaTope() < 0.4) {
             ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.4.jpg"));
-            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH)));
             lblExp.setText("Exp: " + jugador.getExperiencia());
-        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.5){  
+        } else if (jugador.getExperiencia() / jugador.getExperienciaTope() < 0.5) {
             ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.5.jpg"));
-            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH)));
             lblExp.setText("Exp: " + jugador.getExperiencia());
-        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.6){  
+        } else if (jugador.getExperiencia() / jugador.getExperienciaTope() < 0.6) {
             ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.6.jpg"));
-            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH)));
             lblExp.setText("Exp: " + jugador.getExperiencia());
-        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.7){  
+        } else if (jugador.getExperiencia() / jugador.getExperienciaTope() < 0.7) {
             ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.7.jpg"));
-            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH)));
             lblExp.setText("Exp: " + jugador.getExperiencia());
-        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.8){  
+        } else if (jugador.getExperiencia() / jugador.getExperienciaTope() < 0.8) {
             ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.8.jpg"));
-            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH)));
             lblExp.setText("Exp: " + jugador.getExperiencia());
-        }else if(jugador.getExperiencia()/jugador.getExperienciaTope() < 0.9){  
+        } else if (jugador.getExperiencia() / jugador.getExperienciaTope() < 0.9) {
             ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/exp/0.9.jpg"));
-            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH))); 
+            lblExp.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblExp.getWidth() - 100, lblExp.getHeight() - 20, Image.SCALE_SMOOTH)));
             lblExp.setText("Exp: " + jugador.getExperiencia());
         }
+    }
+
+    private void iniciarOyentes() {
+        btnVFecha.addActionListener((java.awt.event.ActionEvent evt) -> {
+            ordenarVehiculos(evt);
+        });
+        btnVestado.addActionListener((java.awt.event.ActionEvent evt) -> {
+            ordenarVehiculos(evt);
+        });
+        btnVkills.addActionListener((java.awt.event.ActionEvent evt) -> {
+            ordenarVehiculos(evt);
+        });
+        btnVmuertes.addActionListener((java.awt.event.ActionEvent evt) -> {
+            ordenarVehiculos(evt);
+        });
+        btnVmuertes.addActionListener((java.awt.event.ActionEvent evt) -> {
+            ordenarVehiculos(evt);
+        });
+        btnVnivel.addActionListener((java.awt.event.ActionEvent evt) -> {
+            ordenarVehiculos(evt);
+        });
+        btnVnombre.addActionListener((java.awt.event.ActionEvent evt) -> {
+            ordenarVehiculos(evt);
+        });
+        btnAfecha.addActionListener((java.awt.event.ActionEvent evt) -> {
+            ordenarArmas(evt);
+        });
+        btnAnombre.addActionListener((java.awt.event.ActionEvent evt) -> {
+            ordenarArmas(evt);
+        });
+    }
+
+    private Vehiculo[] vehiculos;
+
+    private void ordenarVehiculos(java.awt.event.ActionEvent evt) {
+        vehiculos = null;
+        if ("fecha".equals(evt.getActionCommand().toLowerCase())) {
+            vehiculos = jugador.getGarage().ordenarPorFecha();
+        } else if ("estado".equals(evt.getActionCommand().toLowerCase())) {
+            vehiculos = jugador.getGarage().ordenarPorEstado();
+        } else if ("kills".equals(evt.getActionCommand().toLowerCase())) {
+            vehiculos = jugador.getGarage().ordenarPorKills();
+        } else if ("muertes".equals(evt.getActionCommand().toLowerCase())) {
+            vehiculos = jugador.getGarage().ordenarPorMuertes();
+        } else if ("nivel".equals(evt.getActionCommand().toLowerCase())) {
+            vehiculos = jugador.getGarage().ordenarPorNivel();
+        } else if ("nombre".equals(evt.getActionCommand().toLowerCase())) {
+            vehiculos = jugador.getGarage().ordenarPorNombre();
+        }
+        //initComponents();
+        iniciarPnlVehiculos();
+    }
+
+    public JPanel getPnlVehiculos() {
+        return pnlVehiculos;
+    }
+
+    private Arma[] armas;
+
+    private void ordenarArmas(ActionEvent evt) {
+        armas = null;
+        if ("fecha".equals(evt.getActionCommand().toLowerCase())) {
+            armas = jugador.getArmeria().ordenarPorFecha();
+        } else if ("nombre".equals(evt.getActionCommand().toLowerCase())) {
+            armas = jugador.getArmeria().ordenarPorNombre();
+        }
+        iniciarpnlArmas();
+    }
+
+    public void setU(int u) {
+        this.u = u;
     }
 }

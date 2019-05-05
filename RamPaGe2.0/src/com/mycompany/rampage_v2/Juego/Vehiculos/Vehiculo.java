@@ -6,8 +6,10 @@
 package com.mycompany.rampage_v2.Juego.Vehiculos;
 
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
+import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.listado.Armeria;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,6 +35,7 @@ public abstract class Vehiculo extends JLabel {
     private Arma arma;
     private String nombre;
     private boolean estaActivo = true;
+    protected Jugador dueño;
 
     public Vehiculo getAnterior() {
         return a;
@@ -65,6 +68,9 @@ public abstract class Vehiculo extends JLabel {
 
     public void agregarNombre() {
         this.nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre que desea ponerle a su vehiculo", "Nombre", 1);
+        if(nombre == null){
+            dueño.getVehiculos().eliminarUltimo();
+        }
     }
 
     public JLabel getMuestra() {
@@ -77,7 +83,12 @@ public abstract class Vehiculo extends JLabel {
 
     public char getPrimerLetra() {
         char[] arreglo = nombre.toCharArray();
+        if(arreglo.length == 0){
+            String devolver = "a";
+            return devolver.toCharArray()[0];
+        }
         return arreglo[0];
+        
     }
 
     public int getNivel() {
@@ -99,5 +110,16 @@ public abstract class Vehiculo extends JLabel {
     public abstract void iniciarMuestra();
 
     public abstract void ingresarImagen(); 
-    
+
+    public Listado<Arma> getArmas() {
+        return armas;
+    }
+
+    public Jugador getDueño() {
+        return dueño;
+    }
+
+    public void setDueño(Jugador dueño) {
+        this.dueño = dueño;
+    }
 }

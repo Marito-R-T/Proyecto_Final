@@ -23,7 +23,7 @@ public final class Mapa4x4 extends Mapa {
         super.topecajas = TOPECAJAS;
         super.mapa = new Terreno[FILAS][COLUMNAS];
         this.setLayout(null);
-        this.setPreferredSize(new Dimension(220, 220));
+        this.setPreferredSize(new Dimension(820, 820));
         //ingresarTerrenos();
         super.ingresarTerrenos();
         super.colocarCuadros();

@@ -153,13 +153,17 @@ public class Inicio extends javax.swing.JFrame {
                 jugadores.agregar(siguiente);
                 JUGADOR.setJugador(siguiente);
             }
-            JUGADOR.iniciarPnlVehiculos();
             jugadores.getUltimo().setNombre(nombre);
             jugadores.getUltimo().perzonalizarlbl();
             this.setVisible(false);
             JUGADOR.setVisible(true);
             JUGADOR.setJugador(jugadores.getUltimo());
             JUGADOR.iniciarComponentes();
+            //JUGADOR.ordenarFecha();
+            JUGADOR.setX(0);
+            JUGADOR.iniciarPnlVehiculos();
+            JUGADOR.setU(0);
+            JUGADOR.iniciarpnlArmas();
         } else if (nombre != null) {
             JOptionPane.showMessageDialog(this, "No puede dejar vacio el nombre", "nombre", 1);
             lbljuegonuevoMouseClicked(evt);

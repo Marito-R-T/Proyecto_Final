@@ -7,6 +7,7 @@ package com.mycompany.rampage_v2.Ventanas;
 
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa6x4;
+import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
 
 /**
@@ -20,7 +21,7 @@ public class VisualJuego extends javax.swing.JFrame {
      */
     private Inicio inicio;
     private Mapa mapa;
-    private Listado vehiculos;
+    private Vehiculo[] vehiculos;
     
     public VisualJuego(Inicio inicio) {
         initComponents();
@@ -106,13 +107,14 @@ public class VisualJuego extends javax.swing.JFrame {
         pnlMapa.setViewportView(mapa);
     }
 
-    public void setVehiculos(Listado vehiculos) {
+    public void setVehiculos(Vehiculo[] vehiculos) {
         this.vehiculos = vehiculos;
     }
     
     public void mostrarVehiculos(){
         
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel pnlComodines;
     private javax.swing.JPanel pnlDados;

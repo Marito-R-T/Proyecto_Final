@@ -45,6 +45,7 @@ public class Jugador extends JLabel {
         armeria = new Armeria(armas);
         NO = no;
         ingresarVehiculos();
+        ingresarArmas();
         nivel = 1;
         experiencia = 0;
         experienciaTope = 300;
@@ -181,10 +182,10 @@ public class Jugador extends JLabel {
 
     private void lblnombreMouseClicked(MouseEvent evt) {
         iu.setJugador(this);
-        iu.iniciarPnlVehiculos();
-        iu.iniciarComponentes();
+        //iu.ordenarFecha();
         inicio.setVisible(false);
         iu.setVisible(true);
+        iu.iniciarPnlVehiculos();
     }
 
     public void setIU(VisualJugador iu) {
@@ -194,4 +195,31 @@ public class Jugador extends JLabel {
     public void setInicio(Inicio inicio){
         this.inicio = inicio;
     }
+
+    public Garage getGarage() {
+        return garage;
+    }
+
+    public Armeria getArmeria() {
+        return armeria;
+    }
+
+    public Listado<Arma> getArmas() {
+        return armas;
+    }
+
+    private void ingresarArmas() {
+        if(armas.getContador() == 0){
+        Arma nueva = new Arma();
+        armas.agregar(nueva);
+        }else{
+            Arma siguiente = new Arma();
+            armas.agregar(siguiente);
+        }
+    }
+
+    public VisualJugador getIu() {
+        return iu;
+    }
+    
 }
