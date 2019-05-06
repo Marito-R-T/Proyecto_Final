@@ -6,6 +6,7 @@
 package com.mycompany.rampage_v2.Ventanas;
 
 import com.mycompany.rampage_v2.Juego.Dados.D100;
+import com.mycompany.rampage_v2.Juego.Dados.D3;
 import com.mycompany.rampage_v2.Juego.Dados.Dado;
 import com.mycompany.rampage_v2.Juego.Juego;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
@@ -13,6 +14,7 @@ import com.mycompany.rampage_v2.Juego.Mapas.Mapa6x4;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
 import java.awt.Dimension;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -37,6 +39,8 @@ public class VisualJuego extends javax.swing.JFrame {
         pnlMapa.setViewportView(mapa);
         this.inicio = inicio;
         dado = new D100();
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo inicio.jpg"));
+        this.setIconImage(fondo.getImage());
     }
     
 
@@ -185,9 +189,12 @@ public class VisualJuego extends javax.swing.JFrame {
 
     private void btnRendirseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRendirseMouseClicked
         // TODO add your handling code here:
-            /*dado.setSize(pnlDados.getWidth(), pnlDados.getHeight());
+        /*this.setVisible(false);
+        inicio.getJUGADOR().setVisible(true);
+        inicio.getJUGADOR().iniciarPnlVehiculos();*/
+            dado.setSize(pnlDados.getWidth(), pnlDados.getHeight());
             Thread hilo = new Thread(dado);
-            hilo.start();*/
+            hilo.start();
     }//GEN-LAST:event_btnRendirseMouseClicked
 
     public void setMapa(Mapa mapa) {
@@ -200,6 +207,7 @@ public class VisualJuego extends javax.swing.JFrame {
         mostrarVehiculos();
         backendjuego = new Juego(vehiculos, this);
         backendjuego.setMapa(mapa);
+        backendjuego.empezarEnemigos();
         pnlDados.add(dado);
         dado.setBounds(0, 0, pnlDados.getWidth(), pnlDados.getHeight());
         Thread juego = new Thread(backendjuego);

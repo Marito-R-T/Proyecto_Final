@@ -7,6 +7,7 @@ package com.mycompany.rampage_v2.Juego.Vehiculos;
 
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
 import com.mycompany.rampage_v2.Juego.Jugador;
+import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Terreno;
 import com.mycompany.rampage_v2.Juego.listado.Armeria;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
 import java.awt.Image;
@@ -21,7 +22,7 @@ import javax.swing.JOptionPane;
  * @author marito
  */
 public abstract class Vehiculo extends JLabel {
-    
+
     private Vehiculo a, p;
     protected ImageIcon imagen;
     protected int nivel = 1;
@@ -38,51 +39,52 @@ public abstract class Vehiculo extends JLabel {
     private String nombre;
     private boolean estaActivo = true;
     protected Jugador dueño;
-    
+    private Terreno posicion;
+
     public Vehiculo getAnterior() {
         return a;
     }
-    
+
     public void setAnterior(Vehiculo a) {
         this.a = a;
     }
-    
+
     public Vehiculo getPosterior() {
         return p;
     }
-    
+
     public void setPosterior(Vehiculo p) {
         this.p = p;
     }
-    
+
     public int getNo() {
         return No;
     }
-    
+
     public void setNo(int No) {
         this.No = No;
     }
-    
+
     public void revisarSubirNivel() {
         experienciaTope += 100 * (nivel++);
         vida = (50 * nivel) * porcentajes[0];
     }
-    
+
     public void agregarNombre() {
         this.nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre que desea ponerle a su vehiculo", "Nombre", 1);
         if (nombre == null) {
             dueño.getVehiculos().eliminarUltimo();
         }
     }
-    
+
     public JLabel getMuestra() {
         return muestra;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
-    
+
     public char getPrimerLetra() {
         char[] arreglo = nombre.toCharArray();
         if (arreglo.length == 0) {
@@ -90,41 +92,42 @@ public abstract class Vehiculo extends JLabel {
             return devolver.toCharArray()[0];
         }
         return arreglo[0];
-        
+
     }
-    
+
     public int getNivel() {
         return nivel;
     }
-    
+
     public int getKills() {
         return kills;
     }
-    
+
     public boolean isEstaActivo() {
         return estaActivo;
     }
-    
+
     public int getMuertes() {
         return muertes;
     }
-    
+
     public abstract void iniciarMuestra();
-    
-    public abstract void ingresarImagen();    
-    
+
+    public abstract void ingresarImagen();
+
     public Listado<Arma> getArmas() {
         return armas;
     }
-    
+
     public Jugador getDueño() {
         return dueño;
     }
-    
+
     public void setDueño(Jugador dueño) {
         this.dueño = dueño;
     }
     private JDialog dialogo;
+
     public JLabel getMuestra2(JDialog dialogo) {
         this.dialogo = dialogo;
         muestra2.setSize(150, 80);
@@ -136,12 +139,12 @@ public abstract class Vehiculo extends JLabel {
                 iniciarMouseClicked(evt);
             }
 
-            
         });
         return muestra2;
     }
+
     private void iniciarMouseClicked(MouseEvent evt) {
-        
+
         //evt.getComponent().getParent().getParent().setVisible(false);
         dialogo.setVisible(false);
         dialogo = null;
@@ -157,5 +160,12 @@ public abstract class Vehiculo extends JLabel {
 
     public float getDefensaNeta() {
         return defensaNeta;
+    }
+
+    public void setPosicion(Terreno posicion) {
+        this.posicion = posicion;
+        this.setBounds(((this.posicion.getColumnas() - 1) * 200) + 10, (((this.posicion.getFilas() - 1) * 200) + 10), 200, 200);
+        this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+        this.posicion.getMapa().agregarComponente(this);
     }
 }

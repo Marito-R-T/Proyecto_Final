@@ -255,4 +255,8 @@ public class Inicio extends javax.swing.JFrame {
         lblFondo.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(lblFondo.getWidth(), lblFondo.getHeight(), Image.SCALE_SMOOTH)));
         this.setIconImage(fondo.getImage());
     }
+
+    public VisualJugador getJUGADOR() {
+        return JUGADOR;
+    }
 }

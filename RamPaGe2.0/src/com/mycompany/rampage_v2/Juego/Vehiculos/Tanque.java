@@ -72,7 +72,6 @@ public class Tanque extends Vehiculo {
                     break;
             }
         }
-        this.setIcon(imagen);
     }
 
     private void mostrarMouseClicked(MouseEvent evt) {

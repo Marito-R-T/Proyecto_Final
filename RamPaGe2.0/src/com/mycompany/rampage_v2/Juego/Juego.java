@@ -32,7 +32,6 @@ public class Juego implements Runnable {
         this.visual = visual;
         Random numero = new Random();
         enemigos = new Enemigo[numero.nextInt(3) + 3];
-        empezarEnemigos();
     }
 
     @Override
@@ -58,26 +57,35 @@ public class Juego implements Runnable {
     JDialog escoger = new JDialog(visual, true);
     JPanel panel = new JPanel();
 
-    
     private void empezarelJuego() {
-        escoger.setSize(new Dimension(300, 400));
+        /*escoger.setSize(new Dimension(300, 400));
         escoger.setLocationRelativeTo(visual);
         escoger.setResizable(false);
         escoger.add(visual.getPnlVehiculos());
-        escoger.setVisible(true);
+        escoger.setVisible(true);*/
+        mapa.ingresarEnemigos(enemigos);
+        elegirVehiculo();
+        mapa.ingresarprimerVehiculo(enjuego);
         //while(escoger.is)
     }
 
-    private void empezarEnemigos() {
-        for (int i = 0; i < 3; i++) {
-            int referencia = vehiculos[i].getNivel();
-            enemigos[1] = new Enemigo(vehiculos[i].getVida() + (10 * referencia), vehiculos[i].getDaño() + (2*referencia), vehiculos[i].getDefensaNeta() + (3*referencia));
+    public void empezarEnemigos() {
+        Random numerorandom = new Random();
+        for (int i = 0; i < enemigos.length; i++) {
+            int u = numerorandom.nextInt(3);
+            int referencia = vehiculos[u].getNivel();
+            enemigos[i] = new Enemigo(vehiculos[u].getVida() + (10 * referencia), vehiculos[u].getDaño() + (2*referencia), vehiculos[u].getDefensaNeta() + (3*referencia));
         }
-        mapa.ingresarEnemigos(enemigos);
     }
 
     public void setMapa(Mapa mapa) {
         this.mapa = mapa;
+    }
+
+    private void elegirVehiculo() {
+        Random numerorandom = new Random();
+        int randomvehiculo = numerorandom.nextInt(vehiculos.length);
+        enjuego = vehiculos[randomvehiculo];
     }
 
 }

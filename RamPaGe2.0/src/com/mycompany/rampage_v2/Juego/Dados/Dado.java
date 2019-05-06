@@ -31,15 +31,15 @@ public abstract class Dado extends JLabel implements Runnable {
             while (estaGirando) {
                 String x = Integer.toString(numero.nextInt(topenumero) + 1);
                 figurita = new ImageIcon(getClass().getResource("/Imagenes/Dados/" + x + ".png"));
-                this.setIcon(new ImageIcon(figurita.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH)));
+                this.setIcon(new ImageIcon(figurita.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_FAST)));
                 System.gc();
                 this.getParent().repaint();
-                Thread.sleep(200);
+                Thread.sleep(100);
 
             }
             String x = Integer.toString(numero.nextInt(topenumero) + 1);
             figurita = new ImageIcon(getClass().getResource("/Imagenes/Dados/" + x + ".png"));
-            this.setIcon(new ImageIcon(figurita.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH)));
+            this.setIcon(new ImageIcon(figurita.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_FAST)));
             escogido = Integer.parseInt(x);
         } catch (Exception e) {
         }

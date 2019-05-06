@@ -9,9 +9,13 @@ import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Llanura;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Terreno;
+import com.mycompany.rampage_v2.Juego.Oyentes.OyenteMapas;
+import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Enemigo;
+import com.mycompany.rampage_v2.Juego.Vehiculos.Tanque;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.util.Random;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -20,7 +24,6 @@ import javax.swing.JPanel;
  */
 public class Mapa extends JPanel {
 
-    private Mapa a, p;
     private int No;
     protected Terreno[][] mapa;
     protected Random random = new Random();
@@ -29,31 +32,17 @@ public class Mapa extends JPanel {
     protected int COLUMNAS;
     protected int topecajas, cajas;
     protected Terreno anterior, referencia;
+    private OyenteMapas oyente = new OyenteMapas();
 
     public void colocarCuadros() {
         for (int i = 0; i < FILAS; i++) {
             for (int u = 0; u < COLUMNAS; u++) {
                 this.add(mapa[i][u]);
                 mapa[i][u].setBounds((u * 200) + 10, (i * 200) + 10, 200, 200);
+                mapa[i][u].setMapa(this);
                 //mapa[i][u].setimage();
             }
         }
-    }
-
-    public Mapa getAnterior() {
-        return a;
-    }
-
-    public void setAnterior(Mapa a) {
-        this.a = a;
-    }
-
-    public Mapa getPosterior() {
-        return p;
-    }
-
-    public void setPosterior(Mapa p) {
-        this.p = p;
     }
 
     public void ingresarTerrenos() {
@@ -130,12 +119,21 @@ public class Mapa extends JPanel {
         }
     }
 
-    public void ingresarVehiculos(Vehiculo[] vehiculos, Vehiculo[] enemigos) {
-        for (Vehiculo vehiculo : vehiculos) {
-
-        }
-        for (Vehiculo enemigo : enemigos) {
-
+    public void ingresarprimerVehiculo(Vehiculo vehiculo) {
+        Random numerorandom = new Random();
+        int filarandom = numerorandom.nextInt(this.FILAS);
+        int columnarandom = numerorandom.nextInt(this.COLUMNAS);
+        if (mapa[filarandom][columnarandom].getEnemigo() == null) {
+            /*if((vehiculo instanceof Tanque && !(mapa[filarandom][columnarandom] instanceof Agua)) || (vehiculo instanceof Avion && !(mapa[filarandom][columnarandom] instanceof Montaña))){
+             mapa[filarandom][columnarandom].setVehiculo(vehiculo);
+             vehiculo.setPosicion(mapa[filarandom][columnarandom]);}
+             else{
+             ingresarprimerVehiculo(vehiculo);
+             }*/
+            mapa[filarandom][columnarandom].setVehiculo(vehiculo);
+            vehiculo.setPosicion(mapa[filarandom][columnarandom]);
+        } else {
+            ingresarprimerVehiculo(vehiculo);
         }
     }
 
@@ -144,11 +142,26 @@ public class Mapa extends JPanel {
             Random numerorandom = new Random();
             int filarandom = numerorandom.nextInt(this.FILAS);
             int columnarandom = numerorandom.nextInt(this.COLUMNAS);
-            if(mapa[filarandom][columnarandom].getEnemigo() == null){
+            if (mapa[filarandom][columnarandom].getEnemigo() == null) {
                 mapa[filarandom][columnarandom].setEnemigo(enemigos[i]);
-            }else{
+                enemigos[i].setTerreno(mapa[filarandom][columnarandom]);
+            } else {
                 i--;
             }
         }
+    }
+
+    public OyenteMapas getOyente() {
+        return oyente;
+    }
+
+    public void agregarComponente(JLabel label) {
+        this.add(label, 1);
+        this.repaint();
+
+    }
+
+    public Terreno[][] getMapa() {
+        return mapa;
     }
 }

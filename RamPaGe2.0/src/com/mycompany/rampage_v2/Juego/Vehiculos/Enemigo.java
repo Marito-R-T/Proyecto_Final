@@ -15,30 +15,30 @@ import javax.swing.JLabel;
  *
  * @author marito
  */
-public class Enemigo extends JLabel{
-    
+public class Enemigo extends JLabel {
+
     private final float vida, daño, defensa;
     private ImageIcon imagen;
     private Terreno terreno;
     private String agua = "";
-    
-    public Enemigo(float vida, float defensa, float daño){
+
+    public Enemigo(float vida, float defensa, float daño) {
         this.vida = vida;
         this.defensa = defensa;
         this.daño = daño;
         this.setSize(200, 200);
-        imagen = new ImageIcon(getClass().getResource("/Imagenes/Enemigos/enemigo"+agua+".png"));
+        imagen = new ImageIcon(getClass().getResource("/Imagenes/Enemigos/enemigo" + agua + ".png"));
         this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
     }
 
     public void setTerreno(Terreno terreno) {
         this.terreno = terreno;
-        if(this.terreno instanceof Agua){
+        if (this.terreno instanceof Agua) {
             agua = "A";
-            imagen = new ImageIcon(getClass().getResource("/Imagenes/Enemigos/enemigo"+agua+".png"));
-            this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
         }
-        this.setLocation((this.terreno.getColumnas()*200)+10,(this.terreno.getFilas()*200)+10);
-        terreno.getParent().add(this);
+        imagen = new ImageIcon(getClass().getResource("/Imagenes/Enemigos/enemigo" + agua + ".png"));
+        this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+        this.setLocation(((this.terreno.getColumnas() - 1) * 200) + 10, ((this.terreno.getFilas() - 1) * 200) + 10);
+        this.terreno.getMapa().agregarComponente(this);
     }
 }

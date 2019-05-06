@@ -69,9 +69,7 @@ public class Listado<T> {
                     referencia = (T) ((Jugador) referencia).getPosterior();
                 } else if (primero instanceof Arma) {
                     referencia = (T) ((Arma) referencia).getPosterior();
-                } else if (primero instanceof Mapa) {
-                    referencia = (T) ((Mapa) referencia).getPosterior();
-                } else if (primero instanceof Vehiculo) {
+                }else if (primero instanceof Vehiculo) {
                     referencia = (T) ((Vehiculo) referencia).getPosterior();
                 }
             }
@@ -86,8 +84,6 @@ public class Listado<T> {
                 referencia = (T) ((Jugador) referencia).getPosterior();
             } else if (primero instanceof Arma) {
                 referencia = (T) ((Arma) referencia).getPosterior();
-            } else if (primero instanceof Mapa) {
-                referencia = (T) ((Mapa) referencia).getPosterior();
             } else if (primero instanceof Vehiculo) {
                 referencia = (T) ((Vehiculo) referencia).getPosterior();// seguir aqui eliminando los objetos.
             }
@@ -110,9 +106,6 @@ public class Listado<T> {
         } else if (primero instanceof Arma) {
             ultimo = (T) ((Arma) ultimo).getAnterior();
             ((Arma) ultimo).setPosterior(null);
-        } else if (primero instanceof Mapa) {
-            ultimo = (T) ((Mapa) ultimo).getAnterior();
-            ((Mapa) ultimo).setPosterior(null);
         } else if (primero instanceof Vehiculo) {
             ultimo = (T) ((Vehiculo) ultimo).getAnterior();// seguir aqui eliminando los objetos.
             ((Vehiculo) ultimo).setPosterior(null);

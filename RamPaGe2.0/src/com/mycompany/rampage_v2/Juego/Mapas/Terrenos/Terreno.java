@@ -6,6 +6,8 @@
 package com.mycompany.rampage_v2.Juego.Mapas.Terrenos;
 
 import com.mycompany.rampage_v2.Juego.Comodines.Comodin;
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
+import com.mycompany.rampage_v2.Juego.Oyentes.OyenteMapas;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Enemigo;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.awt.Dimension;
@@ -21,11 +23,13 @@ import javax.swing.border.Border;
  * @author marito
  */
 public abstract class Terreno extends JLabel{
-    private Vehiculo vehiculo;
+    private Vehiculo vehiculo = null;
     private Terreno N,S,E,O,NE,NO,SE,SO;
     private int columnas, filas;
     private Comodin caja;
-    private Enemigo enemigo;
+    private Enemigo enemigo = null;
+    private OyenteMapas oyente;
+    private Mapa mapa;
     
     public Terreno(){
         this.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.gray, java.awt.Color.gray, new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -33,11 +37,14 @@ public abstract class Terreno extends JLabel{
         this.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    
                     accionTerreno(evt);
                 }
         });
     }
     private void accionTerreno(MouseEvent evt){
+        Mapa mapa = (Mapa) this.getParent();
+        mapa.getOyente().mouseClicked(evt);
         try {
             Thread.sleep(100);
         } catch (InterruptedException ex) {
@@ -146,5 +153,13 @@ public abstract class Terreno extends JLabel{
 
     public Enemigo getEnemigo() {
         return enemigo;
+    }
+
+    public void setMapa(Mapa mapa) {
+        this.mapa = mapa;
+    }
+
+    public Mapa getMapa() {
+        return mapa;
     }
 }
