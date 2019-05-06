@@ -145,10 +145,12 @@ public class Inicio extends javax.swing.JFrame {
             if (jugadores.getContador() == 0) {
                 Jugador nuevo = new Jugador(jugadores.getContador() + 1);
                 jugadores.agregar(nuevo);
+                nuevo.setIU(JUGADOR);
                 JUGADOR.setJugador(nuevo);
             } else {
                 Jugador siguiente = new Jugador(jugadores.getContador() + 1);
                 siguiente.setAnterior(jugadores.getUltimo());
+                siguiente.setIU(JUGADOR);
                 jugadores.getUltimo().setPosterior(siguiente);
                 jugadores.agregar(siguiente);
                 JUGADOR.setJugador(siguiente);

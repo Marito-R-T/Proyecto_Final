@@ -15,6 +15,7 @@ import com.mycompany.rampage_v2.Juego.listado.Garage;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
 import com.mycompany.rampage_v2.Ventanas.Inicio;
 import com.mycompany.rampage_v2.Ventanas.VisualJugador;
+import com.sun.java.swing.plaf.windows.WindowsInternalFrameTitlePane;
 import java.awt.event.MouseEvent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -46,6 +47,7 @@ public class Jugador extends JLabel {
         NO = no;
         ingresarVehiculos();
         ingresarArmas();
+        ingresarArmas();
         nivel = 1;
         experiencia = 0;
         experienciaTope = 300;
@@ -71,7 +73,6 @@ public class Jugador extends JLabel {
         return NO;
     }
 
-    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -108,7 +109,7 @@ public class Jugador extends JLabel {
     private void ingresarVehiculos() {
         for (int i = 0; i < 3; i++) {
             JOptionPane.showMessageDialog(null, "Seguidamente seleccionara cuantos puntes le dejara a \n 1. Vida, 2. Ataque, 3. Defensa,  4. Especialidad del tipo de vehiculo");
-            int[] porcentajes = new int[4];
+            float[] porcentajes = new float[4];
             for (int j = 0; j < 4; j++) {
                 int lleva = 0;
 
@@ -119,18 +120,20 @@ public class Jugador extends JLabel {
                 for (int k = 0; k < enteros.length; k++) {
                     enteros[k] = k;
                 }
-
-                porcentajes[j] = (int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0]);
+                porcentajes[j] = (1+((int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0])/12));
             }
             if (i == 0) {
                 Vehiculo primero = new Avion(porcentajes);
+                primero.setDueño(this);
                 primero.setNo(1);
                 vehiculos.agregar(primero);
                 primero.agregarNombre();
                 primero.ingresarImagen();
                 JOptionPane.showMessageDialog(null, "Se ha creado su avion");
+                primero.setDueño(this);
             } else {
                 Vehiculo siguiente = new Tanque(porcentajes);
+                siguiente.setDueño(this);
                 siguiente.setNo(vehiculos.getContador() + 1);
                 siguiente.setAnterior(vehiculos.getUltimo());
                 vehiculos.getUltimo().setPosterior(siguiente);
@@ -143,7 +146,9 @@ public class Jugador extends JLabel {
     }
 
     public void nuevoVehiculo() {
-        int[] porcentajes = new int[4];
+        String[] tipos = {"Avion", "Tanque"};
+        String nuevo = (String) JOptionPane.showInputDialog(null, "Se creara un nuevo vehiculo, que tipo desea", "vehiculo", JOptionPane.INFORMATION_MESSAGE, null, tipos, tipos[0]);
+        float[] porcentajes = new float[4];
         int lleva = 0;
         for (int j = 0; j < 4; j++) {
             for (int l = 0; l < porcentajes.length; l++) {
@@ -153,10 +158,30 @@ public class Jugador extends JLabel {
             for (int i = 0; i < enteros.length; i++) {
                 enteros[i] = i + 1;
             }
-            porcentajes[j] = (int) JOptionPane.showInputDialog(null, "Cuantos puntos desea en la vida", "punteos", 1, null, enteros, enteros[0]);
+                porcentajes[j] = (1+((int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0])/12));
         }
-        Vehiculo primero = new Avion(porcentajes);
-        vehiculos.agregar(primero);
+        if ("avion".equals(nuevo.toLowerCase())) {
+            Vehiculo primero = new Avion(porcentajes);
+            primero.setDueño(this);
+            primero.setNo(vehiculos.getContador() + 1);
+            primero.setAnterior(vehiculos.getUltimo());
+            vehiculos.getUltimo().setPosterior(primero);
+            vehiculos.agregar(primero);
+            primero.agregarNombre();
+            primero.ingresarImagen();
+            JOptionPane.showMessageDialog(null, "Se ha creado su avion");
+            primero.setDueño(this);
+        } else if ("tanque".equals(nuevo.toLowerCase())) {
+            Vehiculo primero = new Tanque(porcentajes);
+            primero.setDueño(this);
+            primero.setNo(vehiculos.getContador() + 1);
+            primero.setAnterior(vehiculos.getUltimo());
+            vehiculos.getUltimo().setPosterior(primero);
+            vehiculos.agregar(primero);
+            primero.agregarNombre();
+            primero.ingresarImagen();
+            JOptionPane.showMessageDialog(null, "Se ha creado su tanque");
+        }
     }
 
     public Listado<Vehiculo> getVehiculos() {
@@ -191,8 +216,8 @@ public class Jugador extends JLabel {
     public void setIU(VisualJugador iu) {
         this.iu = iu;
     }
-    
-    public void setInicio(Inicio inicio){
+
+    public void setInicio(Inicio inicio) {
         this.inicio = inicio;
     }
 
@@ -208,12 +233,16 @@ public class Jugador extends JLabel {
         return armas;
     }
 
-    private void ingresarArmas() {
-        if(armas.getContador() == 0){
-        Arma nueva = new Arma();
-        armas.agregar(nueva);
-        }else{
+    public void ingresarArmas() {
+        if (armas.getContador() == 0) {
+            Arma nueva = new Arma();
+            armas.agregar(nueva);
+            nueva.setNo(armas.getContador());
+        } else {
             Arma siguiente = new Arma();
+            siguiente.setNo(armas.getContador() + 1);
+            siguiente.setAnterior(armas.getUltimo());
+            armas.getUltimo().setPosterior(siguiente);
             armas.agregar(siguiente);
         }
     }
@@ -221,5 +250,5 @@ public class Jugador extends JLabel {
     public VisualJugador getIu() {
         return iu;
     }
-    
+
 }

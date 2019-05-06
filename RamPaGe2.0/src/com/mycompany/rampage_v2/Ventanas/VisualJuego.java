@@ -5,10 +5,15 @@
  */
 package com.mycompany.rampage_v2.Ventanas;
 
+import com.mycompany.rampage_v2.Juego.Dados.D100;
+import com.mycompany.rampage_v2.Juego.Dados.Dado;
+import com.mycompany.rampage_v2.Juego.Juego;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa6x4;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
+import java.awt.Dimension;
+import javax.swing.JPanel;
 
 /**
  *
@@ -22,12 +27,16 @@ public class VisualJuego extends javax.swing.JFrame {
     private Inicio inicio;
     private Mapa mapa;
     private Vehiculo[] vehiculos;
+    private Juego backendjuego;
+    private Dado dado;
+    
     
     public VisualJuego(Inicio inicio) {
         initComponents();
         this.setLocationRelativeTo(null);
         pnlMapa.setViewportView(mapa);
         this.inicio = inicio;
+        dado = new D100();
     }
     
 
@@ -41,23 +50,38 @@ public class VisualJuego extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlMapa = new javax.swing.JScrollPane();
-        pnlVehiculos = new javax.swing.JScrollPane();
-        pnlComodines = new javax.swing.JPanel();
+        spnlBots = new javax.swing.JScrollPane();
+        pnlBots = new javax.swing.JPanel();
         pnlDados = new javax.swing.JPanel();
+        btnRendirse = new javax.swing.JButton();
+        btnStop = new javax.swing.JButton();
+        spnlComodines = new javax.swing.JScrollPane();
+        pnlComodines = new javax.swing.JPanel();
+        spnlVehiculos = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(600, 500));
+        setMaximumSize(new java.awt.Dimension(1100, 750));
+        setMinimumSize(new java.awt.Dimension(1100, 750));
+        setPreferredSize(new java.awt.Dimension(1100, 750));
 
-        javax.swing.GroupLayout pnlComodinesLayout = new javax.swing.GroupLayout(pnlComodines);
-        pnlComodines.setLayout(pnlComodinesLayout);
-        pnlComodinesLayout.setHorizontalGroup(
-            pnlComodinesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnlBotsLayout = new javax.swing.GroupLayout(pnlBots);
+        pnlBots.setLayout(pnlBotsLayout);
+        pnlBotsLayout.setHorizontalGroup(
+            pnlBotsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 421, Short.MAX_VALUE)
         );
-        pnlComodinesLayout.setVerticalGroup(
-            pnlComodinesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 129, Short.MAX_VALUE)
+        pnlBotsLayout.setVerticalGroup(
+            pnlBotsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 284, Short.MAX_VALUE)
         );
+
+        spnlBots.setViewportView(pnlBots);
+
+        pnlDados.setBackground(new java.awt.Color(0, 102, 102));
+        pnlDados.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        pnlDados.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        pnlDados.setMinimumSize(new java.awt.Dimension(158, 142));
+        pnlDados.setPreferredSize(new java.awt.Dimension(158, 142));
 
         javax.swing.GroupLayout pnlDadosLayout = new javax.swing.GroupLayout(pnlDados);
         pnlDados.setLayout(pnlDadosLayout);
@@ -67,8 +91,43 @@ public class VisualJuego extends javax.swing.JFrame {
         );
         pnlDadosLayout.setVerticalGroup(
             pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 140, Short.MAX_VALUE)
         );
+
+        btnRendirse.setText("Rendirse");
+        btnRendirse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRendirseMouseClicked(evt);
+            }
+        });
+
+        btnStop.setText("Parar");
+        btnStop.setMaximumSize(new java.awt.Dimension(158, 75));
+        btnStop.setMinimumSize(new java.awt.Dimension(158, 75));
+        btnStop.setPreferredSize(new java.awt.Dimension(158, 75));
+        btnStop.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnStopMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlComodinesLayout = new javax.swing.GroupLayout(pnlComodines);
+        pnlComodines.setLayout(pnlComodinesLayout);
+        pnlComodinesLayout.setHorizontalGroup(
+            pnlComodinesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 421, Short.MAX_VALUE)
+        );
+        pnlComodinesLayout.setVerticalGroup(
+            pnlComodinesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 286, Short.MAX_VALUE)
+        );
+
+        spnlComodines.setViewportView(pnlComodines);
+
+        spnlVehiculos.setMaximumSize(new java.awt.Dimension(158, 337));
+        spnlVehiculos.setMinimumSize(new java.awt.Dimension(158, 337));
+        spnlVehiculos.setOpaque(false);
+        spnlVehiculos.setPreferredSize(new java.awt.Dimension(158, 337));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,12 +135,19 @@ public class VisualJuego extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlMapa, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlVehiculos, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                    .addComponent(pnlComodines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlMapa, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(spnlVehiculos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlDados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnStop, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spnlBots, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(spnlComodines, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(btnRendirse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -89,18 +155,40 @@ public class VisualJuego extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlMapa)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlComodines, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(pnlMapa, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(spnlBots, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(spnlComodines, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pnlDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(spnlVehiculos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRendirse, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnStopMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStopMouseClicked
+        // TODO add your handling code here:
+        if(dado != null){
+            dado.parardeGirar();
+        }
+    }//GEN-LAST:event_btnStopMouseClicked
+
+    private void btnRendirseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRendirseMouseClicked
+        // TODO add your handling code here:
+            /*dado.setSize(pnlDados.getWidth(), pnlDados.getHeight());
+            Thread hilo = new Thread(dado);
+            hilo.start();*/
+    }//GEN-LAST:event_btnRendirseMouseClicked
 
     public void setMapa(Mapa mapa) {
         this.mapa = mapa;
@@ -109,16 +197,41 @@ public class VisualJuego extends javax.swing.JFrame {
 
     public void setVehiculos(Vehiculo[] vehiculos) {
         this.vehiculos = vehiculos;
+        mostrarVehiculos();
+        backendjuego = new Juego(vehiculos, this);
+        backendjuego.setMapa(mapa);
+        pnlDados.add(dado);
+        dado.setBounds(0, 0, pnlDados.getWidth(), pnlDados.getHeight());
+        Thread juego = new Thread(backendjuego);
+        juego.start();
     }
-    
+    JPanel pnlVehiculos = new JPanel();
+
+    public JPanel getPnlVehiculos() {
+        return pnlVehiculos;
+    }
     public void mostrarVehiculos(){
-        
+        spnlVehiculos.setViewportView(pnlVehiculos);
+        pnlVehiculos.setPreferredSize(new Dimension(250, 200));
+        pnlVehiculos.setBackground(new java.awt.Color(204, 204, 204));
+        int i = 0;
+        for (Vehiculo vehiculo : vehiculos) {
+            vehiculo.getMuestra().setBounds(10, (60*i)+10, pnlVehiculos.getWidth(), 60);
+            vehiculo.iniciarMuestra();
+            pnlVehiculos.add(vehiculo.getMuestra());
+            i++;
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRendirse;
+    private javax.swing.JButton btnStop;
+    private javax.swing.JPanel pnlBots;
     private javax.swing.JPanel pnlComodines;
     private javax.swing.JPanel pnlDados;
     private javax.swing.JScrollPane pnlMapa;
-    private javax.swing.JScrollPane pnlVehiculos;
+    private javax.swing.JScrollPane spnlBots;
+    private javax.swing.JScrollPane spnlComodines;
+    private javax.swing.JScrollPane spnlVehiculos;
     // End of variables declaration//GEN-END:variables
 }

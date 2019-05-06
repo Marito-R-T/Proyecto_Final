@@ -17,7 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class Avion extends Vehiculo {
 
-    public Avion(int[] porcentajes) {
+    public Avion(float[] porcentajes) {
+        this.setSize(200, 200);
         super.porcentajes = porcentajes;
         vida = 50 * porcentajes[0];
         daño = 9 * porcentajes[1];
@@ -72,6 +73,7 @@ public class Avion extends Vehiculo {
                     break;
             }
         }
+        this.setIcon(imagen);
     }
 
     private void mostrarMouseClicked(MouseEvent evt) {

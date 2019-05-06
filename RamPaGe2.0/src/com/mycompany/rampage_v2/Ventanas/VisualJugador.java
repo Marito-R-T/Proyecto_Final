@@ -70,7 +70,7 @@ public class VisualJugador extends javax.swing.JFrame {
         spnlArmas = new javax.swing.JScrollPane();
         pnlArmas = new javax.swing.JPanel();
         pnlVcontrolador = new javax.swing.JPanel();
-        pnlcrear = new javax.swing.JButton();
+        btnVcrear = new javax.swing.JButton();
         btnVestado = new javax.swing.JButton();
         btnVFecha = new javax.swing.JButton();
         btnVkills = new javax.swing.JButton();
@@ -192,7 +192,12 @@ public class VisualJugador extends javax.swing.JFrame {
 
         pnlVcontrolador.setBackground(new java.awt.Color(0, 153, 153));
 
-        pnlcrear.setText("C     R     E     A     R");
+        btnVcrear.setText("C     R     E     A     R");
+        btnVcrear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVcrearMouseClicked(evt);
+            }
+        });
 
         btnVestado.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         btnVestado.setText("Estado");
@@ -218,7 +223,7 @@ public class VisualJugador extends javax.swing.JFrame {
             .addGroup(pnlVcontroladorLayout.createSequentialGroup()
                 .addGroup(pnlVcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlVcontroladorLayout.createSequentialGroup()
-                        .addComponent(pnlcrear, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnVcrear, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnVestado, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlVcontroladorLayout.createSequentialGroup()
@@ -237,7 +242,7 @@ public class VisualJugador extends javax.swing.JFrame {
             pnlVcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlVcontroladorLayout.createSequentialGroup()
                 .addGroup(pnlVcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pnlcrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVcrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVestado, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlVcontroladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,6 +263,11 @@ public class VisualJugador extends javax.swing.JFrame {
         btnAnombre.setText(" Nombre");
 
         btnAcrear.setText("C  R  E  A  R");
+        btnAcrear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAcrearMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlAcontroladorLayout = new javax.swing.GroupLayout(pnlAcontrolador);
         pnlAcontrolador.setLayout(pnlAcontroladorLayout);
@@ -326,12 +336,12 @@ public class VisualJugador extends javax.swing.JFrame {
     public void ingresarVehiculo(Vehiculo vehiculo) {
         int z = 0;
         while (elegidos[z] != null && z < 3) {
-            x++;
             if (elegidos[z] == vehiculo) {
                 break;
             }
+            z++;
         }
-        if (x < 3) {
+        if (z < 3) {
             elegidos[z] = vehiculo;
         } else {
             elegidos[0] = elegidos[1];
@@ -402,6 +412,30 @@ public class VisualJugador extends javax.swing.JFrame {
         inicio.setVisible(true);
     }//GEN-LAST:event_btnSalirMouseClicked
 
+    private void btnAcrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcrearMouseClicked
+        // TODO add your handling code here:
+        jugador.ingresarArmas();
+        jugador.getArmas().getUltimo().getMuestra().setBounds(10, (60 * jugador.getArmas().getContador()) + 10, pnlArmas.getWidth() - 10, 60);
+        jugador.getArmas().getUltimo().iniciarMuestra();
+        pnlArmas.add(jugador.getArmas().getUltimo().getMuestra());
+        armas = null;
+        armas = jugador.getArmeria().ordenarPorFecha();
+        u = 1;
+        iniciarpnlArmas();
+    }//GEN-LAST:event_btnAcrearMouseClicked
+
+    private void btnVcrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVcrearMouseClicked
+        // TODO add your handling code here:
+        jugador.nuevoVehiculo();
+        jugador.getVehiculos().getUltimo().getMuestra().setBounds(10, (60*jugador.getVehiculos().getContador()), pnlVehiculos.getWidth() - 10, 60);
+        jugador.getVehiculos().getUltimo().iniciarMuestra();
+        pnlVehiculos.add(jugador.getVehiculos().getUltimo().getMuestra());
+        vehiculos = null;
+        vehiculos = jugador.getGarage().ordenarPorFecha();
+        x = 1;
+        iniciarPnlVehiculos();
+    }//GEN-LAST:event_btnVcrearMouseClicked
+
     public void setJugador(Jugador jugador) {
         this.jugador = jugador;
     }
@@ -415,7 +449,7 @@ public class VisualJugador extends javax.swing.JFrame {
     public void iniciarPnlVehiculos() {
         pnlVehiculos = new JPanel();
         spnlVehiculos.setViewportView(pnlVehiculos);
-        pnlVehiculos.setPreferredSize(new Dimension(spnlVehiculos.getWidth() - 10, jugador.getVehiculos().getContador() * 80));
+        pnlVehiculos.setPreferredSize(new Dimension(spnlVehiculos.getWidth() - 10, jugador.getVehiculos().getContador() * 100));
         pnlVehiculos.setBackground(new java.awt.Color(0, 153, 153));
         if (x == 0) {
             for (int i = 0; i < vehiculos.length; i++) {
@@ -449,6 +483,7 @@ public class VisualJugador extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnTienda;
     private javax.swing.JButton btnVFecha;
+    private javax.swing.JButton btnVcrear;
     private javax.swing.JButton btnVestado;
     private javax.swing.JButton btnVkills;
     private javax.swing.JButton btnVmuertes;
@@ -464,7 +499,6 @@ public class VisualJugador extends javax.swing.JFrame {
     private javax.swing.JPanel pnlInfo2;
     private javax.swing.JPanel pnlVcontrolador;
     private javax.swing.JPanel pnlVehiculos;
-    private javax.swing.JButton pnlcrear;
     private javax.swing.JScrollPane spnlArmas;
     private javax.swing.JScrollPane spnlVehiculos;
     // End of variables declaration//GEN-END:variables
@@ -474,7 +508,7 @@ public class VisualJugador extends javax.swing.JFrame {
     public void iniciarpnlArmas() {
         pnlArmas = new JPanel();
         spnlArmas.setViewportView(pnlArmas);
-        pnlArmas.setPreferredSize(new Dimension(spnlArmas.getWidth() - 10, jugador.getArmas().getContador() * 80));
+        pnlArmas.setPreferredSize(new Dimension(spnlArmas.getWidth() - 10, jugador.getArmas().getContador() * 100));
         pnlArmas.setBackground(new java.awt.Color(204, 204, 204));
         if (u == 0) {
             for (int i = 0; i < armas.length; i++) {
@@ -617,7 +651,7 @@ public class VisualJugador extends javax.swing.JFrame {
         armas = null;
         if ("fecha".equals(evt.getActionCommand().toLowerCase())) {
             armas = jugador.getArmeria().ordenarPorFecha();
-        } else if ("nombre".equals(evt.getActionCommand().toLowerCase())) {
+        } else{
             armas = jugador.getArmeria().ordenarPorNombre();
         }
         iniciarpnlArmas();

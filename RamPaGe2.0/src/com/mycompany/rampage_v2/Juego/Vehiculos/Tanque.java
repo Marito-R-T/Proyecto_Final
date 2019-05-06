@@ -16,7 +16,8 @@ import javax.swing.JOptionPane;
  */
 public class Tanque extends Vehiculo {
 
-    public Tanque(int[] porcentajes) {
+    public Tanque(float[] porcentajes) {
+        this.setSize(200, 200);
         this.porcentajes = porcentajes;
         vida = 50 * porcentajes[0];
         daño = 12 * porcentajes[1];
@@ -71,6 +72,7 @@ public class Tanque extends Vehiculo {
                     break;
             }
         }
+        this.setIcon(imagen);
     }
 
     private void mostrarMouseClicked(MouseEvent evt) {

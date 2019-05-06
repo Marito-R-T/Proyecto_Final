@@ -248,7 +248,7 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="pnlcrear" min="-2" pref="330" max="-2" attributes="0"/>
+                          <Component id="btnVcrear" min="-2" pref="330" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnVestado" min="-2" pref="86" max="-2" attributes="0"/>
                       </Group>
@@ -272,7 +272,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="pnlcrear" alignment="3" max="32767" attributes="0"/>
+                      <Component id="btnVcrear" alignment="3" max="32767" attributes="0"/>
                       <Component id="btnVestado" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -292,10 +292,13 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="pnlcrear">
+        <Component class="javax.swing.JButton" name="btnVcrear">
           <Properties>
             <Property name="text" type="java.lang.String" value="C     R     E     A     R"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnVcrearMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnVestado">
           <Properties>
@@ -390,6 +393,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="C  R  E  A  R"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAcrearMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

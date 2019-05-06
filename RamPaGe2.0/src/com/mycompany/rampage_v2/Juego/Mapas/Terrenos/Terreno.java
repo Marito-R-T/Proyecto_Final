@@ -6,6 +6,7 @@
 package com.mycompany.rampage_v2.Juego.Mapas.Terrenos;
 
 import com.mycompany.rampage_v2.Juego.Comodines.Comodin;
+import com.mycompany.rampage_v2.Juego.Vehiculos.Enemigo;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
@@ -24,7 +25,8 @@ public abstract class Terreno extends JLabel{
     private Terreno N,S,E,O,NE,NO,SE,SO;
     private int columnas, filas;
     private Comodin caja;
-
+    private Enemigo enemigo;
+    
     public Terreno(){
         this.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.gray, java.awt.Color.gray, new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
         //this.setBounds((columnas-1)*60 + 10,(filas-1)*60 +10, 60, 60);
@@ -138,4 +140,11 @@ public abstract class Terreno extends JLabel{
         this.caja = caja;
     }
     
+    public void setEnemigo(Enemigo enemigo){
+        this.enemigo = enemigo;
+    }
+
+    public Enemigo getEnemigo() {
+        return enemigo;
+    }
 }

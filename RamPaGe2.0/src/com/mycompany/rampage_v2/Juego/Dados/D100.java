@@ -5,7 +5,9 @@
  */
 package com.mycompany.rampage_v2.Juego.Dados;
 
+import java.awt.Image;
 import java.util.Random;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -15,6 +17,7 @@ public class D100 extends Dado{
     
     public D100(){
         numero = new Random();
+        topenumero = 100;
     }
     @Override
     public int obtenerNumero(){
