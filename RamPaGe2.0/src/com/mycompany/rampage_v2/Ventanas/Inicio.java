@@ -5,6 +5,7 @@
  */
 package com.mycompany.rampage_v2.Ventanas;
 
+import com.mycompany.rampage_v2.Juego.Bibliotecario;
 import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.listado.Identificador;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
@@ -44,6 +45,8 @@ public class Inicio extends javax.swing.JFrame {
         btnmusica.setSelected(true);
         sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/musicainicio.wav"));
         sonido.loop(); //ubuntu
+        Bibliotecario leer = new Bibliotecario();
+        leer.recuperarJugadores(jugadores);
 
     }
 
@@ -137,39 +140,55 @@ public class Inicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public Jugador[] getOrdenado() {
+        return ordenado;
+    }
+
+    public void setOrdenado(Jugador[] ordenado) {
+        this.ordenado = ordenado;
+    }
+
+    public Identificador getPosicionamiento() {
+        return posicionamiento;
+    }
+
     private void lbljuegonuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbljuegonuevoMouseClicked
         // TODO add your handling code here:
-        String nombre = "";
-        nombre = JOptionPane.showInputDialog(this, "Que nombre tendra su avatar?", "NOMBRE AVATAR", JOptionPane.QUESTION_MESSAGE);
-        if (nombre != null && !"".equals(nombre)) {
-            if (jugadores.getContador() == 0) {
-                Jugador nuevo = new Jugador(jugadores.getContador() + 1);
-                jugadores.agregar(nuevo);
-                nuevo.setIU(JUGADOR);
-                JUGADOR.setJugador(nuevo);
-            } else {
-                Jugador siguiente = new Jugador(jugadores.getContador() + 1);
-                siguiente.setAnterior(jugadores.getUltimo());
-                siguiente.setIU(JUGADOR);
-                jugadores.getUltimo().setPosterior(siguiente);
-                jugadores.agregar(siguiente);
-                JUGADOR.setJugador(siguiente);
+        try {
+            String nombre = "";
+            nombre = JOptionPane.showInputDialog(this, "Que nombre tendra su avatar?", "NOMBRE AVATAR", JOptionPane.QUESTION_MESSAGE);
+            if (nombre != null && !"".equals(nombre)) {
+                if (jugadores.getContador() == 0) {
+                    Jugador nuevo = new Jugador(jugadores.getContador() + 1);
+                    jugadores.agregar(nuevo);
+                    nuevo.setIU(JUGADOR);
+                    JUGADOR.setJugador(nuevo);
+                } else {
+                    Jugador siguiente = new Jugador(jugadores.getContador() + 1);
+                    siguiente.setAnterior(jugadores.getUltimo());
+                    siguiente.setIU(JUGADOR);
+                    jugadores.getUltimo().setPosterior(siguiente);
+                    jugadores.agregar(siguiente);
+                    JUGADOR.setJugador(siguiente);
+                }
+                jugadores.getUltimo().setNombre(nombre);
+                jugadores.getUltimo().perzonalizarlbl();
+                this.setVisible(false);
+                JUGADOR.setVisible(true);
+                JUGADOR.setJugador(jugadores.getUltimo());
+                JUGADOR.iniciarComponentes();
+                //JUGADOR.ordenarFecha();
+                JUGADOR.setX(0);
+                JUGADOR.iniciarPnlVehiculos();
+                JUGADOR.setU(0);
+                JUGADOR.iniciarpnlArmas();
+            } else if (nombre != null) {
+                JOptionPane.showMessageDialog(this, "No puede dejar vacio el nombre", "nombre", 1);
+                lbljuegonuevoMouseClicked(evt);
             }
-            jugadores.getUltimo().setNombre(nombre);
-            jugadores.getUltimo().perzonalizarlbl();
-            this.setVisible(false);
-            JUGADOR.setVisible(true);
-            JUGADOR.setJugador(jugadores.getUltimo());
-            JUGADOR.iniciarComponentes();
-            //JUGADOR.ordenarFecha();
-            JUGADOR.setX(0);
-            JUGADOR.iniciarPnlVehiculos();
-            JUGADOR.setU(0);
-            JUGADOR.iniciarpnlArmas();
-        } else if (nombre != null) {
-            JOptionPane.showMessageDialog(this, "No puede dejar vacio el nombre", "nombre", 1);
-            lbljuegonuevoMouseClicked(evt);
+        } catch (Exception e) {
         }
+
         /*else /*if (!"".equals(nombre)) {
          }*/
     }//GEN-LAST:event_lbljuegonuevoMouseClicked

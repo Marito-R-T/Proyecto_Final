@@ -15,9 +15,10 @@ import java.awt.Dimension;
  */
 public final class Mapa8x9 extends Mapa {
 
-    private final int TOPECAJAS = 15;
+    private final int TOPECAJAS = 15, TOPEENEMIGOS = 6;
 
     public Mapa8x9() {
+        super.topeenemigos = TOPEENEMIGOS;
         FILAS = 8;
         COLUMNAS = 9;
         super.topecajas = TOPECAJAS;

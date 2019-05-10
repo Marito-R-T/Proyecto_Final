@@ -17,6 +17,7 @@ import com.mycompany.rampage_v2.Ventanas.Inicio;
 import com.mycompany.rampage_v2.Ventanas.VisualJugador;
 import com.sun.java.swing.plaf.windows.WindowsInternalFrameTitlePane;
 import java.awt.event.MouseEvent;
+import java.io.*;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,7 +26,7 @@ import javax.swing.JOptionPane;
  *
  * @author marito
  */
-public class Jugador extends JLabel {
+public class Jugador extends JLabel implements Serializable{
 
     private final int NO;
     private Jugador a, p;
@@ -37,9 +38,11 @@ public class Jugador extends JLabel {
     private final Garage garage;
     private final Listado<Arma> armas;
     private final Armeria armeria;
-    private int nivel, experiencia, experienciaTope, kills, muertes;
+    private int nivel, experiencia, experienciaTope, kills, muertes, perdidas, ganadas, dinero;
 
     public Jugador(int no) {
+        this.perdidas = 0;
+        this.ganadas = 0;
         vehiculos = new Listado<>();
         garage = new Garage(vehiculos);
         armas = new Listado<>();
@@ -120,7 +123,7 @@ public class Jugador extends JLabel {
                 for (int k = 0; k < enteros.length; k++) {
                     enteros[k] = k;
                 }
-                porcentajes[j] = (1+((int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0])/12));
+                porcentajes[j] = (int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0]);
             }
             if (i == 0) {
                 Vehiculo primero = new Avion(porcentajes);
@@ -154,11 +157,11 @@ public class Jugador extends JLabel {
             for (int l = 0; l < porcentajes.length; l++) {
                 lleva += porcentajes[l];
             }
-            Integer[] enteros = new Integer[12 - lleva];
+            Integer[] enteros = new Integer[13 - lleva];
             for (int i = 0; i < enteros.length; i++) {
-                enteros[i] = i + 1;
+                enteros[i] = i;
             }
-                porcentajes[j] = (1+((int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0])/12));
+            porcentajes[j] = (int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0]);
         }
         if ("avion".equals(nuevo.toLowerCase())) {
             Vehiculo primero = new Avion(porcentajes);
@@ -210,7 +213,11 @@ public class Jugador extends JLabel {
         //iu.ordenarFecha();
         inicio.setVisible(false);
         iu.setVisible(true);
+        iu.iniciarComponentes();
+        iu.setX(0);
         iu.iniciarPnlVehiculos();
+        iu.setU(0);
+        iu.iniciarpnlArmas();
     }
 
     public void setIU(VisualJugador iu) {
@@ -235,11 +242,11 @@ public class Jugador extends JLabel {
 
     public void ingresarArmas() {
         if (armas.getContador() == 0) {
-            Arma nueva = new Arma();
+            Arma nueva = new Arma(this);
             armas.agregar(nueva);
             nueva.setNo(armas.getContador());
         } else {
-            Arma siguiente = new Arma();
+            Arma siguiente = new Arma(this);
             siguiente.setNo(armas.getContador() + 1);
             siguiente.setAnterior(armas.getUltimo());
             armas.getUltimo().setPosterior(siguiente);
@@ -250,5 +257,29 @@ public class Jugador extends JLabel {
     public VisualJugador getIu() {
         return iu;
     }
-
+    
+    public void setPerdida(){
+        this.perdidas++;
+    }
+    
+    public void setGanada(){
+        this.ganadas++;
+        experiencia += 300;
+        dinero += 250;
+        if(experiencia >= experienciaTope){
+            nivel++;
+            experienciaTope += 300*nivel;
+            experiencia = 0;
+            dinero+= 600;
+            JOptionPane.showMessageDialog(null, "Ha subido de nivel \n junto a eso suben todas sus caracteristicas!", "nivel+", JOptionPane.OK_OPTION);
+        }
+    }
+    
+    public void setKills(){
+        kills++;
+    }
+    
+    public void setMuertes(){
+        muertes++;
+    }
 }

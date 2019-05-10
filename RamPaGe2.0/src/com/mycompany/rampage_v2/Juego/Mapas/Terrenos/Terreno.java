@@ -13,6 +13,7 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -161,5 +162,7 @@ public abstract class Terreno extends JLabel{
 
     public Mapa getMapa() {
         return mapa;
+    }
+    public void quitarVida(){
     }
 }

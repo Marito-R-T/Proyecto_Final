@@ -16,8 +16,9 @@ import java.awt.Dimension;
  * @author marito
  */
 public final class Mapa4x4 extends Mapa {
-    private final int TOPECAJAS = 4;
+    private final int TOPECAJAS = 4, TOPEENEMIGOS = 2;
     public Mapa4x4() {
+        super.topeenemigos = TOPEENEMIGOS;
         FILAS = 4;
         COLUMNAS = 4;
         super.topecajas = TOPECAJAS;

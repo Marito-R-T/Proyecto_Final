@@ -7,6 +7,7 @@ package com.mycompany.rampage_v2.Ventanas;
 
 import com.mycompany.rampage_v2.Juego.Dados.D100;
 import com.mycompany.rampage_v2.Juego.Dados.D3;
+import com.mycompany.rampage_v2.Juego.Dados.D6;
 import com.mycompany.rampage_v2.Juego.Dados.Dado;
 import com.mycompany.rampage_v2.Juego.Juego;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
@@ -15,6 +16,7 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -31,8 +33,7 @@ public class VisualJuego extends javax.swing.JFrame {
     private Vehiculo[] vehiculos;
     private Juego backendjuego;
     private Dado dado;
-    
-    
+
     public VisualJuego(Inicio inicio) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -42,7 +43,6 @@ public class VisualJuego extends javax.swing.JFrame {
         ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo inicio.jpg"));
         this.setIconImage(fondo.getImage());
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -182,25 +182,80 @@ public class VisualJuego extends javax.swing.JFrame {
 
     private void btnStopMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStopMouseClicked
         // TODO add your handling code here:
-        if(dado != null){
+        if (dado != null) {
             dado.parardeGirar();
+            dado.setEstaGirando(false);
         }
     }//GEN-LAST:event_btnStopMouseClicked
 
+    public Inicio getInicio() {
+        return inicio;
+    }
+
+    public Dado getDado() {
+        return dado;
+    }
+
+    public void empezarDado3() {
+        pnlDados.removeAll();
+        dado = new D3();
+        dado.setSize(pnlDados.getWidth(), pnlDados.getHeight());
+        pnlDados.add(dado);
+        dado.setEstaGirando(true);
+        Thread hilo = new Thread(dado);
+        hilo.start();
+    }
+
+    public void empezarDado6() {
+        pnlDados.removeAll();
+        dado = new D6();
+        dado.setSize(pnlDados.getWidth(), pnlDados.getHeight());
+        pnlDados.add(dado);
+        dado.setEstaGirando(true);
+        Thread hilo = new Thread(dado);
+        hilo.start();
+    }
+
+    public void empezarDado100() {
+        pnlDados.removeAll();
+        dado = new D100();
+        dado.setSize(pnlDados.getWidth(), pnlDados.getHeight());
+        pnlDados.add(dado);
+        dado.setEstaGirando(true);
+        Thread hilo = new Thread(dado);
+        hilo.start();
+    }
+
+    public Mapa getMapa() {
+        return mapa;
+    }
+
     private void btnRendirseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRendirseMouseClicked
         // TODO add your handling code here:
-        /*this.setVisible(false);
-        inicio.getJUGADOR().setVisible(true);
-        inicio.getJUGADOR().iniciarPnlVehiculos();*/
-            dado.setSize(pnlDados.getWidth(), pnlDados.getHeight());
-            Thread hilo = new Thread(dado);
-            hilo.start();
+        try {
+            if(dado != null && dado.isEstaGirando()){
+                dado.setEstaGirando(false);
+            }
+            backendjuego.setSeperdio(true);
+            Thread.sleep(1100);
+            this.setVisible(false);
+            inicio.getJUGADOR().setVisible(true);
+            inicio.getJUGADOR().iniciarPnlVehiculos();
+            juego.interrupt();
+            //juego = null;
+
+        } catch (Exception e) {
+        }
+        /*dado.setSize(pnlDados.getWidth(), pnlDados.getHeight());
+         Thread hilo = new Thread(dado);
+         hilo.start();*/
     }//GEN-LAST:event_btnRendirseMouseClicked
 
     public void setMapa(Mapa mapa) {
         this.mapa = mapa;
         pnlMapa.setViewportView(mapa);
     }
+    private Thread juego;
 
     public void setVehiculos(Vehiculo[] vehiculos) {
         this.vehiculos = vehiculos;
@@ -210,7 +265,8 @@ public class VisualJuego extends javax.swing.JFrame {
         backendjuego.empezarEnemigos();
         pnlDados.add(dado);
         dado.setBounds(0, 0, pnlDados.getWidth(), pnlDados.getHeight());
-        Thread juego = new Thread(backendjuego);
+        juego = new Thread(backendjuego);
+        backendjuego.setSeperdio(false);
         juego.start();
     }
     JPanel pnlVehiculos = new JPanel();
@@ -218,19 +274,20 @@ public class VisualJuego extends javax.swing.JFrame {
     public JPanel getPnlVehiculos() {
         return pnlVehiculos;
     }
-    public void mostrarVehiculos(){
+
+    public void mostrarVehiculos() {
         spnlVehiculos.setViewportView(pnlVehiculos);
         pnlVehiculos.setPreferredSize(new Dimension(250, 200));
         pnlVehiculos.setBackground(new java.awt.Color(204, 204, 204));
         int i = 0;
         for (Vehiculo vehiculo : vehiculos) {
-            vehiculo.getMuestra().setBounds(10, (60*i)+10, pnlVehiculos.getWidth(), 60);
+            vehiculo.getMuestra().setBounds(10, (60 * i) + 10, pnlVehiculos.getWidth(), 60);
             vehiculo.iniciarMuestra();
             pnlVehiculos.add(vehiculo.getMuestra());
             i++;
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRendirse;
     private javax.swing.JButton btnStop;

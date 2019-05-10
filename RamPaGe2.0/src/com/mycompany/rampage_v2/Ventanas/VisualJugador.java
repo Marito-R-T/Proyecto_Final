@@ -6,16 +6,15 @@
 package com.mycompany.rampage_v2.Ventanas;
 
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
+import com.mycompany.rampage_v2.Juego.Bibliotecario;
 import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa4x4;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa6x4;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa8x9;
-import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
@@ -374,16 +373,21 @@ public class VisualJugador extends javax.swing.JFrame {
                         if (evt.getSource() == mapas[0]) {
                             mapa = new Mapa4x4();
                             JUEGO.setMapa(mapa);
+                            dialogo.setVisible(false);
                         } else if (evt.getSource() == mapas[1]) {
                             mapa = new Mapa6x4();
                             JUEGO.setMapa(mapa);
+                            dialogo.setVisible(false);
                         } else {
                             mapa = new Mapa8x9();
                             JUEGO.setMapa(mapa);
+                            dialogo.setVisible(false);
                         }
                         setVisible(false);
+                        dialogo.setVisible(false);
                         JUEGO.setVisible(true);
                         JUEGO.setVehiculos(elegidos);
+                        JUEGO.mostrarVehiculos();
                     }
                 });
             }
@@ -406,10 +410,20 @@ public class VisualJugador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnjugarActionPerformed
 
+    public Jugador getJugador() {
+        return jugador;
+    }
+
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
         inicio.setVisible(true);
+        inicio.setOrdenado(inicio.getPosicionamiento().ordenarPorFecha());
+        jugador.setIU(null);
+        jugador.setInicio(null);
+        Bibliotecario guardar = new Bibliotecario();
+        guardar.guardarJugadores(jugador);
+        
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void btnAcrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcrearMouseClicked

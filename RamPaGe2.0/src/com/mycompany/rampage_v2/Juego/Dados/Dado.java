@@ -37,10 +37,10 @@ public abstract class Dado extends JLabel implements Runnable {
                 Thread.sleep(100);
 
             }
-            String x = Integer.toString(numero.nextInt(topenumero) + 1);
+            escogido = numero.nextInt(topenumero) +1;
+            String x = Integer.toString(escogido);
             figurita = new ImageIcon(getClass().getResource("/Imagenes/Dados/" + x + ".png"));
             this.setIcon(new ImageIcon(figurita.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_FAST)));
-            escogido = Integer.parseInt(x);
         } catch (Exception e) {
         }
     }
@@ -60,6 +60,14 @@ public abstract class Dado extends JLabel implements Runnable {
 
     public int getEscogido() {
         return escogido;
+    }
+
+    public boolean isEstaGirando() {
+        return estaGirando;
+    }
+
+    public void setEstaGirando(boolean estaGirando) {
+        this.estaGirando = estaGirando;
     }
 
 }

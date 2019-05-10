@@ -8,7 +8,6 @@ package com.mycompany.rampage_v2.Juego.Vehiculos;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,9 +19,9 @@ public class Avion extends Vehiculo {
     public Avion(float[] porcentajes) {
         this.setSize(200, 200);
         super.porcentajes = porcentajes;
-        vida = 50 * porcentajes[0];
-        daño = 9 * porcentajes[1];
-        defensa = 4 * porcentajes[2];
+        vida = 50 * (1+(porcentajes[0]/12));
+        daño = 9 * (1+(porcentajes[1]/12));
+        defensa = 4 * (1+(porcentajes[2]/12));
         defensaNeta = vida * (defensa / 100);
         muestra.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -34,12 +33,10 @@ public class Avion extends Vehiculo {
 
     @Override
     public void revisarSubirNivel() {
-        if (experiencia >= experienciaTope) {
             super.revisarSubirNivel();
             daño = (7 + 2 * nivel) * porcentajes[1];
             defensa = (3 + (1 * nivel)) * porcentajes[2];
             defensaNeta = vida * (defensa / 100);
-        }
     }
 
     @Override
@@ -76,7 +73,4 @@ public class Avion extends Vehiculo {
         this.setIcon(imagen);
     }
 
-    private void mostrarMouseClicked(MouseEvent evt) {
-        super.dueño.getIu().ingresarVehiculo(this);
-    }
 }

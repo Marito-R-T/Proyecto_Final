@@ -18,10 +18,10 @@ public class Tanque extends Vehiculo {
 
     public Tanque(float[] porcentajes) {
         this.setSize(200, 200);
-        this.porcentajes = porcentajes;
-        vida = 50 * porcentajes[0];
-        daño = 12 * porcentajes[1];
-        defensa = 7 * porcentajes[2];
+        super.porcentajes = porcentajes;
+        vida = 50 * (1+(porcentajes[0]/12));
+        daño = 12 *(1+(porcentajes[1]/12));
+        defensa = 7 * (1+(porcentajes[2]/12));
         defensaNeta = vida * (defensa / 100);
         muestra.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -33,12 +33,10 @@ public class Tanque extends Vehiculo {
 
     @Override
     public void revisarSubirNivel() {
-        if (experiencia >= experienciaTope) {
             super.revisarSubirNivel();
             daño = (10 + 2 * nivel) * porcentajes[1];
             defensa = (6 + (1 * nivel)) * porcentajes[2];
             defensaNeta = vida * (defensa / 100);
-        }
     }
 
     @Override
@@ -74,7 +72,5 @@ public class Tanque extends Vehiculo {
         }
     }
 
-    private void mostrarMouseClicked(MouseEvent evt) {
-        super.dueño.getIu().ingresarVehiculo(this);
-    }
+
 }

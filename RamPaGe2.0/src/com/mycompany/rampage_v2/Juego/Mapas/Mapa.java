@@ -5,6 +5,7 @@
  */
 package com.mycompany.rampage_v2.Juego.Mapas;
 
+import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Llanura;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
@@ -33,6 +34,7 @@ public class Mapa extends JPanel {
     protected int topecajas, cajas;
     protected Terreno anterior, referencia;
     private OyenteMapas oyente = new OyenteMapas();
+    protected int topeenemigos;
 
     public void colocarCuadros() {
         for (int i = 0; i < FILAS; i++) {
@@ -43,6 +45,10 @@ public class Mapa extends JPanel {
                 //mapa[i][u].setimage();
             }
         }
+    }
+
+    public int getTopeenemigos() {
+        return topeenemigos;
     }
 
     public void ingresarTerrenos() {
@@ -63,7 +69,7 @@ public class Mapa extends JPanel {
             mapa[i][0] = primero;
             primero.setColumnas(1);
             primero.setFilas(i + 1);
-            if (random.nextInt(2) == 0) {
+            if (random.nextInt(3) == 0) {
                 primero.setCaja(cajas, topecajas);
                 cajas++;
             }
@@ -124,14 +130,14 @@ public class Mapa extends JPanel {
         int filarandom = numerorandom.nextInt(this.FILAS);
         int columnarandom = numerorandom.nextInt(this.COLUMNAS);
         if (mapa[filarandom][columnarandom].getEnemigo() == null) {
-            /*if((vehiculo instanceof Tanque && !(mapa[filarandom][columnarandom] instanceof Agua)) || (vehiculo instanceof Avion && !(mapa[filarandom][columnarandom] instanceof Montaña))){
+            if((vehiculo instanceof Tanque && !(mapa[filarandom][columnarandom] instanceof Agua))|| (vehiculo instanceof Avion && !(mapa[filarandom][columnarandom] instanceof Montaña))){
              mapa[filarandom][columnarandom].setVehiculo(vehiculo);
              vehiculo.setPosicion(mapa[filarandom][columnarandom]);}
              else{
              ingresarprimerVehiculo(vehiculo);
-             }*/
-            mapa[filarandom][columnarandom].setVehiculo(vehiculo);
-            vehiculo.setPosicion(mapa[filarandom][columnarandom]);
+             }
+            /*mapa[filarandom][columnarandom].setVehiculo(vehiculo);
+            vehiculo.setPosicion(mapa[filarandom][columnarandom]);*/
         } else {
             ingresarprimerVehiculo(vehiculo);
         }
@@ -155,13 +161,16 @@ public class Mapa extends JPanel {
         return oyente;
     }
 
-    public void agregarComponente(JLabel label) {
-        this.add(label, 1);
+    public void agregarComponente(Vehiculo enjuego) {
+        this.add(enjuego, 1);
         this.repaint();
-
     }
 
     public Terreno[][] getMapa() {
         return mapa;
+    }
+    public void agregarEnemigos(Enemigo enemigo){
+        this.add(enemigo, 1);
+        this.repaint();
     }
 }

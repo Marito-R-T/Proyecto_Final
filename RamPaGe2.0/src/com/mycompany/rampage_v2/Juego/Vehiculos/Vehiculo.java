@@ -7,11 +7,15 @@ package com.mycompany.rampage_v2.Juego.Vehiculos;
 
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
 import com.mycompany.rampage_v2.Juego.Jugador;
+import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
+import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Terreno;
 import com.mycompany.rampage_v2.Juego.listado.Armeria;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -31,6 +35,7 @@ public abstract class Vehiculo extends JLabel {
     protected int No;
     private int kills = 0, muertes = 0;
     protected float vida, daño, defensa, defensaNeta;
+    private float vidatope;
     protected JLabel muestra = new JLabel(), muestra2 = new JLabel();
     protected float[] porcentajes;
     private final Listado<Arma> armas = new Listado<>();
@@ -66,7 +71,6 @@ public abstract class Vehiculo extends JLabel {
     }
 
     public void revisarSubirNivel() {
-        experienciaTope += 100 * (nivel++);
         vida = (50 * nivel) * porcentajes[0];
     }
 
@@ -128,18 +132,14 @@ public abstract class Vehiculo extends JLabel {
     }
     private JDialog dialogo;
 
-    public JLabel getMuestra2(JDialog dialogo) {
-        this.dialogo = dialogo;
-        muestra2.setSize(150, 80);
-        muestra2.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
+    public JLabel getMuestra2() {
+        muestra2.setSize(400, 100);
+        muestra2.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
         muestra2.setText(nombre);
-        muestra2.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                iniciarMouseClicked(evt);
-            }
-
-        });
+        muestra2.setText(" vida: " +Integer.toString((int) vida));
+        muestra2.setText(" daño: " + Integer.toString((int) daño));
+        muestra2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        muestra2.setFont(new java.awt.Font("Comic Sans MS", 1, 18));
         return muestra2;
     }
 
@@ -162,10 +162,62 @@ public abstract class Vehiculo extends JLabel {
         return defensaNeta;
     }
 
-    public void setPosicion(Terreno posicion) {
+    public void setPosicion2(Terreno posicion){
         this.posicion = posicion;
-        this.setBounds(((this.posicion.getColumnas() - 1) * 200) + 10, (((this.posicion.getFilas() - 1) * 200) + 10), 200, 200);
-        this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
-        this.posicion.getMapa().agregarComponente(this);
     }
+    
+    public boolean setPosicion(Terreno posicion) {
+        if (((this instanceof Tanque && !(posicion instanceof Agua)) || (this instanceof Avion && !(posicion instanceof Montaña))) && posicion != null) {
+            this.posicion = posicion;
+            this.setBounds(((this.posicion.getColumnas() - 1) * 200) + 10, (((this.posicion.getFilas() - 1) * 200) + 10), 200, 200);
+            this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+            this.posicion.getMapa().agregarComponente(this);
+            return true;
+        } if (posicion == null){
+            this.posicion = posicion;
+        }
+        return false;
+    }
+
+    public Terreno getPosicion() {
+        return posicion;
+    }
+
+    public void mostrarMouseClicked(MouseEvent evt) {
+        dueño.getIu().ingresarVehiculo(this);
+        JOptionPane.showMessageDialog(null, "   daño:   " + daño
+                + " \n     vida:  " + vida + " \n     defensa: " + defensaNeta, nombre, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void serDañado(float daño) {
+        if (daño > this.defensa) {
+            if (daño > vida) {
+                vida = 0;
+                dueño.setMuertes();
+                estaActivo = false;
+                this.setOpaque(false);
+                this.setBackground(Color.red);
+            } else {
+                if (defensa < daño) {
+                    vida -= (daño - defensa);
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, "me has dañado, \n  me has quitado: " + daño + "  de vida! \n y mi vida total es de: " + vidatope + " \n ahorita tengo: " + vida + " \n defensa: " + defensa);
+
+    }
+
+    public void setExperiencia() {
+        kills++;
+        dueño.setKills();
+        this.experiencia += 200;
+        if (experiencia >= experienciaTope) {
+            nivel++;
+            experienciaTope += 200 * nivel;
+            experiencia = 0;
+            revisarSubirNivel();
+            JOptionPane.showMessageDialog(null, "Tu vehiculo " + nombre + "a subido de nivel!", "nivel+", JOptionPane.OK_OPTION);
+        }
+    }
+
 }

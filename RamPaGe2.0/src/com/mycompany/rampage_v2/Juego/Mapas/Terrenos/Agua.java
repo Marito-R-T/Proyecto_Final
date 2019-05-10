@@ -12,10 +12,70 @@ import javax.swing.ImageIcon;
  *
  * @author marito
  */
-public class Agua extends Terreno{
-    private int vida;
-    public Agua(){
-        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Terrenos/agua.jpg")); 
+public class Agua extends Terreno {
+
+    private int vida = 15;
+
+    public Agua() {
+        ImageIcon fondo = new ImageIcon(getClass().getResource("/Imagenes/Terrenos/agua.jpg"));
         this.setIcon(new ImageIcon(fondo.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
     }
+
+    @Override
+    public void quitarVida() {
+        if (vida > 0) {
+            vida -= 3;
+        } else{
+            convertirenLLanura();
+        }
+    }
+
+    public void convertirenLLanura() {
+        if (vida == 0) {
+            Terreno terreno = new Llanura();
+            terreno.setColumnas(super.getColumnas());
+            terreno.setFilas(super.getFilas());
+            if(super.getEnemigo() != null){
+                terreno.setEnemigo(super.getEnemigo());
+            }
+            if (this.getN() != null) {
+                terreno.setN(this.getN());
+                this.getN().setS(terreno);
+            }
+            if (this.getE() != null) {
+                terreno.setE(this.getE());
+                this.getE().setO(terreno);
+            }
+            if (this.getO() != null) {
+                terreno.setO(this.getO());
+                this.getO().setE(terreno);
+            }
+            if (this.getS() != null) {
+                terreno.setS(this.getS());
+                this.getS().setN(terreno);
+            }
+            if (this.getNE() != null) {
+                terreno.setNE(this.getNE());
+                this.getNE().setSO(terreno);
+            }
+            if (this.getNO() != null) {
+                terreno.setNO(this.getNO());
+                this.getNO().setSE(terreno);
+            }
+            if (this.getSE() != null) {
+                terreno.setSE(this.getSE());
+                this.getSE().setNO(terreno);
+            }
+            if (this.getSO() != null) {
+                terreno.setSO(this.getSO());
+                terreno.getSO().setNE(terreno);
+            }
+            terreno.setBounds(10 + (200*(this.getColumnas()-1)),10 + (200*(this.getFilas()-1)), 2000, 200);
+            super.getMapa().add(terreno);
+            super.getMapa().remove(this);
+            super.getMapa().getMapa()[this.getColumnas()-1][this.getFilas()-1] = terreno;
+            System.gc();
+        }
+    }
+
 }
