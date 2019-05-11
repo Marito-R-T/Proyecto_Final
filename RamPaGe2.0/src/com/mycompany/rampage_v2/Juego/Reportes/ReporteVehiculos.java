@@ -17,6 +17,6 @@ import java.util.Date;
 public class ReporteVehiculos {
     private Vehiculo mejor;
     private Vehiculo peor;
-    private ArrayList<Date> fehcas = new ArrayList<>();
+    private ArrayList<Date> fechas = new ArrayList<>();
     private ArrayList<Enemigo> enemigosderrotados = new ArrayList<>();
 }

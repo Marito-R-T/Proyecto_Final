@@ -107,16 +107,6 @@ public class Arma {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 muestraMouseClicked(evt);
             }
-
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                muestraMouseExited(evt);
-            }
-
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                muestraMouseEntered(evt);
-            }
         });
     }
 
@@ -189,12 +179,6 @@ public class Arma {
                 enuso = true;
             }
         }
-    }
-
-    private void muestraMouseExited(MouseEvent evt) {
-    }
-
-    private void muestraMouseEntered(MouseEvent evt) {
     }
 
     public boolean isEnuso() {
