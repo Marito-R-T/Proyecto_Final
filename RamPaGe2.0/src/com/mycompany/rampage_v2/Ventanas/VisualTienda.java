@@ -11,8 +11,6 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
 import java.awt.Color;
 import java.awt.Image;
-import java.io.Serializable;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 

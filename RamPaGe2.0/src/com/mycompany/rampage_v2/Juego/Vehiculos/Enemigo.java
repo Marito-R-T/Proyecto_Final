@@ -96,4 +96,10 @@ public class Enemigo extends JLabel {
     public Terreno getTerreno() {
         return terreno;
     }
+    public void obtenerdaño(){
+        vida -= 0.1*vida;
+    }
+    public void explotar(){
+        vida -= 0.9*vida;
+    }
 }

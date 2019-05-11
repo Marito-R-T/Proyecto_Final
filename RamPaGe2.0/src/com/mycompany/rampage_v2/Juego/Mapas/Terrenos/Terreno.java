@@ -7,17 +7,9 @@ package com.mycompany.rampage_v2.Juego.Mapas.Terrenos;
 
 import com.mycompany.rampage_v2.Juego.Comodines.Comodin;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
-import com.mycompany.rampage_v2.Juego.Oyentes.OyenteMapas;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Enemigo;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
-import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
-import javax.swing.border.Border;
 
 /**
  *

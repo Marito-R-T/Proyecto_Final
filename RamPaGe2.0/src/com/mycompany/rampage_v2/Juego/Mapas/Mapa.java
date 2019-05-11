@@ -5,19 +5,15 @@
  */
 package com.mycompany.rampage_v2.Juego.Mapas;
 
-import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Llanura;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Terreno;
-import com.mycompany.rampage_v2.Juego.Oyentes.OyenteMapas;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Enemigo;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Tanque;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
-import java.io.Serializable;
 import java.util.Random;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
