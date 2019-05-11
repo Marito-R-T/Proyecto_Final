@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  *
  * @author marito
  */
-public abstract class Vehiculo extends JLabel {
+public abstract class Vehiculo extends JLabel implements Serializable {
 
     private Vehiculo a, p;
     protected ImageIcon imagen;
@@ -42,9 +42,20 @@ public abstract class Vehiculo extends JLabel {
     private final Armeria armeria = new Armeria(armas);
     private Arma arma;
     private String nombre;
-    private boolean estaActivo = true;
+    private boolean estaActivo = true, Comprada = false;
     protected Jugador dueño;
     private Terreno posicion;
+    private int precio;
+
+    public boolean isComprada() {
+        return Comprada;
+    }
+
+    public void setComprada(boolean Comprada) {
+        muestra.setOpaque(true);
+        muestra.setBackground(Color.LIGHT_GRAY);
+        this.Comprada = Comprada;
+    }
 
     public Vehiculo getAnterior() {
         return a;
@@ -134,9 +145,15 @@ public abstract class Vehiculo extends JLabel {
 
     public JLabel getMuestra2() {
         muestra2.setSize(400, 100);
+        muestra2.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ComprarVehiculo(evt);
+            }
+        });
         muestra2.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
         muestra2.setText(nombre);
-        muestra2.setText(" vida: " +Integer.toString((int) vida));
+        muestra2.setText(" vida: " + Integer.toString((int) vida));
         muestra2.setText(" daño: " + Integer.toString((int) daño));
         muestra2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         muestra2.setFont(new java.awt.Font("Comic Sans MS", 1, 18));
@@ -154,7 +171,24 @@ public abstract class Vehiculo extends JLabel {
         return vida;
     }
 
+    public void setEstaActivo(boolean estaActivo) {
+        this.estaActivo = estaActivo;
+    }
+
     public float getDaño() {
+        float dañoarma = 0;
+        Arma[] listadoarmas = armeria.ordenarPorFecha();
+        if (listadoarmas.length != 0) {
+            Arma armaAusar = (Arma) JOptionPane.showInputDialog(null, "Escoja arma para hacer daño", "Arma", JOptionPane.INFORMATION_MESSAGE,
+                    new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)), listadoarmas, listadoarmas[0]);
+            if (armaAusar != null) {
+                dañoarma = armaAusar.dañoHecho();
+            }
+        }
+        return daño + dañoarma;
+    }
+
+    public float getDañoEnemigos() {
         return daño;
     }
 
@@ -162,10 +196,10 @@ public abstract class Vehiculo extends JLabel {
         return defensaNeta;
     }
 
-    public void setPosicion2(Terreno posicion){
+    public void setPosicion2(Terreno posicion) {
         this.posicion = posicion;
     }
-    
+
     public boolean setPosicion(Terreno posicion) {
         if (((this instanceof Tanque && !(posicion instanceof Agua)) || (this instanceof Avion && !(posicion instanceof Montaña))) && posicion != null) {
             this.posicion = posicion;
@@ -173,7 +207,8 @@ public abstract class Vehiculo extends JLabel {
             this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
             this.posicion.getMapa().agregarComponente(this);
             return true;
-        } if (posicion == null){
+        }
+        if (posicion == null) {
             this.posicion = posicion;
         }
         return false;
@@ -186,7 +221,8 @@ public abstract class Vehiculo extends JLabel {
     public void mostrarMouseClicked(MouseEvent evt) {
         dueño.getIu().ingresarVehiculo(this);
         JOptionPane.showMessageDialog(null, "   daño:   " + daño
-                + " \n     vida:  " + vida + " \n     defensa: " + defensaNeta, nombre, JOptionPane.INFORMATION_MESSAGE);
+                + " \n     vida:  " + vida + " \n     defensa: " + defensaNeta + " \n Activo: " +
+                estaActivo + "\n Kills: " + kills, nombre, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void serDañado(float daño) {
@@ -195,7 +231,7 @@ public abstract class Vehiculo extends JLabel {
                 vida = 0;
                 dueño.setMuertes();
                 estaActivo = false;
-                this.setOpaque(false);
+                this.setOpaque(true);
                 this.setBackground(Color.red);
             } else {
                 if (defensa < daño) {
@@ -220,4 +256,27 @@ public abstract class Vehiculo extends JLabel {
         }
     }
 
+    public void ingresarArma(Arma arma) {
+        armas.agregar(arma);
+    }
+
+    @Override
+    public String toString() {
+        return "nombre: " + nombre + "No. " + No;
+    }
+
+    private void ComprarVehiculo(MouseEvent evt) {
+         if(dueño.getDinero() > precio){
+            if(JOptionPane.showConfirmDialog(muestra2, "seguro quiere comprar este vehiculo?") == 1){
+            setComprada(true);
+            dueño.comprarObjeto(precio);
+            }
+        }
+    }
+    
+    public void ingresarPrecio(){
+        int lleva = 0;
+        lleva += porcentajes[0] * 50 + (porcentajes[1]);
+        precio = lleva;
+    }
 }

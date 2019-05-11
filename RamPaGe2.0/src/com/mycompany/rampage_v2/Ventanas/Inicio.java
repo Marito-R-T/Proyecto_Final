@@ -15,7 +15,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,15 +28,11 @@ public class Inicio extends javax.swing.JFrame {
      */
     private AudioClip sonido;
     private final VisualJugador JUGADOR = new VisualJugador(this);
-    private final VisualReportes REPORTES = new VisualReportes(this);
-    private final VisualTienda TIENDA = new VisualTienda(this);
-    private final Listado<Jugador> jugadores = new Listado<>();
+    private Listado<Jugador> jugadores;
     private final Identificador posicionamiento;
     //private final Seleccion seleccion = new Seleccion(jugadores, this);
 
     public Inicio() {
-        posicionamiento = new Identificador(jugadores);
-        ordenado = posicionamiento.ordenarPorFecha();
         initComponents();
         iniciarComponentes();
         this.setResizable(false);
@@ -46,8 +41,10 @@ public class Inicio extends javax.swing.JFrame {
         sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Audio/musicainicio.wav"));
         sonido.loop(); //ubuntu
         Bibliotecario leer = new Bibliotecario();
+        jugadores = new Listado<>();
         leer.recuperarJugadores(jugadores);
-
+        posicionamiento = new Identificador(jugadores);
+        ordenado = posicionamiento.ordenarPorFecha();
     }
 
     /**
@@ -139,6 +136,10 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public Listado<Jugador> getJugadores() {
+        return jugadores;
+    }
 
     public Jugador[] getOrdenado() {
         return ordenado;

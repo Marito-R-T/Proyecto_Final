@@ -8,6 +8,7 @@ package com.mycompany.rampage_v2.Juego.Dados;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.Serializable;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -16,7 +17,7 @@ import javax.swing.JLabel;
  *
  * @author marito
  */
-public abstract class Dado extends JLabel implements Runnable {
+public abstract class Dado extends JLabel implements Runnable{
 
     protected Random numero;
     protected ImageIcon figurita;

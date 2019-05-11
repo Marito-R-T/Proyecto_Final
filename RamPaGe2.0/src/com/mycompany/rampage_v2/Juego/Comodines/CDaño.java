@@ -5,6 +5,8 @@
  */
 package com.mycompany.rampage_v2.Juego.Comodines;
 
+import java.io.Serializable;
+
 /**
  *
  * @author marito

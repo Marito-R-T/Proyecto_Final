@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
  *
  * @author marito
  */
-public class Jugador extends JLabel implements Serializable{
+public class Jugador extends JLabel{
 
     private final int NO;
     private Jugador a, p;
@@ -41,6 +41,7 @@ public class Jugador extends JLabel implements Serializable{
     private int nivel, experiencia, experienciaTope, kills, muertes, perdidas, ganadas, dinero;
 
     public Jugador(int no) {
+        dinero = 0;
         this.perdidas = 0;
         this.ganadas = 0;
         vehiculos = new Listado<>();
@@ -48,7 +49,9 @@ public class Jugador extends JLabel implements Serializable{
         armas = new Listado<>();
         armeria = new Armeria(armas);
         NO = no;
-        ingresarVehiculos();
+        nuevoVehiculo();
+        nuevoVehiculo();
+        nuevoVehiculo();
         ingresarArmas();
         ingresarArmas();
         nivel = 1;
@@ -79,7 +82,6 @@ public class Jugador extends JLabel implements Serializable{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
     public void perzonalizarlbl() {
         lblnombre.setFont(new java.awt.Font("Comic Sans MS", 1, 16));
         lblnombre.setText(nombre);
@@ -109,51 +111,13 @@ public class Jugador extends JLabel implements Serializable{
         return experiencia;
     }
 
-    private void ingresarVehiculos() {
-        for (int i = 0; i < 3; i++) {
-            JOptionPane.showMessageDialog(null, "Seguidamente seleccionara cuantos puntes le dejara a \n 1. Vida, 2. Ataque, 3. Defensa,  4. Especialidad del tipo de vehiculo");
-            float[] porcentajes = new float[4];
-            for (int j = 0; j < 4; j++) {
-                int lleva = 0;
-
-                for (int l = 0; l < porcentajes.length; l++) {
-                    lleva += porcentajes[l];
-                }
-                Integer[] enteros = new Integer[13 - lleva];
-                for (int k = 0; k < enteros.length; k++) {
-                    enteros[k] = k;
-                }
-                porcentajes[j] = (int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0]);
-            }
-            if (i == 0) {
-                Vehiculo primero = new Avion(porcentajes);
-                primero.setDueño(this);
-                primero.setNo(1);
-                vehiculos.agregar(primero);
-                primero.agregarNombre();
-                primero.ingresarImagen();
-                JOptionPane.showMessageDialog(null, "Se ha creado su avion");
-                primero.setDueño(this);
-            } else {
-                Vehiculo siguiente = new Tanque(porcentajes);
-                siguiente.setDueño(this);
-                siguiente.setNo(vehiculos.getContador() + 1);
-                siguiente.setAnterior(vehiculos.getUltimo());
-                vehiculos.getUltimo().setPosterior(siguiente);
-                vehiculos.agregar(siguiente);
-                siguiente.agregarNombre();
-                siguiente.ingresarImagen();
-                JOptionPane.showMessageDialog(null, "Se ha creado su tanque");
-            }
-        }
-    }
-
     public void nuevoVehiculo() {
         String[] tipos = {"Avion", "Tanque"};
         String nuevo = (String) JOptionPane.showInputDialog(null, "Se creara un nuevo vehiculo, que tipo desea", "vehiculo", JOptionPane.INFORMATION_MESSAGE, null, tipos, tipos[0]);
         float[] porcentajes = new float[4];
         int lleva = 0;
         for (int j = 0; j < 4; j++) {
+            lleva = 0;
             for (int l = 0; l < porcentajes.length; l++) {
                 lleva += porcentajes[l];
             }
@@ -163,27 +127,42 @@ public class Jugador extends JLabel implements Serializable{
             }
             porcentajes[j] = (int) JOptionPane.showInputDialog(null, "", "puntos a la caracteristica: " + (j + 1), 1, null, enteros, enteros[0]);
         }
-        if ("avion".equals(nuevo.toLowerCase())) {
-            Vehiculo primero = new Avion(porcentajes);
-            primero.setDueño(this);
-            primero.setNo(vehiculos.getContador() + 1);
-            primero.setAnterior(vehiculos.getUltimo());
-            vehiculos.getUltimo().setPosterior(primero);
-            vehiculos.agregar(primero);
-            primero.agregarNombre();
-            primero.ingresarImagen();
-            JOptionPane.showMessageDialog(null, "Se ha creado su avion");
-            primero.setDueño(this);
-        } else if ("tanque".equals(nuevo.toLowerCase())) {
-            Vehiculo primero = new Tanque(porcentajes);
-            primero.setDueño(this);
-            primero.setNo(vehiculos.getContador() + 1);
-            primero.setAnterior(vehiculos.getUltimo());
-            vehiculos.getUltimo().setPosterior(primero);
-            vehiculos.agregar(primero);
-            primero.agregarNombre();
-            primero.ingresarImagen();
-            JOptionPane.showMessageDialog(null, "Se ha creado su tanque");
+        if (null != nuevo.toLowerCase()) {
+            switch (nuevo.toLowerCase()) {
+                case "avion":
+                    Vehiculo avion = new Avion(porcentajes);
+                    avion.setDueño(this);
+                    avion.setNo(vehiculos.getContador() + 1);
+                    if (vehiculos.getContador() != 0) {
+                        avion.setAnterior(vehiculos.getUltimo());
+                        vehiculos.getUltimo().setPosterior(avion);
+                    }
+                    vehiculos.agregar(avion);
+                    avion.agregarNombre();
+                    avion.ingresarImagen();
+                    JOptionPane.showMessageDialog(null, "Se ha creado su avion");
+                    avion.setDueño(this);
+                    if (vehiculos.getContador() < 4) {
+                        avion.setComprada(true);
+                    }
+                    break;
+                case "tanque":
+                    Vehiculo tanque = new Tanque(porcentajes);
+                    tanque.setDueño(this);
+                    tanque.setNo(vehiculos.getContador() + 1);
+                    if (vehiculos.getContador() != 0) {
+                        tanque.setAnterior(vehiculos.getUltimo());
+                        vehiculos.getUltimo().setPosterior(tanque);
+                    }
+                    vehiculos.agregar(tanque);
+                    tanque.agregarNombre();
+                    tanque.ingresarImagen();
+                    JOptionPane.showMessageDialog(null, "Se ha creado su tanque");
+                    if (vehiculos.getContador() < 4) {
+                        tanque.setComprada(true);
+                    }
+                    break;
+            }
         }
     }
 
@@ -240,46 +219,62 @@ public class Jugador extends JLabel implements Serializable{
         return armas;
     }
 
+    public int getDinero() {
+        return dinero;
+    }
+
     public void ingresarArmas() {
         if (armas.getContador() == 0) {
             Arma nueva = new Arma(this);
             armas.agregar(nueva);
             nueva.setNo(armas.getContador());
+            if (armas.getContador() < 3) {
+                nueva.setComprada(true);
+            }
         } else {
             Arma siguiente = new Arma(this);
             siguiente.setNo(armas.getContador() + 1);
             siguiente.setAnterior(armas.getUltimo());
             armas.getUltimo().setPosterior(siguiente);
             armas.agregar(siguiente);
+            if (armas.getContador() < 3) {
+                siguiente.setComprada(true);
+            }
         }
     }
 
     public VisualJugador getIu() {
         return iu;
     }
-    
-    public void setPerdida(){
+
+    public void setPerdida() {
         this.perdidas++;
     }
-    
-    public void setGanada(){
+
+    public void setGanada() {
         this.ganadas++;
         experiencia += 300;
         dinero += 250;
-        if(experiencia >= experienciaTope){
+        if (experiencia >= experienciaTope) {
             nivel++;
-            experienciaTope += 300*nivel;
+            experienciaTope += 300 * nivel;
             experiencia = 0;
-            dinero+= 600;
+            dinero += 600;
             JOptionPane.showMessageDialog(null, "Ha subido de nivel \n junto a eso suben todas sus caracteristicas!", "nivel+", JOptionPane.OK_OPTION);
         }
     }
-    
-    public void setKills(){
+
+    public void setKills() {
         kills++;
     }
-    
-    public void setMuertes(){
+
+    public void setMuertes() {
         muertes++;
+    }
+
+    public void comprarObjeto(int valor) {
+        if (valor <= dinero) {
+            dinero -= valor;
+        }
     }
 }

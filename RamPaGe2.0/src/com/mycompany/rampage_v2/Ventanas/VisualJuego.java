@@ -11,19 +11,16 @@ import com.mycompany.rampage_v2.Juego.Dados.D6;
 import com.mycompany.rampage_v2.Juego.Dados.Dado;
 import com.mycompany.rampage_v2.Juego.Juego;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
-import com.mycompany.rampage_v2.Juego.Mapas.Mapa6x4;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
-import com.mycompany.rampage_v2.Juego.listado.Listado;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
  *
  * @author marito
  */
-public class VisualJuego extends javax.swing.JFrame {
+public class VisualJuego extends javax.swing.JFrame{
 
     /**
      * Creates new form VisualJuego

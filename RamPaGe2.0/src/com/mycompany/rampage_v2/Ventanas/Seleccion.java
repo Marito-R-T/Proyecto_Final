@@ -7,12 +7,13 @@ package com.mycompany.rampage_v2.Ventanas;
 
 import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.listado.Listado;
+import java.io.Serializable;
 
 /**
  *
  * @author marito
  */
-public class Seleccion extends javax.swing.JFrame {
+public class Seleccion extends javax.swing.JFrame{
 
     /**
      * Creates new form Seleccion

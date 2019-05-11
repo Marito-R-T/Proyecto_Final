@@ -7,6 +7,7 @@ package com.mycompany.rampage_v2.Juego.Armas;
 
 import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,23 +21,43 @@ import javax.swing.JOptionPane;
  *
  * @author marito
  */
-public class Arma{
+public class Arma {
 
     private Arma a, p;
     private int No;
     private String nombre;
-    private double daño, precision;
-    private JLabel muestra = new JLabel();
+    private float daño, precision;
+    private JLabel muestra = new JLabel(), comprar = new JLabel();
     private ImageIcon imagen;
     private String tipo;
     private Vehiculo dueño;
     private Jugador jugador;
+    private boolean enuso = false;
+    private boolean comprada = false;
+    private int precio;
 
     public Arma(Jugador jugador) {
         this.jugador = jugador;
+        muestra.setOpaque(true);
+        muestra.setBackground(Color.red);
         ingresarImagen();
         nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre de su Arma", null, JOptionPane.QUESTION_MESSAGE);
         iniciarMuestra();
+        comprar.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ComprarMouseClicked(evt);
+            }
+
+        });
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public ImageIcon getImagen() {
+        return imagen;
     }
 
     public Arma getAnterior() {
@@ -80,6 +101,7 @@ public class Arma{
         muestra.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         muestra.setFont(new java.awt.Font("Comic Sans MS", 1, 16));
         muestra.setText(this.getNombre() + " Arma no: " + this.getNo() + " " + tipo);
+        muestra.setToolTipText("Es un/a " + tipo + " \n tiene de daño " + daño + " \n tiene de presicion: " + ((precision - 1) * 100));
         muestra.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -107,18 +129,30 @@ public class Arma{
                 case "Pistola":
                     imagen = new ImageIcon(getClass().getResource("/Imagenes/Armas/pistola.png"));
                     muestra.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+                    daño = 5;
+                    precision = (float) 1.6;
+                    precio = 100;
                     break;
                 case "Subfusil":
                     imagen = new ImageIcon(getClass().getResource("/Imagenes/Armas/subfusil.png"));
                     muestra.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+                    daño = 7;
+                    precision = (float) 1.5;
+                    precio = 120;
                     break;
                 case "Bazooka":
                     imagen = new ImageIcon(getClass().getResource("/Imagenes/Armas/bazooka.png"));
                     muestra.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+                    daño = 10;
+                    precision = (float) 1.6;
+                    precio = 160;
                     break;
                 case "FrancoTirador":
                     imagen = new ImageIcon(getClass().getResource("/Imagenes/Armas/francotirador.png"));
                     muestra.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+                    daño = 14;
+                    precision = (float) 1.8;
+                    precio = 220;
                     break;
             }
         }
@@ -146,18 +180,14 @@ public class Arma{
     }
 
     private void muestraMouseClicked(MouseEvent evt) {
-        JDialog escoger = new JDialog();
-        Vehiculo[] vehiculos = jugador.getGarage().ordenarPorFecha();
-        String[] opciones = new String[vehiculos.length];
-        Integer[] enteros = new Integer[vehiculos.length];
-        for (int i = 0; i < vehiculos.length; i++) {
-            enteros[i] = vehiculos[i].getNo();
-            opciones[i] = vehiculos[i].getNombre();
-        }
-        int x = -1;
-        while (x == -1) {
-            //JOptionPane.showInternalOptionDialog(jugador.getIu(), "porfavor escoger un vehiculo para ingresar", nombre, JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE, opciones, opciones[0]);
-            JOptionPane.showMessageDialog(null, x);
+        if (comprada && !enuso) {
+            Vehiculo[] vehiculos = jugador.getGarage().ordenarPorFecha();
+            Vehiculo vehiculo = (Vehiculo) JOptionPane.showInputDialog(null, "A que vehiculo deseas ingresarlo", "vehiculo",
+                    JOptionPane.INFORMATION_MESSAGE, new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)), vehiculos, vehiculos[0]);
+            if (vehiculo != null) {
+                vehiculo.ingresarArma(this);
+                enuso = true;
+            }
         }
     }
 
@@ -165,5 +195,45 @@ public class Arma{
     }
 
     private void muestraMouseEntered(MouseEvent evt) {
+    }
+
+    public boolean isEnuso() {
+        return enuso;
+    }
+
+    public void setEnuso(boolean enuso) {
+        this.enuso = enuso;
+    }
+
+    public boolean isComprada() {
+        return comprada;
+    }
+
+    public void setComprada(boolean comprada) {
+        muestra.setOpaque(true);
+        muestra.setBackground(Color.CYAN);
+        this.comprada = comprada;
+    }
+
+    public float dañoHecho() {
+        float dañototal = daño * precision;
+        return dañototal;
+    }
+
+    public String toString() {
+        return "nombre: " + nombre + "No: " + tipo + "de tipo: " + tipo;
+    }
+
+    public JLabel getComprar() {
+        return comprar;
+    }
+
+    private void ComprarMouseClicked(MouseEvent evt) {
+        if(jugador.getDinero() > precio){
+            if(JOptionPane.showConfirmDialog(comprar, "seguro quiere comprar esta arma?") == 1){
+            setComprada(true);
+            jugador.comprarObjeto(precio);
+            }
+        }
     }
 }

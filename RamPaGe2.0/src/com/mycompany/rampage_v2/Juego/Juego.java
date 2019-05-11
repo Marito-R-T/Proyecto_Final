@@ -5,11 +5,9 @@
  */
 package com.mycompany.rampage_v2.Juego;
 
-import com.mycompany.rampage_v2.Juego.Dados.Dado;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
-import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Terreno;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Capacidades.CampoBatalla;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Capacidades.Volante;
@@ -18,10 +16,6 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Tanque;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import com.mycompany.rampage_v2.Ventanas.VisualJuego;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.List;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +28,7 @@ import javax.swing.JPanel;
  *
  * @author marito
  */
-public class Juego implements Runnable {
+public class Juego implements Runnable{
 
     private boolean segano = false, seperdio = false;
     private Vehiculo[] vehiculos;
@@ -153,7 +147,7 @@ public class Juego implements Runnable {
         for (int i = 0; i < enemigos.length; i++) {
             int u = numerorandom.nextInt(3);
             int referencia = vehiculos[u].getNivel();
-            enemigos[i] = new Enemigo(vehiculos[u].getVida() + (10 * referencia), vehiculos[u].getDaño() + (2 * referencia), vehiculos[u].getDefensaNeta() + (3 * referencia));
+            enemigos[i] = new Enemigo(vehiculos[u].getVida() + (10 * referencia), vehiculos[u].getDañoEnemigos() + (2 * referencia), vehiculos[u].getDefensaNeta() + (3 * referencia));
         }
     }
 
@@ -259,6 +253,19 @@ public class Juego implements Runnable {
             direccion = (String) JOptionPane.showInputDialog(visual, "A que direccion se movera?", "Dirreccion", JOptionPane.INFORMATION_MESSAGE, null, direcciones, direcciones[0]);
         }
         movimiento.moverVehiculo(enjuego, visual.getDado().getEscogido(), direccion);
+        //aqui verifico si donde se quedo el vehiculo hay una cajacomodin;
+/*        if (enjuego.getPosicion().getCaja() != null) {
+         visual.empezarDado3();
+         while (visual.getDado().isEstaGirando()) {
+         try {
+         Thread.sleep(100);
+         } catch (InterruptedException ex) {
+         Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
+         }
+
+         }*/
 
         //movimiento.colocarFlechas(this);
         /*while (movimiento.getDireccion() == null) {
@@ -273,6 +280,7 @@ public class Juego implements Runnable {
     private CampoBatalla atacar = new CampoBatalla();
 
     public void atacarVehiculo() {
+        //empiezo el ataque a los enemigos, primero escogiendo a que direccion desea atacar!!!
         visual.empezarDado100();
         while (visual.getDado().isEstaGirando()) {
             try {
@@ -292,54 +300,34 @@ public class Juego implements Runnable {
     }
 
     public void cambiarVehiculo() {
-        escoger.setVisible(false);
-        escoger.setModal(false);
-        JDialog cambio = new JDialog(visual);
-        cambio.setSize(400, 450);
-        cambio.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        cambio.setLocationRelativeTo(visual);
-        JPanel panel = new JPanel();
-        panel.setSize(cambio.getSize());
-        JLabel[] elegir = new JLabel[vehiculos.length];
+        //aqui lo que hare es poner un Joption para que eija el vehiculo que desee
+        int x = 0;
         for (int i = 0; i < vehiculos.length; i++) {
-            elegir[i] = vehiculos[i].getMuestra2();
-            elegir[i].addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    
-                    for (int i = 0; i < elegir.length; i++) {
-                        if (elegir[i] == evt.getSource()) {
-                            if ((vehiculos[i].getVida() > 0 && (vehiculos[i] instanceof Tanque && !(enjuego.getPosicion() instanceof Agua)) || (vehiculos[i] instanceof Avion && !(enjuego.getPosicion() instanceof Montaña))) && vehiculos[i] != enjuego) {
-                                //vehiculos[i].setLocation(enjuego.getLocation());
-                                //vehiculos[i].setSize(enjuego.getSize());
-                                mapa.remove(enjuego);
-                                enjuego.getPosicion().setVehiculo(vehiculos[i]);
-                                Terreno terreno = enjuego.getPosicion();
-                                enjuego = vehiculos[i];
-                                vehiculos[i].setPosicion(terreno);
-                                cambio.setVisible(false);
-                                cambio.setModal(false);
-                                    //mapa.agregarComponente(enjuego);
-                                    //mapa.add(enjuego, 1);
-                                    //enjuego.getPosicion().setVehiculo(vehiculos[i]);
-                                    //enjuego.setPosicion(null);
-                                    //mapa.remove(enjuego);
-                                    //mapa.add(enjuego, 1);
-                            }
-                        }
-                    }
-                }
-            });
-            panel.add(elegir[i]);
-        }
-        cambio.add(panel);
-        cambio.setVisible(true);
-        cambio.setModal(true);
-        while (cambio.isVisible()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
+            if (vehiculos[i].getVida() == 0) {
+                x++;
             }
+        }
+        Vehiculo cambiar = null;
+        if (x < 2) {
+            while (cambiar == null) {
+                cambiar = (Vehiculo) JOptionPane.showInputDialog(null, "Que vehiculo desea cambiar", "vehiculo",
+                        JOptionPane.INFORMATION_MESSAGE, null, vehiculos, vehiculos[0]);
+                if (cambiar != null && (cambiar.getVida() == 0 || cambiar == enjuego)) {
+                    cambiar = null;
+                }
+            }
+            if ((cambiar instanceof Tanque && !(enjuego.getPosicion() instanceof Agua)) || (cambiar instanceof Avion && !(enjuego.getPosicion() instanceof Montaña))) {
+                enjuego.getPosicion().setVehiculo(null);
+                mapa.remove(enjuego);
+                cambiar.setPosicion(enjuego.getPosicion());
+                enjuego.getPosicion().setVehiculo(cambiar);
+                enjuego = cambiar;
+                //mapa.add(cambiar);
+            }else{
+                JOptionPane.showMessageDialog(null, "no se puede cambiar \n ya que esta en un terreno que no puede ingresar");
+            }
+        } else {
+            JOptionPane.showMessageDialog(visual, "No puede cambiar su auto, porque todos estan de baja");
         }
     }
 
@@ -382,8 +370,9 @@ public class Juego implements Runnable {
             for (int i = 0; i < vehiculos.length; i++) {
                 if (vehiculos[i].getVida() == 0) {
                     vehiculoderrotado = i;
-                    vehiculos[i].setOpaque(false);
-                    vehiculos[i].setBackground(Color.red);
+                    vehiculos[i].setEstaActivo(false);
+                    vehiculos[i].getMuestra().setOpaque(false);
+                    vehiculos[i].getMuestra().setBackground(Color.red);
                     vehiculos[i].getPosicion().setVehiculo(null);
                     mapa.remove(enjuego);
                     break;

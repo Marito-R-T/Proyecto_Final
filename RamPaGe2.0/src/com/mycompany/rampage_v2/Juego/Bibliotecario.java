@@ -36,6 +36,7 @@ public class Bibliotecario {
             this.salida = new FileOutputStream(archivo);
             this.guardar = new ObjectOutputStream(this.salida);
             guardar.writeObject(jugador);
+            guardar.flush();
             guardar.close();
         } catch (IOException ex) {
         }
@@ -61,6 +62,9 @@ public class Bibliotecario {
                     jugadores.agregar(siguiente);
                 }
             }
+            if (!archivo.exists()) {
+                jugadores = new Listado<>();
+            }
         } catch (FileNotFoundException ex) {
         } catch (IOException | ClassNotFoundException ex) {
         }
@@ -82,5 +86,34 @@ public class Bibliotecario {
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Bibliotecario.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void guardarListado(Listado<Jugador> jugadores) {
+        try {
+            File archivo = new File("jugadores.rpg");
+            this.salida = new FileOutputStream(archivo);
+            this.guardar = new ObjectOutputStream(this.salida);
+            guardar.writeObject(jugadores);
+            guardar.flush();
+            guardar.close();
+        } catch (IOException ex) {
+        }
+    }
+
+    public Listado<Jugador> leerListado() {
+        try {
+            Listado<Jugador> listado;
+            File archivo = new File("jugadores.rpg");
+            this.entrada = new FileInputStream(archivo);
+            this.lectura = new ObjectInputStream(this.entrada);
+            listado = (Listado<Jugador>) this.lectura.readObject();
+            lectura.close();
+            return listado;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Bibliotecario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Bibliotecario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new Listado<>();
     }
 }

@@ -11,6 +11,7 @@ import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Terreno;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Enemigo;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
+import java.io.Serializable;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author marito
  */
-public class CampoBatalla {
+public class CampoBatalla{
 
     private Vehiculo enjuego;
     private Enemigo enemigo;

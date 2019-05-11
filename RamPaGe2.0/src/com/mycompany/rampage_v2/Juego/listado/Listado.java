@@ -9,6 +9,7 @@ import com.mycompany.rampage_v2.Juego.Armas.Arma;
 import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
+import java.io.Serializable;
 
 /**
  *
@@ -16,7 +17,7 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
  * @param <T>
  *
  */
-public class Listado<T> {
+public class Listado<T> implements Serializable{
 
     private T primero;
     private T ultimo;

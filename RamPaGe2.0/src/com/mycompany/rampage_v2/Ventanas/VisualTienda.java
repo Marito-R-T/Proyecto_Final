@@ -5,19 +5,43 @@
  */
 package com.mycompany.rampage_v2.Ventanas;
 
+import com.mycompany.rampage_v2.Juego.Armas.Arma;
+import com.mycompany.rampage_v2.Juego.Jugador;
+import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
+import com.mycompany.rampage_v2.Juego.listado.Listado;
+import java.awt.Color;
+import java.awt.Image;
+import java.io.Serializable;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 /**
  *
  * @author marito
  */
-public class VisualTienda extends javax.swing.JFrame {
+public class VisualTienda extends javax.swing.JFrame{
 
+    private Jugador jugador;
+    private Vehiculo[] porcomprar;
+    private Arma[] sincomprar;
+    private Listado<Arma> armas;
+    private Listado<Vehiculo> vehiculos;
+    private VisualJugador visual;
     /**
      * Creates new form VisualTienda
      */
     private Inicio inicio;
-    public VisualTienda(Inicio inicio) {
+
+    public VisualTienda(Inicio inicio, Jugador jugador, VisualJugador visual) {
+        this.setLocationRelativeTo(null);
+        this.visual = visual;
+        this.setResizable(false);
+        this.jugador = jugador;
         initComponents();
         this.inicio = inicio;
+        revisarArmasPorComprar();
+        revisarVehiculosporComprar();
     }
 
     /**
@@ -29,23 +53,162 @@ public class VisualTienda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        pnl_jugador = new javax.swing.JPanel();
+        spnl_vehiculos = new javax.swing.JScrollPane();
+        pnl_vehiculos = new javax.swing.JPanel();
+        spnl_armas = new javax.swing.JScrollPane();
+        pnl_armas = new javax.swing.JPanel();
+        pnlBots = new javax.swing.JPanel();
+        btn_salir = new javax.swing.JButton();
+        lblfondo = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(800, 640));
+        setMinimumSize(new java.awt.Dimension(800, 640));
+        setPreferredSize(new java.awt.Dimension(800, 640));
+        setResizable(false);
+        getContentPane().setLayout(null);
+
+        javax.swing.GroupLayout pnl_jugadorLayout = new javax.swing.GroupLayout(pnl_jugador);
+        pnl_jugador.setLayout(pnl_jugadorLayout);
+        pnl_jugadorLayout.setHorizontalGroup(
+            pnl_jugadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 460, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        pnl_jugadorLayout.setVerticalGroup(
+            pnl_jugadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        getContentPane().add(pnl_jugador);
+        pnl_jugador.setBounds(10, 10, 460, 100);
+
+        javax.swing.GroupLayout pnl_vehiculosLayout = new javax.swing.GroupLayout(pnl_vehiculos);
+        pnl_vehiculos.setLayout(pnl_vehiculosLayout);
+        pnl_vehiculosLayout.setHorizontalGroup(
+            pnl_vehiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 457, Short.MAX_VALUE)
+        );
+        pnl_vehiculosLayout.setVerticalGroup(
+            pnl_vehiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 467, Short.MAX_VALUE)
+        );
+
+        spnl_vehiculos.setViewportView(pnl_vehiculos);
+
+        getContentPane().add(spnl_vehiculos);
+        spnl_vehiculos.setBounds(10, 120, 460, 470);
+
+        javax.swing.GroupLayout pnl_armasLayout = new javax.swing.GroupLayout(pnl_armas);
+        pnl_armas.setLayout(pnl_armasLayout);
+        pnl_armasLayout.setHorizontalGroup(
+            pnl_armasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 307, Short.MAX_VALUE)
+        );
+        pnl_armasLayout.setVerticalGroup(
+            pnl_armasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 397, Short.MAX_VALUE)
+        );
+
+        spnl_armas.setViewportView(pnl_armas);
+
+        getContentPane().add(spnl_armas);
+        spnl_armas.setBounds(480, 10, 310, 400);
+
+        javax.swing.GroupLayout pnlBotsLayout = new javax.swing.GroupLayout(pnlBots);
+        pnlBots.setLayout(pnlBotsLayout);
+        pnlBotsLayout.setHorizontalGroup(
+            pnlBotsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        pnlBotsLayout.setVerticalGroup(
+            pnlBotsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(pnlBots);
+        pnlBots.setBounds(480, 420, 200, 170);
+
+        btn_salir.setText("Salir");
+        btn_salir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_salirMouseClicked(evt);
+            }
+        });
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_salir);
+        btn_salir.setBounds(690, 420, 100, 170);
+        getContentPane().add(lblfondo);
+        lblfondo.setBounds(0, 0, 800, 600);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_salirActionPerformed
 
+    private void btn_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        visual.setVisible(true);
+    }//GEN-LAST:event_btn_salirMouseClicked
+
+    public void iniciarComponentes() {
+        lbldinero = new JLabel();
+        lbldinero.setBounds(0, 0, pnl_jugador.getWidth(), pnl_jugador.getHeight() / 2);
+        lblnombre = new JLabel();
+        lblnombre.setBounds(0, pnl_jugador.getHeight() / 2, pnl_jugador.getWidth(), pnl_jugador.getHeight() / 2);
+        lbldinero.setText(Integer.toString(jugador.getDinero()));
+        lbldinero.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        lblnombre.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        lblnombre.setFont(new java.awt.Font("Comic Sans MS", 1, 24));
+        lbldinero.setFont(new java.awt.Font("Comic Sans MS", 1, 24));
+        lbldinero.setOpaque(true);
+        lbldinero.setBackground(Color.YELLOW);
+        pnl_jugador.add(jugador);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_salir;
+    private javax.swing.JLabel lblfondo;
+    private javax.swing.JPanel pnlBots;
+    private javax.swing.JPanel pnl_armas;
+    private javax.swing.JPanel pnl_jugador;
+    private javax.swing.JPanel pnl_vehiculos;
+    private javax.swing.JScrollPane spnl_armas;
+    private javax.swing.JScrollPane spnl_vehiculos;
     // End of variables declaration//GEN-END:variables
+
+    private JLabel lbldinero;
+    private JLabel lblnombre;
+
+    private void revisarArmasPorComprar() {
+        Arma[] generales = jugador.getArmeria().ordenarPorFecha();
+        ArrayList<JLabel> lbl_armas = new ArrayList<>();
+        int x = 0;
+        for (int i = 0; i < generales.length; i++) {
+            if (!generales[i].isComprada()) {
+                //armas.agregar(generales[i]);
+                JLabel nuevo = generales[i].getComprar();
+                nuevo.setBounds(10, 100 * x + 10, pnl_armas.getWidth() - 20, 100);
+                nuevo.setIcon(new ImageIcon(generales[i].getImagen().getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+                nuevo.setText(generales[i].toString());
+                pnl_armas.add(nuevo);
+                x++;
+            }
+        }
+    }
+
+    private void revisarVehiculosporComprar() {
+        Vehiculo[] generales = jugador.getGarage().ordenarPorFecha();
+        for (int i = 0; i<generales.length; i++){
+            if(!generales[i].isComprada()){
+                vehiculos.agregar(generales[i]);
+            }
+        }
+    }
 }

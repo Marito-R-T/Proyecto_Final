@@ -5,11 +5,13 @@
  */
 package com.mycompany.rampage_v2.Ventanas;
 
+import java.io.Serializable;
+
 /**
  *
  * @author marito
  */
-public class VisualReportes extends javax.swing.JFrame {
+public class VisualReportes extends javax.swing.JFrame{
 
     /**
      * Creates new form VisualReportes

@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -35,8 +36,11 @@ public class VisualJugador extends javax.swing.JFrame {
     private Inicio inicio;
     private Jugador jugador;
     private final VisualJuego JUEGO;
+    private VisualTienda TIENDA;
 
     public VisualJugador(Inicio inicio) {
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         JUEGO = new VisualJuego(inicio);
         initComponents();
         //iniciarComponentes();
@@ -110,6 +114,11 @@ public class VisualJugador extends javax.swing.JFrame {
 
         btnTienda.setBackground(new java.awt.Color(153, 153, 0));
         btnTienda.setText("TIENDA");
+        btnTienda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTiendaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlInfo2Layout = new javax.swing.GroupLayout(pnlInfo2);
         pnlInfo2.setLayout(pnlInfo2Layout);
@@ -334,18 +343,20 @@ public class VisualJugador extends javax.swing.JFrame {
 
     public void ingresarVehiculo(Vehiculo vehiculo) {
         int z = 0;
-        while (elegidos[z] != null && z < 3) {
-            if (elegidos[z] == vehiculo) {
-                break;
+        if (vehiculo.isComprada() && vehiculo.isEstaActivo()) {
+            while (elegidos[z] != null && z < 3) {
+                if (elegidos[z] == vehiculo) {
+                    break;
+                }
+                z++;
             }
-            z++;
-        }
-        if (z < 3) {
-            elegidos[z] = vehiculo;
-        } else {
-            elegidos[0] = elegidos[1];
-            elegidos[1] = elegidos[2];
-            elegidos[2] = vehiculo;
+            if (z < 3) {
+                elegidos[z] = vehiculo;
+            } else {
+                elegidos[0] = elegidos[1];
+                elegidos[1] = elegidos[2];
+                elegidos[2] = vehiculo;
+            }
         }
     }
     private void btnjugarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnjugarMouseClicked
@@ -398,10 +409,10 @@ public class VisualJugador extends javax.swing.JFrame {
             mapas[1].setFont(new java.awt.Font("Comic Sans MS", 1, 13));
             mapas[2].setFont(new java.awt.Font("Comic Sans MS", 1, 13));
             dialogo.setVisible(true);
-        //this.setVisible(false);
+            //this.setVisible(false);
             //JUEGO.setVisible(true);
             //JUEGO.setMapa(new Mapa6x4());
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "No puede ingresar, ya que no ha elegido vehiculos", "Error", JOptionPane.OK_OPTION);
         }
     }//GEN-LAST:event_btnjugarMouseClicked
@@ -422,8 +433,9 @@ public class VisualJugador extends javax.swing.JFrame {
         jugador.setIU(null);
         jugador.setInicio(null);
         Bibliotecario guardar = new Bibliotecario();
+        //guardar.guardarJugadores(jugador);
         guardar.guardarJugadores(jugador);
-        
+
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void btnAcrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcrearMouseClicked
@@ -441,7 +453,7 @@ public class VisualJugador extends javax.swing.JFrame {
     private void btnVcrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVcrearMouseClicked
         // TODO add your handling code here:
         jugador.nuevoVehiculo();
-        jugador.getVehiculos().getUltimo().getMuestra().setBounds(10, (60*jugador.getVehiculos().getContador()), pnlVehiculos.getWidth() - 10, 60);
+        jugador.getVehiculos().getUltimo().getMuestra().setBounds(10, (60 * jugador.getVehiculos().getContador()), pnlVehiculos.getWidth() - 10, 60);
         jugador.getVehiculos().getUltimo().iniciarMuestra();
         pnlVehiculos.add(jugador.getVehiculos().getUltimo().getMuestra());
         vehiculos = null;
@@ -449,6 +461,13 @@ public class VisualJugador extends javax.swing.JFrame {
         x = 1;
         iniciarPnlVehiculos();
     }//GEN-LAST:event_btnVcrearMouseClicked
+
+    private void btnTiendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTiendaMouseClicked
+        // TODO add your handling code here:
+        TIENDA = new VisualTienda(inicio, jugador, this);
+        TIENDA.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTiendaMouseClicked
 
     public void setJugador(Jugador jugador) {
         this.jugador = jugador;
@@ -665,7 +684,7 @@ public class VisualJugador extends javax.swing.JFrame {
         armas = null;
         if ("fecha".equals(evt.getActionCommand().toLowerCase())) {
             armas = jugador.getArmeria().ordenarPorFecha();
-        } else{
+        } else {
             armas = jugador.getArmeria().ordenarPorNombre();
         }
         iniciarpnlArmas();

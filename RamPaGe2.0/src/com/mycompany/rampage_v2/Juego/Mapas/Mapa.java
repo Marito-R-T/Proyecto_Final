@@ -15,6 +15,7 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Enemigo;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Tanque;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
+import java.io.Serializable;
 import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +24,7 @@ import javax.swing.JPanel;
  *
  * @author marito
  */
-public class Mapa extends JPanel {
+public class Mapa extends JPanel{
 
     private int No;
     protected Terreno[][] mapa;
@@ -39,7 +40,7 @@ public class Mapa extends JPanel {
     public void colocarCuadros() {
         for (int i = 0; i < FILAS; i++) {
             for (int u = 0; u < COLUMNAS; u++) {
-                this.add(mapa[i][u]);
+                this.add(mapa[i][u], 2);
                 mapa[i][u].setBounds((u * 200) + 10, (i * 200) + 10, 200, 200);
                 mapa[i][u].setMapa(this);
                 //mapa[i][u].setimage();
