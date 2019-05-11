@@ -214,7 +214,7 @@ public class Arma {
 
     private void ComprarMouseClicked(MouseEvent evt) {
         if(jugador.getDinero() > precio){
-            if(JOptionPane.showConfirmDialog(comprar, "seguro quiere comprar esta arma?") == 1){
+            if(JOptionPane.showConfirmDialog(comprar, "seguro quiere comprar esta arma?", toString(), JOptionPane.OK_OPTION) == 0){
             setComprada(true);
             jugador.comprarObjeto(precio);
             }

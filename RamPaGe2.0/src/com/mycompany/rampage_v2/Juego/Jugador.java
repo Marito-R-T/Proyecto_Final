@@ -41,7 +41,7 @@ public class Jugador extends JLabel{
     private int nivel, experiencia, experienciaTope, kills, muertes, perdidas, ganadas, dinero;
 
     public Jugador(int no) {
-        dinero = 0;
+        dinero = 600;
         this.perdidas = 0;
         this.ganadas = 0;
         vehiculos = new Listado<>();
@@ -254,7 +254,7 @@ public class Jugador extends JLabel{
     public void setGanada() {
         this.ganadas++;
         experiencia += 300;
-        dinero += 250;
+        dinero += 350;
         if (experiencia >= experienciaTope) {
             nivel++;
             experienciaTope += 300 * nivel;

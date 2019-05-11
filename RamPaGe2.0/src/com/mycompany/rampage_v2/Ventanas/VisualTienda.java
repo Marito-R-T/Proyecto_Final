@@ -20,7 +20,7 @@ import javax.swing.JLabel;
  *
  * @author marito
  */
-public class VisualTienda extends javax.swing.JFrame{
+public class VisualTienda extends javax.swing.JFrame {
 
     private Jugador jugador;
     private Vehiculo[] porcomprar;
@@ -42,6 +42,7 @@ public class VisualTienda extends javax.swing.JFrame{
         this.inicio = inicio;
         revisarArmasPorComprar();
         revisarVehiculosporComprar();
+        iniciarComponentes();
     }
 
     /**
@@ -63,9 +64,7 @@ public class VisualTienda extends javax.swing.JFrame{
         lblfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 640));
         setMinimumSize(new java.awt.Dimension(800, 640));
-        setPreferredSize(new java.awt.Dimension(800, 640));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -83,49 +82,19 @@ public class VisualTienda extends javax.swing.JFrame{
         getContentPane().add(pnl_jugador);
         pnl_jugador.setBounds(10, 10, 460, 100);
 
-        javax.swing.GroupLayout pnl_vehiculosLayout = new javax.swing.GroupLayout(pnl_vehiculos);
-        pnl_vehiculos.setLayout(pnl_vehiculosLayout);
-        pnl_vehiculosLayout.setHorizontalGroup(
-            pnl_vehiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 457, Short.MAX_VALUE)
-        );
-        pnl_vehiculosLayout.setVerticalGroup(
-            pnl_vehiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
-        );
-
+        pnl_vehiculos.setLayout(null);
         spnl_vehiculos.setViewportView(pnl_vehiculos);
 
         getContentPane().add(spnl_vehiculos);
         spnl_vehiculos.setBounds(10, 120, 460, 470);
 
-        javax.swing.GroupLayout pnl_armasLayout = new javax.swing.GroupLayout(pnl_armas);
-        pnl_armas.setLayout(pnl_armasLayout);
-        pnl_armasLayout.setHorizontalGroup(
-            pnl_armasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 307, Short.MAX_VALUE)
-        );
-        pnl_armasLayout.setVerticalGroup(
-            pnl_armasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
-        );
-
+        pnl_armas.setLayout(null);
         spnl_armas.setViewportView(pnl_armas);
 
         getContentPane().add(spnl_armas);
         spnl_armas.setBounds(480, 10, 310, 400);
 
-        javax.swing.GroupLayout pnlBotsLayout = new javax.swing.GroupLayout(pnlBots);
-        pnlBots.setLayout(pnlBotsLayout);
-        pnlBotsLayout.setHorizontalGroup(
-            pnlBotsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-        pnlBotsLayout.setVerticalGroup(
-            pnlBotsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 170, Short.MAX_VALUE)
-        );
-
+        pnlBots.setLayout(null);
         getContentPane().add(pnlBots);
         pnlBots.setBounds(480, 420, 200, 170);
 
@@ -157,20 +126,46 @@ public class VisualTienda extends javax.swing.JFrame{
         this.setVisible(false);
         visual.setVisible(true);
     }//GEN-LAST:event_btn_salirMouseClicked
-
+        JLabel lbl_armeria;
+        JLabel lbl_garage;
+        JLabel lbl_bots;
     public void iniciarComponentes() {
+        lbl_armeria = new JLabel();
+        lbl_garage = new JLabel();
+        lbl_bots = new JLabel();
+        lbl_armeria.setSize(pnl_armas.getSize());
+        lbl_garage.setSize(pnl_vehiculos.getSize());
+        lbl_bots.setSize(pnlBots.getSize());
+        ImageIcon figurita1 = new ImageIcon(getClass().getResource("/Imagenes/tienda.jpg"));
+        lblfondo.setIcon(new ImageIcon(figurita1.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_FAST)));
+        ImageIcon figurita2 = new ImageIcon(getClass().getResource("/Imagenes/armeria.jpg"));
+        lbl_armeria.setIcon(new ImageIcon(figurita2.getImage().getScaledInstance(lbl_armeria.getWidth(), lbl_armeria.getHeight(), Image.SCALE_FAST)));
+        ImageIcon figurita3 = new ImageIcon(getClass().getResource("/Imagenes/garage.jpeg"));
+        lbl_garage.setIcon(new ImageIcon(figurita3.getImage().getScaledInstance(lbl_garage.getWidth(), lbl_garage.getHeight(), Image.SCALE_FAST)));
+        ImageIcon figurita4 = new ImageIcon(getClass().getResource("/Imagenes/bot.png"));
+        lbl_bots.setIcon(new ImageIcon(figurita4.getImage().getScaledInstance(lbl_bots.getWidth(), lbl_bots.getHeight(), Image.SCALE_FAST)));
+        System.gc();
+        pnlBots.add(lbl_bots);
+        pnl_armas.add(lbl_armeria);
+        pnl_vehiculos.add(lbl_garage);
+        lblfondo.setIcon(null);
         lbldinero = new JLabel();
         lbldinero.setBounds(0, 0, pnl_jugador.getWidth(), pnl_jugador.getHeight() / 2);
         lblnombre = new JLabel();
         lblnombre.setBounds(0, pnl_jugador.getHeight() / 2, pnl_jugador.getWidth(), pnl_jugador.getHeight() / 2);
-        lbldinero.setText(Integer.toString(jugador.getDinero()));
+        lblnombre.setText(jugador.getNombre());
+        lbldinero.setText("Tiene " + Integer.toString(jugador.getDinero()) + " De Oro");
         lbldinero.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         lblnombre.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        lblnombre.setFont(new java.awt.Font("Comic Sans MS", 1, 24));
+        lblnombre.setFont(new java.awt.Font("Comic Sans MS", 1, 30));
         lbldinero.setFont(new java.awt.Font("Comic Sans MS", 1, 24));
         lbldinero.setOpaque(true);
         lbldinero.setBackground(Color.YELLOW);
-        pnl_jugador.add(jugador);
+        lblnombre.setBackground(Color.LIGHT_GRAY);
+        pnl_jugador.add(lbldinero);
+        pnl_jugador.add(lblnombre);
+        
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_salir;
@@ -188,7 +183,6 @@ public class VisualTienda extends javax.swing.JFrame{
 
     private void revisarArmasPorComprar() {
         Arma[] generales = jugador.getArmeria().ordenarPorFecha();
-        ArrayList<JLabel> lbl_armas = new ArrayList<>();
         int x = 0;
         for (int i = 0; i < generales.length; i++) {
             if (!generales[i].isComprada()) {
@@ -197,6 +191,7 @@ public class VisualTienda extends javax.swing.JFrame{
                 nuevo.setBounds(10, 100 * x + 10, pnl_armas.getWidth() - 20, 100);
                 nuevo.setIcon(new ImageIcon(generales[i].getImagen().getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
                 nuevo.setText(generales[i].toString());
+                nuevo.setFont(new java.awt.Font("Negrita", 1, 18));
                 pnl_armas.add(nuevo);
                 x++;
             }
@@ -205,9 +200,15 @@ public class VisualTienda extends javax.swing.JFrame{
 
     private void revisarVehiculosporComprar() {
         Vehiculo[] generales = jugador.getGarage().ordenarPorFecha();
-        for (int i = 0; i<generales.length; i++){
-            if(!generales[i].isComprada()){
-                vehiculos.agregar(generales[i]);
+        for (int i = 0; i < generales.length; i++) {
+            int x = 0;
+            if (!generales[i].isComprada()) {
+                JLabel nuevo = generales[i].getMuestra2();
+                nuevo.setBounds(10, 100 * x + 10, pnl_vehiculos.getWidth() - 20, 100);
+                nuevo.setIcon(new ImageIcon(generales[i].getImagen().getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+                nuevo.setText(generales[i].toString());
+                pnl_vehiculos.add(nuevo);
+                x++;
             }
         }
     }

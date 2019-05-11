@@ -5,6 +5,7 @@
  */
 package com.mycompany.rampage_v2.Juego;
 
+import com.mycompany.rampage_v2.Juego.Comodines.Comodin;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
@@ -28,7 +29,7 @@ import javax.swing.JPanel;
  *
  * @author marito
  */
-public class Juego implements Runnable{
+public class Juego implements Runnable {
 
     private boolean segano = false, seperdio = false;
     private Vehiculo[] vehiculos;
@@ -59,6 +60,7 @@ public class Juego implements Runnable{
             empezarelJuego();
             while (!segano && !seperdio) {
                 turnopropio();
+                revisarComodin();
                 revisarVida();
                 if (segano || seperdio) {
                     break;
@@ -85,6 +87,27 @@ public class Juego implements Runnable{
 
     private final Volante movimiento = new Volante();
     private final JLabel[] posibilidades;
+
+    private void revisarComodin() {
+        if (enjuego.getPosicion().getCaja() != null) {
+            JOptionPane.showMessageDialog(null, "has encontrado un comodin \n presiona el boton del dado \n para saber que te toca :3");
+            visual.empezarDado3();
+            while (visual.getDado().isEstaGirando()) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            Comodin nuevo = new Comodin(visual.getDado().getEscogido());
+            enjuego.setComodin(nuevo);
+            enjuego.getPosicion().setComodin(null);
+            if (enjuego.getComodin().getNumero() == 1) {
+                JOptionPane.showMessageDialog(null, "tu comodin te ha curado! ");
+                enjuego.setVida((float) (enjuego.getVida() + enjuego.getVida()*enjuego.getComodin().recuperarVida()));
+            }
+        }
+    }
 
     private void turnopropio() {
         //empieza el turno propio
@@ -323,7 +346,7 @@ public class Juego implements Runnable{
                 enjuego.getPosicion().setVehiculo(cambiar);
                 enjuego = cambiar;
                 //mapa.add(cambiar);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "no se puede cambiar \n ya que esta en un terreno que no puede ingresar");
             }
         } else {

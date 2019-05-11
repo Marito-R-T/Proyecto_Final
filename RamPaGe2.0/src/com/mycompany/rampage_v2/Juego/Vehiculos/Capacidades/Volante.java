@@ -5,33 +5,21 @@
  */
 package com.mycompany.rampage_v2.Juego.Vehiculos.Capacidades;
 
-import com.mycompany.rampage_v2.Juego.Juego;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Tanque;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
-import com.mycompany.rampage_v2.Ventanas.VisualJuego;
-import java.awt.Image;
-import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 /**
  *
  * @author marito
  */
-public class Volante implements Runnable {
+public class Volante{
 
-    private ImageIcon l, r, u, d;
     private String direccion = null;
 
     public Volante() {
-    }
-
-    @Override
-    public void run() {
-
     }
 
     public String getDireccion() {

@@ -6,6 +6,7 @@
 package com.mycompany.rampage_v2.Juego.Vehiculos;
 
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
+import com.mycompany.rampage_v2.Juego.Comodines.Comodin;
 import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
@@ -35,20 +36,24 @@ public abstract class Vehiculo extends JLabel implements Serializable {
     protected int No;
     private int kills = 0, muertes = 0;
     protected float vida, daño, defensa, defensaNeta;
-    private float vidatope;
+    protected float vidatope;
     protected JLabel muestra = new JLabel(), muestra2 = new JLabel();
     protected float[] porcentajes;
     private final Listado<Arma> armas = new Listado<>();
     private final Armeria armeria = new Armeria(armas);
-    private Arma arma;
     private String nombre;
     private boolean estaActivo = true, Comprada = false;
     protected Jugador dueño;
     private Terreno posicion;
-    private int precio;
+    protected int precio;
+    private Comodin comodin;
 
     public boolean isComprada() {
         return Comprada;
+    }
+
+    public void setComodin(Comodin comodin) {
+        this.comodin = comodin;
     }
 
     public void setComprada(boolean Comprada) {
@@ -138,10 +143,13 @@ public abstract class Vehiculo extends JLabel implements Serializable {
         return dueño;
     }
 
+    public ImageIcon getImagen() {
+        return imagen;
+    }
+
     public void setDueño(Jugador dueño) {
         this.dueño = dueño;
     }
-    private JDialog dialogo;
 
     public JLabel getMuestra2() {
         muestra2.setSize(400, 100);
@@ -160,13 +168,6 @@ public abstract class Vehiculo extends JLabel implements Serializable {
         return muestra2;
     }
 
-    private void iniciarMouseClicked(MouseEvent evt) {
-
-        //evt.getComponent().getParent().getParent().setVisible(false);
-        dialogo.setVisible(false);
-        dialogo = null;
-    }
-
     public float getVida() {
         return vida;
     }
@@ -175,7 +176,24 @@ public abstract class Vehiculo extends JLabel implements Serializable {
         this.estaActivo = estaActivo;
     }
 
+    public Comodin getComodin() {
+        return comodin;
+    }
+
+    public void setVida(float vida) {
+        if (vida <= vidatope) {
+            this.vida = vida;
+        }
+    }
+
     public float getDaño() {
+        float dañocomodin = 0;
+        if (comodin != null) {
+            if (comodin.getNumero() == 2 && "ataque".equals(comodin.getDecision())) {
+                JOptionPane.showMessageDialog(null, "tu comodin te esta dando daño extra!! ");
+                dañocomodin = daño * (float) comodin.maximizarDañoEscudo();
+            }
+        }
         float dañoarma = 0;
         Arma[] listadoarmas = armeria.ordenarPorFecha();
         if (listadoarmas.length != 0) {
@@ -185,7 +203,7 @@ public abstract class Vehiculo extends JLabel implements Serializable {
                 dañoarma = armaAusar.dañoHecho();
             }
         }
-        return daño + dañoarma;
+        return daño + dañoarma + dañocomodin;
     }
 
     public float getDañoEnemigos() {
@@ -221,25 +239,33 @@ public abstract class Vehiculo extends JLabel implements Serializable {
     public void mostrarMouseClicked(MouseEvent evt) {
         dueño.getIu().ingresarVehiculo(this);
         JOptionPane.showMessageDialog(null, "   daño:   " + daño
-                + " \n     vida:  " + vida + " \n     defensa: " + defensaNeta + " \n Activo: " +
-                estaActivo + "\n Kills: " + kills, nombre, JOptionPane.INFORMATION_MESSAGE);
+                + " \n     vida:  " + vida + " \n     defensa: " + defensaNeta + " \n Activo: "
+                + estaActivo + "\n Kills: " + kills, nombre, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void serDañado(float daño) {
+        float escudocomodin = 0;
+        if (comodin != null) {
+            if (comodin.getNumero() == 2 && "defensa".equals(comodin.getDecision())) {
+                JOptionPane.showMessageDialog(null, "tu comodin te esta protegiendo mas!! ");
+                escudocomodin = daño * (float) comodin.maximizarDañoEscudo();
+            }
+        }
         if (daño > this.defensa) {
             if (daño > vida) {
                 vida = 0;
                 dueño.setMuertes();
                 estaActivo = false;
-                this.setOpaque(true);
-                this.setBackground(Color.red);
+                muestra.setOpaque(true);
+                muestra.setBackground(Color.red);
             } else {
-                if (defensa < daño) {
-                    vida -= (daño - defensa);
+                if (defensa + escudocomodin < daño) {
+                    vida -= (daño - defensa - escudocomodin);
                 }
             }
         }
-        JOptionPane.showMessageDialog(null, "me has dañado, \n  me has quitado: " + daño + "  de vida! \n y mi vida total es de: " + vidatope + " \n ahorita tengo: " + vida + " \n defensa: " + defensa);
+        JOptionPane.showMessageDialog(null, "he sido dañado, cuidado pueden matarme,"
+                + " \n  me has quitado: " + daño + "  de vida! \n y mi vida total es de: " + vidatope + " \n ahorita tengo: " + vida + " \n defensa: " + defensa);
 
     }
 
@@ -266,15 +292,15 @@ public abstract class Vehiculo extends JLabel implements Serializable {
     }
 
     private void ComprarVehiculo(MouseEvent evt) {
-         if(dueño.getDinero() > precio){
-            if(JOptionPane.showConfirmDialog(muestra2, "seguro quiere comprar este vehiculo?") == 1){
-            setComprada(true);
-            dueño.comprarObjeto(precio);
+        if (dueño.getDinero() > precio) {
+            if (JOptionPane.showConfirmDialog(muestra2, "seguro quiere comprar este vehiculo?", toString(), JOptionPane.OK_OPTION) == 0) {
+                setComprada(true);
+                dueño.comprarObjeto(precio);
             }
         }
     }
-    
-    public void ingresarPrecio(){
+
+    public void ingresarPrecio() {
         int lleva = 0;
         lleva += porcentajes[0] * 50 + (porcentajes[1]);
         precio = lleva;

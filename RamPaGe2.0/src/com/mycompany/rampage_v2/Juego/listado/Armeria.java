@@ -15,7 +15,7 @@ import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 public class Armeria {
 
     private final Listado<Arma> listado;
-    private Arma[] fecha, kills, nivel, muertes, nombre, estado;
+    private Arma[] fecha, nombre;
 
     public Armeria(Listado listado) {
         this.listado = listado;

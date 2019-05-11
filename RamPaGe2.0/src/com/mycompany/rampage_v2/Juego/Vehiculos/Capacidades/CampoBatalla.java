@@ -23,12 +23,9 @@ public class CampoBatalla{
 
     private Vehiculo enjuego;
     private Enemigo enemigo;
-    private int espacios;
     private float dañoahacer;
-    private Juego juego;
 
     public void setJuego(Juego juego) {
-        this.juego = juego;
     }
 
     public void atacaraEnemigo(Vehiculo enJuego, float porcentajedaño, String direccion) {

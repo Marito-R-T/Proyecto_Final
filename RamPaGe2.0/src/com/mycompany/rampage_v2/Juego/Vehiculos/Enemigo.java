@@ -56,7 +56,7 @@ public class Enemigo extends JLabel {
                 }
             }
         }
-        JOptionPane.showMessageDialog(null, "me has dañado, \n  me has quitado: " + daño + "  de vida! \n y mi vida total es de: " + vidaTope + " \n ahorita tengo: " + vida + " \n defensa: " + defensa);
+        JOptionPane.showMessageDialog(null, "has dañado a un enemigo, \n  le has quitado: " + daño + "  de vida! \n y su vida total es de: " + vidaTope + " \n ahora tiene : " + vida + " de vida"+ "\n defensa: " + defensa);
 
     }
 

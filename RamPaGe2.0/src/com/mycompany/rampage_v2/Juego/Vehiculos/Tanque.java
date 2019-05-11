@@ -18,7 +18,9 @@ public class Tanque extends Vehiculo {
 
     public Tanque(float[] porcentajes) {
         this.setSize(200, 200);
+        precio = 1000;
         super.porcentajes = porcentajes;
+        vidatope= 50 * (1+(porcentajes[0]/12));
         vida = 50 * (1+(porcentajes[0]/12));
         daño = 12 *(1+(porcentajes[1]/12));
         defensa = 7 * (1+(porcentajes[2]/12));

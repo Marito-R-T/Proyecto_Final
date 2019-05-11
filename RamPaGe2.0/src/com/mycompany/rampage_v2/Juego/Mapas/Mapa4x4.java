@@ -5,9 +5,6 @@
  */
 package com.mycompany.rampage_v2.Juego.Mapas;
 
-import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
-import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Llanura;
-import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Terreno;
 import java.awt.Dimension;
 

@@ -29,28 +29,11 @@ public abstract class Terreno extends JLabel{
     private int columnas, filas;
     private Comodin caja;
     private Enemigo enemigo = null;
-    private OyenteMapas oyente;
     private Mapa mapa;
     
     public Terreno(){
         this.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.gray, java.awt.Color.gray, new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
         //this.setBounds((columnas-1)*60 + 10,(filas-1)*60 +10, 60, 60);
-        this.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    
-                    accionTerreno(evt);
-                }
-        });
-    }
-    private void accionTerreno(MouseEvent evt){
-        Mapa mapa = (Mapa) this.getParent();
-        mapa.getOyente().mouseClicked(evt);
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Terreno.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
@@ -144,8 +127,12 @@ public abstract class Terreno extends JLabel{
         return caja;
     }
 
-    public void setCaja(int numerocaja, int tope) {
-        this.caja = caja;
+    public void setComodin(Comodin comodin){
+        this.caja = comodin;
+    }
+    
+    public void setCaja() {
+        this.caja = new Comodin();
     }
     
     public void setEnemigo(Enemigo enemigo){

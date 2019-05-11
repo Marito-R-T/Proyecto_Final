@@ -34,7 +34,6 @@ public class Mapa extends JPanel{
     protected int COLUMNAS;
     protected int topecajas, cajas;
     protected Terreno anterior, referencia;
-    private OyenteMapas oyente = new OyenteMapas();
     protected int topeenemigos;
 
     public void colocarCuadros() {
@@ -71,7 +70,7 @@ public class Mapa extends JPanel{
             primero.setColumnas(1);
             primero.setFilas(i + 1);
             if (random.nextInt(3) == 0) {
-                primero.setCaja(cajas, topecajas);
+                primero.setCaja();
                 cajas++;
             }
             if (i > 0) {
@@ -99,7 +98,7 @@ public class Mapa extends JPanel{
                 nuevo.setFilas(i + 1);
                 mapa[i][j] = nuevo;
                 if (random.nextInt(2) == 0) {
-                    nuevo.setCaja(cajas, topecajas);
+                    nuevo.setCaja();
                     cajas++;
                 }
                 crearConexiones(nuevo);
@@ -158,9 +157,6 @@ public class Mapa extends JPanel{
         }
     }
 
-    public OyenteMapas getOyente() {
-        return oyente;
-    }
 
     public void agregarComponente(Vehiculo enjuego) {
         this.add(enjuego, 1);
