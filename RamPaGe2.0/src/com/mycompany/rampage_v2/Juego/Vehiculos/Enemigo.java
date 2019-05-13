@@ -29,7 +29,7 @@ public class Enemigo extends JLabel {
         this.vidaTope = 55*nivel;
         this.vida = 55*nivel;
         this.defensa = 4*nivel;
-        this.daño = 12*nivel;
+        this.daño = 8*nivel;
         this.setSize(200, 200);
         imagen = new ImageIcon(getClass().getResource("/Imagenes/Enemigos/enemigo" + agua + ".png"));
         this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));

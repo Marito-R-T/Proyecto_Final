@@ -320,6 +320,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="J U G A R"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_JugarMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

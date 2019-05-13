@@ -44,9 +44,9 @@ public final class Comodin {
     public double recuperarVida() {
         if (x == 0) {
             x++;
-            return 0.25;
+            return 1.25;
         }
-        return 0;
+        return 1;
     }
 
     private int x;
@@ -54,9 +54,9 @@ public final class Comodin {
     public double maximizarDañoEscudo() {
         if (x <= 3) {
             x++;
-            return 0.5;
-        }
-        return 0;
+            return 1.5;
+        } 
+        return 1;
     }
 
     public int getNumero() {
@@ -65,5 +65,9 @@ public final class Comodin {
 
     public String getDecision() {
         return decision;
+    }
+
+    public int getX() {
+        return x;
     }
 }

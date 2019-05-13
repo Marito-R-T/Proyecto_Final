@@ -54,7 +54,7 @@ public class Volante{
         try {
             while (enjuego.getY() != y) {
                 if (espacios % 200 == 0) {
-                    if (enjuego.getPosicion().getS() != null && enjuego.getPosicion().getS().getEnemigo() == null) {
+                    if (enjuego.getPosicion().getS() != null && enjuego.getPosicion().getS().getEnemigo() == null && enjuego.getPosicion().getS().getVehiculo() == null) {
                         if ((enjuego instanceof Tanque && !(enjuego.getPosicion().getS() instanceof Agua)) || (enjuego instanceof Avion && !(enjuego.getPosicion().getS() instanceof Montaña))) {
                             enjuego.getPosicion().setVehiculo(null);
                             enjuego.getPosicion().getS().setVehiculo(enjuego);
@@ -87,7 +87,7 @@ public class Volante{
         try {
             while (enjuego.getY() != y) {
                 if (espacios % 200 == 0) {
-                    if (enjuego.getPosicion().getN() != null && enjuego.getPosicion().getN().getEnemigo() == null) {
+                    if (enjuego.getPosicion().getN() != null && enjuego.getPosicion().getN().getEnemigo() == null&& enjuego.getPosicion().getN().getVehiculo() == null) {
                         if ((enjuego instanceof Tanque && !(enjuego.getPosicion().getN() instanceof Agua)) || (enjuego instanceof Avion && !(enjuego.getPosicion().getN() instanceof Montaña))) {
                             enjuego.getPosicion().setVehiculo(null);
                             enjuego.getPosicion().getN().setVehiculo(enjuego);
@@ -120,7 +120,7 @@ public class Volante{
         try {
             while (enjuego.getX() != x) {
                 if (espacios % 200 == 0) {
-                    if (enjuego.getPosicion().getO() != null && enjuego.getPosicion().getO().getEnemigo() == null) {
+                    if (enjuego.getPosicion().getO() != null && enjuego.getPosicion().getO().getEnemigo() == null&& enjuego.getPosicion().getO().getVehiculo() == null) {
                         if ((enjuego instanceof Tanque && !(enjuego.getPosicion().getO() instanceof Agua)) || (enjuego instanceof Avion && !(enjuego.getPosicion().getO() instanceof Montaña))) {
                             enjuego.getPosicion().setVehiculo(null);
                             enjuego.getPosicion().getO().setVehiculo(enjuego);
@@ -154,7 +154,7 @@ public class Volante{
         try {
             while (enjuego.getX() != x) {
                 if (espacios % 200 == 0) {
-                    if (enjuego.getPosicion().getE() != null && enjuego.getPosicion().getE().getEnemigo() == null) {
+                    if (enjuego.getPosicion().getE() != null && enjuego.getPosicion().getE().getEnemigo() == null && enjuego.getPosicion().getE().getVehiculo() == null) {
                         if ((enjuego instanceof Tanque && !(enjuego.getPosicion().getE() instanceof Agua)) || (enjuego instanceof Avion && !(enjuego.getPosicion().getE() instanceof Montaña))) {
                             enjuego.getPosicion().setVehiculo(null);
                             enjuego.getPosicion().getE().setVehiculo(enjuego);

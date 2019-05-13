@@ -87,14 +87,12 @@ public abstract class Vehiculo extends JLabel implements Serializable {
     }
 
     public void revisarSubirNivel() {
-        vida = (50 * nivel) * porcentajes[0];
+        vida = ( 50 * (1+(porcentajes[0]/12)));
     }
 
     public void agregarNombre() {
         this.nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre que desea ponerle a su vehiculo", "Nombre", 1);
-        if (nombre == null) {
-            dueño.getVehiculos().eliminarUltimo();
-        }
+        this.setToolTipText("mi dueño es: "+ dueño.getNombre() + "\n No: " + dueño.getNO());
     }
 
     public JLabel getMuestra() {
@@ -129,6 +127,14 @@ public abstract class Vehiculo extends JLabel implements Serializable {
 
     public int getMuertes() {
         return muertes;
+    }
+
+    public void setKills() {
+        this.kills ++;
+    }
+
+    public void setMuertes() {
+        this.muertes ++;
     }
 
     public abstract void iniciarMuestra();
@@ -192,6 +198,9 @@ public abstract class Vehiculo extends JLabel implements Serializable {
             if (comodin.getNumero() == 2 && "ataque".equals(comodin.getDecision())) {
                 JOptionPane.showMessageDialog(null, "tu comodin te esta dando daño extra!! ");
                 dañocomodin = daño * (float) comodin.maximizarDañoEscudo();
+                if(comodin.getX() >=3){
+                    comodin = null;
+                }
             }
         }
         float dañoarma = 0;
@@ -272,7 +281,7 @@ public abstract class Vehiculo extends JLabel implements Serializable {
                 }
             }
         }
-        JOptionPane.showMessageDialog(null, "he sido dañado, cuidado pueden matarme,"
+        JOptionPane.showMessageDialog(null, "he sido dañado  "+ nombre+" \n cuidado pueden matarme,"
                 + " \n  me has quitado: " + daño + "  de vida! \n y mi vida total es de: " + vidatope + " \n ahorita tengo: " + vida + " \n defensa: " + defensa);
 
     }

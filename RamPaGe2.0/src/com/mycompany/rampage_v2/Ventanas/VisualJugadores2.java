@@ -6,10 +6,16 @@
 package com.mycompany.rampage_v2.Ventanas;
 
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
+import com.mycompany.rampage_v2.Juego.Bibliotecario;
 import com.mycompany.rampage_v2.Juego.Jugador;
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa4x4;
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa6x4;
+import com.mycompany.rampage_v2.Juego.Mapas.Mapa8x9;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,19 +25,29 @@ import javax.swing.table.DefaultTableModel;
  * @author marito
  */
 public class VisualJugadores2 extends javax.swing.JFrame {
-    
-    private Inicio inicio = null;
-    private Jugador primero = null;
+
+    private Inicio inicio;
+    private Jugador primero;
     private Jugador segundo;
+    private final Vehiculo[] vehiculos1;
+    private final Vehiculo[] vehiculos2;
+    private final VisualJuego1vs1 jugar;
+    private Bibliotecario biblioteca;
+
     /**
      * Creates new form VisualJugadores2
+     *
      * @param inicio
      */
     public VisualJugadores2(Inicio inicio) {
-       // modelo.
+        // modelo.
+        jugar = new VisualJuego1vs1(this);
+        vehiculos1 = new Vehiculo[3];
+        vehiculos2 = new Vehiculo[3];
         this.inicio = inicio;
         initComponents();
         iniciarComponentes();
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("VS");
     }
@@ -202,6 +218,11 @@ public class VisualJugadores2 extends javax.swing.JFrame {
 
         btn_Jugar.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btn_Jugar.setText("J U G A R");
+        btn_Jugar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_JugarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -266,23 +287,65 @@ public class VisualJugadores2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setBiblioteca(Bibliotecario biblioteca) {
+        this.biblioteca = biblioteca;
+    }
+
     private void btn_SalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_SalirMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
         inicio.setVisible(true);
+        inicio.setOrdenado(inicio.getPosicionamiento().ordenarPorFecha());
+        biblioteca.guardarListado(inicio.getJugadores());
     }//GEN-LAST:event_btn_SalirMouseClicked
 
     private void info_Armas2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_info_Armas2MouseClicked
         // TODO add your handling code here:
+
     }//GEN-LAST:event_info_Armas2MouseClicked
 
     private void info_Vehiculos2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_info_Vehiculos2MouseClicked
         // TODO add your handling code here:
+        int seleccion = info_Vehiculos2.getSelectedRow();
+        int posicion_vehiculo = (int) info_Vehiculos2.getValueAt(seleccion, 4);
+        ingresarVehiculos2(posicion_vehiculo);
     }//GEN-LAST:event_info_Vehiculos2MouseClicked
 
     private void info_Vehiculos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_info_Vehiculos1MouseClicked
         // TODO add your handling code here:
+        int seleccion = info_Vehiculos1.getSelectedRow();
+        int posicion_vehiculo = (int) info_Vehiculos1.getValueAt(seleccion, 4);
+        ingresarVehiculos1(posicion_vehiculo);
     }//GEN-LAST:event_info_Vehiculos1MouseClicked
+
+    private void btn_JugarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_JugarMouseClicked
+        // TODO add your handling code here:
+        if (vehiculos1[2] != null && vehiculos2[2] != null) {
+            Mapa mapajugar = null;
+            String[] mapas = {"MAPA 4*4", "MAPA 6*4", "MAPA 8*9"};
+            String mapa = null;
+            mapa = (String) JOptionPane.showInputDialog(this, "Escoja el Mapa a jugar", "MAPAS", JOptionPane.OK_OPTION, null, mapas, mapas[0]);
+            if (mapa != null && !"".equals(mapa)) {
+                switch (mapa) {
+                    case "MAPA 4*4":
+                        mapajugar = new Mapa4x4();
+                        break;
+                    case "MAPA 6*4":
+                        mapajugar = new Mapa6x4();
+                        break;
+                    case "MAPA 8*9":
+                        mapajugar = new Mapa8x9();
+                        break;
+                }
+                jugar.setMapa(mapajugar);
+                jugar.setVehiculos1(vehiculos1);
+                jugar.setVehiculos2(vehiculos2);
+                jugar.setVehiculos(vehiculos1, vehiculos2);
+                jugar.setVisible(true);
+                this.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_btn_JugarMouseClicked
 
     public Jugador getPrimero() {
         return primero;
@@ -292,7 +355,7 @@ public class VisualJugadores2 extends javax.swing.JFrame {
         return segundo;
     }
 
-    public void iniciarComponentes(){
+    public void iniciarComponentes() {
         modelo1 = new DefaultTableModel(
                 new Object[][]{},
                 new String[]{
@@ -300,20 +363,20 @@ public class VisualJugadores2 extends javax.swing.JFrame {
                 }
         ) {
             boolean[] canEdit = new boolean[]{
-               false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
-            Class[] types = new Class [] {
+            Class[] types = new Class[]{
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Boolean.class
             };
 
             @Override
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
         };
         //Modelo 2
@@ -332,13 +395,13 @@ public class VisualJugadores2 extends javax.swing.JFrame {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
-            Class[] types = new Class [] {
+            Class[] types = new Class[]{
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Boolean.class
             };
 
             @Override
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
         };
         ////////////////////////////////////
@@ -357,13 +420,13 @@ public class VisualJugadores2 extends javax.swing.JFrame {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
-            Class[] types = new Class [] {
+            Class[] types = new Class[]{
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Boolean.class
             };
 
             @Override
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
         };
         ////////////////////////////////////
@@ -382,13 +445,13 @@ public class VisualJugadores2 extends javax.swing.JFrame {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
-            Class[] types = new Class [] {
+            Class[] types = new Class[]{
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Boolean.class
             };
 
             @Override
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
         };
         ////////////////////////////////////
@@ -459,7 +522,7 @@ public class VisualJugadores2 extends javax.swing.JFrame {
         info_Armas1.getColumn("En uso").setMinWidth(75);
         spnl_Armas1.setViewportView(info_Armas1);
         // sigue el jugador 2
-        
+
         info_Armas2.setModel(modelo4);
         info_Armas2.setSize(500, 500);
         info_Armas2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -481,7 +544,8 @@ public class VisualJugadores2 extends javax.swing.JFrame {
         info_Armas2.getColumn("En uso").setMinWidth(75);
         spnl_Armas2.setViewportView(info_Armas2);
     }
-    public void setIncio(Inicio inicio){
+
+    public void setIncio(Inicio inicio) {
         this.inicio = inicio;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -504,16 +568,16 @@ public class VisualJugadores2 extends javax.swing.JFrame {
     private DefaultTableModel modelo2;
     private DefaultTableModel modelo3;
     private DefaultTableModel modelo4;
-    
-    public void empezarJugador1(){
+
+    public void empezarJugador1() {
         Vehiculo[] vehiculosprimero = primero.getGarage().ordenarPorFecha();
         Arma[] armasprimero = primero.getArmeria().ordenarPorFecha();
         for (Vehiculo vehiculosprimero1 : vehiculosprimero) {
             Object[] datos = new Object[6];
             datos[0] = vehiculosprimero1.getNombre();
             datos[1] = vehiculosprimero1.getTipo();
-            datos[2] = (int)vehiculosprimero1.getDaño();
-            datos[3] = (int)vehiculosprimero1.getVida();
+            datos[2] = (int) vehiculosprimero1.getDaño();
+            datos[3] = (int) vehiculosprimero1.getVida();
             datos[4] = vehiculosprimero1.getNo();
             datos[5] = vehiculosprimero1.isEstaActivo();
             modelo1.addRow(datos);
@@ -522,21 +586,22 @@ public class VisualJugadores2 extends javax.swing.JFrame {
             Object[] datos = new Object[5];
             datos[0] = armasprimero1.getNombre();
             datos[1] = armasprimero1.getTipo();
-            datos[2] = (int)armasprimero1.dañoHecho();
+            datos[2] = (int) armasprimero1.dañoHecho();
             datos[3] = armasprimero1.getNo();
             datos[4] = armasprimero1.isEnuso();
             modelo3.addRow(datos);
         }
     }
-    public void empezarJugador2(){
+
+    public void empezarJugador2() {
         Vehiculo[] vehiculosprimero = segundo.getGarage().ordenarPorFecha();
         Arma[] armasprimero = segundo.getArmeria().ordenarPorFecha();
         for (Vehiculo vehiculosprimero1 : vehiculosprimero) {
             Object[] datos = new Object[6];
             datos[0] = vehiculosprimero1.getNombre();
             datos[1] = vehiculosprimero1.getTipo();
-            datos[2] = (int)vehiculosprimero1.getDaño();
-            datos[3] = (int)vehiculosprimero1.getVida();
+            datos[2] = (int) vehiculosprimero1.getDaño();
+            datos[3] = (int) vehiculosprimero1.getVida();
             datos[4] = vehiculosprimero1.getNo();
             datos[5] = vehiculosprimero1.isEstaActivo();
             modelo2.addRow(datos);
@@ -545,7 +610,7 @@ public class VisualJugadores2 extends javax.swing.JFrame {
             Object[] datos = new Object[5];
             datos[0] = armas2.getNombre();
             datos[1] = armas2.getTipo();
-            datos[2] = (int)armas2.dañoHecho();
+            datos[2] = (int) armas2.dañoHecho();
             datos[3] = armas2.getNo();
             datos[4] = armas2.isEnuso();
             modelo4.addRow(datos);
@@ -558,5 +623,45 @@ public class VisualJugadores2 extends javax.swing.JFrame {
 
     public void setSegundo(Jugador segundo) {
         this.segundo = segundo;
+    }
+
+    private void ingresarVehiculos2(int no) {
+        int z = 0;
+        Vehiculo vehiculo = segundo.getVehiculos().devolver(no);
+        if (vehiculo.isComprada() && vehiculo.isEstaActivo()) {
+            while (vehiculos2[z] != null && z < 3) {
+                if (vehiculos2[z] == vehiculo) {
+                    break;
+                }
+                z++;
+            }
+            if (z < 3) {
+                vehiculos2[z] = vehiculo;
+            } else {
+                vehiculos2[0] = vehiculos2[1];
+                vehiculos2[1] = vehiculos2[2];
+                vehiculos2[2] = vehiculo;
+            }
+        }
+    }
+
+    private void ingresarVehiculos1(int no) {
+        int z = 0;
+        Vehiculo vehiculo = primero.getVehiculos().devolver(no);
+        if (vehiculo.isComprada() && vehiculo.isEstaActivo()) {
+            while (vehiculos1[z] != null && z < 3) {
+                if (vehiculos1[z] == vehiculo) {
+                    break;
+                }
+                z++;
+            }
+            if (z < 3) {
+                vehiculos1[z] = vehiculo;
+            } else {
+                vehiculos1[0] = vehiculos1[1];
+                vehiculos1[1] = vehiculos1[2];
+                vehiculos1[2] = vehiculo;
+            }
+        }
     }
 }

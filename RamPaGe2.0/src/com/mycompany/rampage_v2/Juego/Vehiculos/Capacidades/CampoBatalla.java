@@ -51,10 +51,10 @@ public class CampoBatalla {
         Terreno referencia = enjuego.getPosicion();
         boolean atacar = true;
         Enemigo enemigo = null;
-        while (referencia.getEnemigo() == null) {
+        while (referencia.getEnemigo() == null && referencia.getVehiculo() == null || referencia.getVehiculo() == enjuego) {
             if (referencia.getS() != null) {
-                dañoahacer = (float) (dañoahacer * 0.96);
                 referencia = referencia.getS();
+                dañoahacer = (float) (dañoahacer * 0.96);
                 if (referencia instanceof Agua || referencia instanceof Montaña) {
                     referencia.quitarVida();
                 }
@@ -66,14 +66,27 @@ public class CampoBatalla {
             System.gc();
         }
         if (atacar) {
-            enemigo = referencia.getEnemigo();
-            enemigo.serDañado(dañoahacer, enjuego);
-            enemigo.comprobarImagen();
-            if (referencia.getEnemigo().getVida() == 0) {
-                referencia.setEnemigo(null);
-                referencia.getMapa().remove(enemigo);
-                referencia.getMapa().repaint();
-                enemigo = null;
+            if (referencia.getEnemigo() != null) {
+                enemigo = referencia.getEnemigo();
+                enemigo.serDañado(dañoahacer, enjuego);
+                enemigo.comprobarImagen();
+                if (referencia.getEnemigo().getVida() == 0) {
+                    referencia.setEnemigo(null);
+                    referencia.getMapa().remove(enemigo);
+                    referencia.getMapa().repaint();
+                    enemigo = null;
+                }
+            } else {
+                Vehiculo daño = referencia.getVehiculo();
+                daño.serDañado(dañoahacer);
+                if (daño.getVida() == 0) {
+                    enjuego.setKills();
+                    enjuego.getDueño().setKills();
+                    daño.getPosicion().setVehiculo(null);
+                    referencia.getMapa().remove(daño);
+                    daño.setPosicion(null);
+                    referencia.getMapa().repaint();
+                }
             }
         }
     }
@@ -82,10 +95,10 @@ public class CampoBatalla {
         Terreno referencia = enjuego.getPosicion();
         boolean atacar = true;
         Enemigo enemigo = null;
-        while (referencia.getEnemigo() == null) {
+        while (referencia.getEnemigo() == null && referencia.getVehiculo() == null || referencia.getVehiculo() == enjuego) {
             if (referencia.getN() != null) {
-                dañoahacer = (float) (dañoahacer * 0.96);
                 referencia = referencia.getN();
+                dañoahacer = (float) (dañoahacer * 0.96);
                 if (referencia instanceof Agua || referencia instanceof Montaña) {
                     referencia.quitarVida();
                 }
@@ -97,14 +110,27 @@ public class CampoBatalla {
             System.gc();
         }
         if (atacar) {
-            enemigo = referencia.getEnemigo();
-            enemigo.serDañado(dañoahacer, enjuego);
-            enemigo.comprobarImagen();
-            if (referencia.getEnemigo().getVida() == 0) {
-                referencia.setEnemigo(null);
-                referencia.getMapa().remove(enemigo);
-                referencia.getMapa().repaint();
-                enemigo = null;
+            if (referencia.getEnemigo() != null) {
+                enemigo = referencia.getEnemigo();
+                enemigo.serDañado(dañoahacer, enjuego);
+                enemigo.comprobarImagen();
+                if (referencia.getEnemigo().getVida() == 0) {
+                    referencia.setEnemigo(null);
+                    referencia.getMapa().remove(enemigo);
+                    referencia.getMapa().repaint();
+                    enemigo = null;
+                }
+            } else {
+                Vehiculo daño = referencia.getVehiculo();
+                daño.serDañado(dañoahacer);
+                if (daño.getVida() == 0) {
+                    enjuego.setKills();
+                    enjuego.getDueño().setKills();
+                    daño.getPosicion().setVehiculo(null);
+                    referencia.getMapa().remove(daño);
+                    daño.setPosicion(null);
+                    referencia.getMapa().repaint();
+                }
             }
         }
     }
@@ -113,10 +139,10 @@ public class CampoBatalla {
         Terreno referencia = enjuego.getPosicion();
         boolean atacar = true;
         Enemigo enemigo = null;
-        while (referencia.getEnemigo() == null) {
+        while (referencia.getEnemigo() == null && referencia.getVehiculo() == null || referencia.getVehiculo() == enjuego) {
             if (referencia.getO() != null) {
-                dañoahacer = (float) (dañoahacer * 0.96);
                 referencia = referencia.getO();
+                dañoahacer = (float) (dañoahacer * 0.96);
                 if (referencia instanceof Agua || referencia instanceof Montaña) {
                     referencia.quitarVida();
                 }
@@ -128,14 +154,27 @@ public class CampoBatalla {
             System.gc();
         }
         if (atacar) {
-            enemigo = referencia.getEnemigo();
-            enemigo.serDañado(dañoahacer, enjuego);
-            enemigo.comprobarImagen();
-            if (referencia.getEnemigo().getVida() == 0) {
-                referencia.setEnemigo(null);
-                referencia.getMapa().remove(enemigo);
-                referencia.getMapa().repaint();
-                enemigo = null;
+            if (referencia.getEnemigo() != null) {
+                enemigo = referencia.getEnemigo();
+                enemigo.serDañado(dañoahacer, enjuego);
+                enemigo.comprobarImagen();
+                if (referencia.getEnemigo().getVida() == 0) {
+                    referencia.setEnemigo(null);
+                    referencia.getMapa().remove(enemigo);
+                    referencia.getMapa().repaint();
+                    enemigo = null;
+                }
+            } else {
+                Vehiculo daño = referencia.getVehiculo();
+                daño.serDañado(dañoahacer);
+                if (daño.getVida() == 0) {
+                    enjuego.setKills();
+                    enjuego.getDueño().setKills();
+                    daño.getPosicion().setVehiculo(null);
+                    referencia.getMapa().remove(daño);
+                    daño.setPosicion(null);
+                    referencia.getMapa().repaint();
+                }
             }
         }
 
@@ -145,7 +184,7 @@ public class CampoBatalla {
         Terreno referencia = enjuego.getPosicion();
         boolean atacar = true;
         Enemigo enemigo = null;
-        while (referencia.getEnemigo() == null) {
+        while (referencia.getEnemigo() == null && referencia.getVehiculo() == null || referencia.getVehiculo() == enjuego) {
             if (referencia.getE() != null) {
                 dañoahacer = (float) (dañoahacer * 0.96);
                 referencia = referencia.getE();
@@ -160,14 +199,27 @@ public class CampoBatalla {
             System.gc();
         }
         if (atacar) {
-            enemigo = referencia.getEnemigo();
-            enemigo.serDañado(dañoahacer, enjuego);
-            enemigo.comprobarImagen();
-            if (referencia.getEnemigo().getVida() == 0) {
-                referencia.setEnemigo(null);
-                referencia.getMapa().remove(enemigo);
-                referencia.getMapa().repaint();
-                enemigo = null;
+            if (referencia.getEnemigo() != null) {
+                enemigo = referencia.getEnemigo();
+                enemigo.serDañado(dañoahacer, enjuego);
+                enemigo.comprobarImagen();
+                if (referencia.getEnemigo().getVida() == 0) {
+                    referencia.setEnemigo(null);
+                    referencia.getMapa().remove(enemigo);
+                    referencia.getMapa().repaint();
+                    enemigo = null;
+                }
+            } else {
+                Vehiculo daño = referencia.getVehiculo();
+                daño.serDañado(dañoahacer);
+                if (daño.getVida() == 0) {
+                    enjuego.setKills();
+                    enjuego.getDueño().setKills();
+                    daño.getPosicion().setVehiculo(null);
+                    referencia.getMapa().remove(daño);
+                    daño.setPosicion(null);
+                    referencia.getMapa().repaint();
+                }
             }
         }
 

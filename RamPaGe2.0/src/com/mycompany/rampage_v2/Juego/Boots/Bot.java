@@ -28,6 +28,7 @@ public class Bot extends JLabel implements Runnable, MouseListener {
     private Jugador dueño;
     private Terreno terreno;
     private final float daño;
+    private Vehiculo lanzador;
     private int turnos;
     private Mapa enjuego;
     private boolean activo, sepuede;
@@ -49,6 +50,10 @@ public class Bot extends JLabel implements Runnable, MouseListener {
 
     public Jugador getDueño() {
         return dueño;
+    }
+
+    public void setLanzador(Vehiculo lanzador) {
+        this.lanzador = lanzador;
     }
 
     public int getNo() {
@@ -194,7 +199,7 @@ public class Bot extends JLabel implements Runnable, MouseListener {
                 Terreno ref = ((Vehiculo) objetos[i]).getPosicion();
                 Integer filas = ref.getFilas() - terreno.getFilas();
                 Integer columnas = ref.getColumnas() - terreno.getColumnas();
-                if ((filas < 3 && filas > -3) && (columnas < 3 && columnas > -3)) {
+                if ((filas < 3 && filas > -3) && (columnas < 3 && columnas > -3) && ref.getVehiculo() == lanzador) {
                     return false;
                 }
             }

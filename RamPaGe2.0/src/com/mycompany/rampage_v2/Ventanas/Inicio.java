@@ -171,19 +171,18 @@ public final class Inicio extends javax.swing.JFrame {
             nombre = JOptionPane.showInputDialog(this, "Que nombre tendra su avatar?", "NOMBRE AVATAR", JOptionPane.QUESTION_MESSAGE);
             if (nombre != null && !"".equals(nombre)) {
                 if (jugadores.getContador() == 0) {
-                    Jugador nuevo = new Jugador(jugadores.getContador() + 1);
+                    Jugador nuevo = new Jugador(jugadores.getContador() + 1, nombre);
                     jugadores.agregar(nuevo);
                     nuevo.setIU(JUGADOR);
                     JUGADOR.setJugador(nuevo);
                 } else {
-                    Jugador siguiente = new Jugador(jugadores.getContador() + 1);
+                    Jugador siguiente = new Jugador(jugadores.getContador() + 1, nombre);
                     siguiente.setAnterior(jugadores.getUltimo());
                     siguiente.setIU(JUGADOR);
                     jugadores.getUltimo().setPosterior(siguiente);
                     jugadores.agregar(siguiente);
                     JUGADOR.setJugador(siguiente);
                 }
-                jugadores.getUltimo().setNombre(nombre);
                 jugadores.getUltimo().perzonalizarlbl();
                 this.setVisible(false);
                 JUGADOR.setVisible(true);
@@ -286,6 +285,7 @@ public final class Inicio extends javax.swing.JFrame {
             VS2.iniciarComponentes();
             VS2.empezarJugador1();
             VS2.empezarJugador2();
+            VS2.setBiblioteca(biblioteca);
             /*for (int k = 0; k < 2; k++) {
              int m = k;
              JDialog cargar = new JDialog(this);

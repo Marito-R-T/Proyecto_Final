@@ -126,7 +126,7 @@ public class Mapa extends JPanel {
         Random numerorandom = new Random();
         int filarandom = numerorandom.nextInt(this.FILAS);
         int columnarandom = numerorandom.nextInt(this.COLUMNAS);
-        if (mapa[filarandom][columnarandom].getEnemigo() == null) {
+        if (mapa[filarandom][columnarandom].getEnemigo() == null && mapa[filarandom][columnarandom].getVehiculo() == null) {
             if((vehiculo instanceof Tanque && !(mapa[filarandom][columnarandom] instanceof Agua))|| (vehiculo instanceof Avion && !(mapa[filarandom][columnarandom] instanceof Montaña))){
              mapa[filarandom][columnarandom].setVehiculo(vehiculo);
              vehiculo.setPosicion(mapa[filarandom][columnarandom]);}
@@ -167,4 +167,5 @@ public class Mapa extends JPanel {
         this.add(enemigo, 1);
         this.repaint();
     }
+    
 }

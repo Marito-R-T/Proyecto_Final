@@ -11,6 +11,8 @@ import com.mycompany.rampage_v2.Juego.Dados.D6;
 import com.mycompany.rampage_v2.Juego.Dados.Dado;
 import com.mycompany.rampage_v2.Juego.Juego;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
+import com.mycompany.rampage_v2.Juego.Vehiculos.Capacidades.CampoBatalla;
+import com.mycompany.rampage_v2.Juego.Vehiculos.Capacidades.Volante;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
@@ -20,7 +22,7 @@ import javax.swing.JPanel;
  *
  * @author marito
  */
-public class VisualJuego extends javax.swing.JFrame{
+public class VisualJuego extends javax.swing.JFrame {
 
     /**
      * Creates new form VisualJuego
@@ -230,15 +232,16 @@ public class VisualJuego extends javax.swing.JFrame{
     private void btnRendirseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRendirseMouseClicked
         // TODO add your handling code here:
         try {
-            if(dado != null && dado.isEstaGirando()){
+            if (dado != null && dado.isEstaGirando()) {
                 dado.setEstaGirando(false);
+                Thread.sleep(1100);
             }
             backendjuego.setSeperdio(true);
             Thread.sleep(1100);
+            juego.interrupt();
             this.setVisible(false);
             inicio.getJUGADOR().setVisible(true);
             inicio.getJUGADOR().iniciarPnlVehiculos();
-            juego.interrupt();
             //juego = null;
 
         } catch (Exception e) {

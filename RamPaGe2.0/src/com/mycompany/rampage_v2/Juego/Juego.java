@@ -111,7 +111,10 @@ public class Juego implements Runnable {
             enjuego.getPosicion().setComodin(null);
             if (enjuego.getComodin().getNumero() == 1) {
                 JOptionPane.showMessageDialog(null, "tu comodin te ha curado! ");
-                enjuego.setVida((float) (enjuego.getVida() + enjuego.getVida() * enjuego.getComodin().recuperarVida()));
+                enjuego.setVida((float) (enjuego.getVida() * enjuego.getComodin().recuperarVida()));
+                enjuego.setComodin(null);
+            } else if(enjuego.getComodin().getNumero() == 3){
+                enjuego.setComodin(null);
             }
         }
     }
@@ -171,16 +174,6 @@ public class Juego implements Runnable {
         //while(escoger.is)
     }
 
-    public void empezarEnemigos() {
-        // inicializa a los enemigos
-        Random numerorandom = new Random();
-        for (int i = 0; i < enemigos.length; i++) {
-            int u = numerorandom.nextInt(3);
-            int referencia = vehiculos[u].getNivel();
-            enemigos[i] = new Enemigo(referencia);
-        }
-    }
-
     public void setMapa(Mapa mapa) {
         Random numero = new Random();
         this.mapa = mapa;
@@ -192,6 +185,16 @@ public class Juego implements Runnable {
         Random numerorandom = new Random();
         int randomvehiculo = numerorandom.nextInt(vehiculos.length);
         enjuego = vehiculos[randomvehiculo];
+    }
+
+    public void empezarEnemigos() {
+        // inicializa a los enemigos
+        Random numerorandom = new Random();
+        for (int i = 0; i < enemigos.length; i++) {
+            int u = numerorandom.nextInt(3);
+            int referencia = vehiculos[u].getNivel();
+            enemigos[i] = new Enemigo(referencia);
+        }
     }
 
     private void empezarPosibilidades() {
@@ -421,7 +424,7 @@ public class Juego implements Runnable {
         }
 
     }
-    
+
     private void perderPartida() {
         visual.getInicio().getJUGADOR().getJugador().setPerdida();
         JOptionPane.showMessageDialog(visual, "Ha perdido \n  Para la siguiente sera!", "perdio", JOptionPane.OK_OPTION);
@@ -429,15 +432,16 @@ public class Juego implements Runnable {
 
     private void ganarPartida() {
         visual.getInicio().getJUGADOR().getJugador().setGanada();
-        JOptionPane.showMessageDialog(visual, "Ha ganado \n  felicidades, ha ganado: \n experiencia!", "perdio", JOptionPane.OK_OPTION);
+        JOptionPane.showMessageDialog(visual, "Ha ganado \n  felicidades, ha ganado: \n experiencia!", "gano", JOptionPane.OK_OPTION);
     }
     private Bot bot;
+
     private void ingresarBot() {
-        if(bots > 0 && bot == null){
+        if (bots > 0 && bot == null) {
             bots--;
             visual.getInicio().getJUGADOR().getJugador().eliminarBots();
             visual.empezarDado100();
-            while(visual.getDado().isEstaGirando()){
+            while (visual.getDado().isEstaGirando()) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
@@ -448,6 +452,7 @@ public class Juego implements Runnable {
             bot = nuevo;
             nuevo.setEnjuego(mapa);
             nuevo.setDueño(visual.getInicio().getJUGADOR().getJugador());
+            nuevo.setLanzador(enjuego);
             mapa.addMouseListener(nuevo);
             JOptionPane.showMessageDialog(null, "Escoja en que casilla colocarse");
             while (!nuevo.isEmpezo()) {
@@ -458,32 +463,31 @@ public class Juego implements Runnable {
                 }
             }
         }
-        
+
     }
 
     /*private boolean hayBots() {
-        //sirve para ver si hay bots para usar aun.
-        int i = 0;
-        for (int j = 0; j < bots.length; j++) {
-            if (bots[j] != null && !bots[i].isActivo()) {
-                i++;
-            }
-            /*if (!bots[j].isActivo()) {
-                bots[j] = null;
-                /*for (int k = 0; k < bots.length; k++) {
-                    bots[k] = bots[k+1];
-                }
-            }
-        }
-        return i != 0;
-    }*/
-
+     //sirve para ver si hay bots para usar aun.
+     int i = 0;
+     for (int j = 0; j < bots.length; j++) {
+     if (bots[j] != null && !bots[i].isActivo()) {
+     i++;
+     }
+     /*if (!bots[j].isActivo()) {
+     bots[j] = null;
+     /*for (int k = 0; k < bots.length; k++) {
+     bots[k] = bots[k+1];
+     }
+     }
+     }
+     return i != 0;
+     }*/
     private void atacarBot() {
-        if(bot != null && bot.getTurnos() < 4 && bot.isSepuede()){
-            if(bot.isSepuede()){
+        if (bot != null && bot.getTurnos() < 4 && bot.isSepuede()) {
+            if (bot.isSepuede()) {
                 bot.atacar();
             }
-            if(bot.getTurnos() == 3){
+            if (bot.getTurnos() == 3) {
                 bot.explotar();
                 mapa.remove(bot);
                 bot = null;

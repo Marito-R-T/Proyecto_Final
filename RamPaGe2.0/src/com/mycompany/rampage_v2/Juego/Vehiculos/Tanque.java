@@ -45,7 +45,7 @@ public class Tanque extends Vehiculo {
     public void iniciarMuestra() {
         muestra.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         super.muestra.setFont(new java.awt.Font("Comic Sans MS", 1, 16));
-        super.muestra.setText(this.getNombre() + " Vehiculo no: " + this.getNo());
+        super.muestra.setText(this.getNombre() + "      Vehiculo no:     " + this.getNo());
     }
 
     @Override

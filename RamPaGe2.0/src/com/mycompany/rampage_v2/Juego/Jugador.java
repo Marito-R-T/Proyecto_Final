@@ -17,6 +17,7 @@ import com.mycompany.rampage_v2.Juego.listado.Listado;
 import com.mycompany.rampage_v2.Ventanas.Inicio;
 import com.mycompany.rampage_v2.Ventanas.VisualJugador;
 import com.sun.java.swing.plaf.windows.WindowsInternalFrameTitlePane;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class Jugador extends JLabel {
     private final int NO;
     private Jugador a, p;
     private JLabel lblnombre = new JLabel();
-    private String nombre;
+    private final String nombre;
     private VisualJugador iu;
     private Inicio inicio;
     private final Listado<Vehiculo> vehiculos;
@@ -43,7 +44,7 @@ public class Jugador extends JLabel {
     private int nivel, experiencia, experienciaTope, kills, muertes, perdidas, ganadas, dinero;
     private int bots;
 
-    public Jugador(int no) {
+    public Jugador(int no, String nombre) {
         bots = 2;
         dinero = 600;
         this.perdidas = 0;
@@ -61,6 +62,7 @@ public class Jugador extends JLabel {
         nivel = 1;
         experiencia = 0;
         experienciaTope = 300;
+        this.nombre = nombre;
     }
 
     public Jugador getAnterior() {
@@ -87,15 +89,11 @@ public class Jugador extends JLabel {
         return NO;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public void perzonalizarlbl() {
-        lblnombre.setFont(new java.awt.Font("Comic Sans MS", 1, 16));
+        lblnombre.setFont(new java.awt.Font("Comic Sans MS", 1, 22));
         lblnombre.setText(nombre);
         lblnombre.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        lblnombre.setForeground(new java.awt.Color(0, 204, 204));
+        lblnombre.setForeground(Color.BLACK);
         lblnombre.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -150,7 +148,6 @@ public class Jugador extends JLabel {
                     avion.agregarNombre();
                     avion.ingresarImagen();
                     JOptionPane.showMessageDialog(null, "Se ha creado su avion");
-                    avion.setDueño(this);
                     if (vehiculos.getContador() < 4) {
                         avion.setComprada(true);
                     }

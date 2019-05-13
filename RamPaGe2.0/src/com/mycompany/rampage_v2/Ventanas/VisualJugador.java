@@ -40,7 +40,7 @@ public class VisualJugador extends javax.swing.JFrame {
      */
     private Inicio inicio;
     private Jugador jugador;
-    private final VisualJuego JUEGO;
+    private VisualJuego JUEGO;
     private VisualTienda TIENDA;
     private Bibliotecario biblioteca;
 
@@ -390,6 +390,7 @@ public class VisualJugador extends javax.swing.JFrame {
                     }
 
                     private void btnsmapasMouseClicked(MouseEvent evt) {
+                        JUEGO = new VisualJuego(inicio);
                         Mapa mapa;
                         if (evt.getSource() == mapas[0]) {
                             mapa = new Mapa4x4();
@@ -409,6 +410,7 @@ public class VisualJugador extends javax.swing.JFrame {
                         JUEGO.setVisible(true);
                         JUEGO.setVehiculos(elegidos);
                         JUEGO.mostrarVehiculos();
+                        System.gc();
                     }
                 });
             }
@@ -444,6 +446,7 @@ public class VisualJugador extends javax.swing.JFrame {
         jugador.setInicio(null);
         //this.guardarJugador();
         biblioteca.guardarListado(inicio.getJugadores());
+        elegidos = null;
 //guardar.guardarJugadores(jugador);
 
     }//GEN-LAST:event_btnSalirMouseClicked
@@ -481,6 +484,7 @@ public class VisualJugador extends javax.swing.JFrame {
 
     public void setJugador(Jugador jugador) {
         this.jugador = jugador;
+        elegidos = new Vehiculo[3];
     }
 
     private int x = 0;
@@ -494,9 +498,10 @@ public class VisualJugador extends javax.swing.JFrame {
         spnlVehiculos.setViewportView(pnlVehiculos);
         pnlVehiculos.setPreferredSize(new Dimension(spnlVehiculos.getWidth() - 10, jugador.getVehiculos().getContador() * 100));
         pnlVehiculos.setBackground(new java.awt.Color(0, 153, 153));
+        //pnlVehiculos.setLayout(null);
         if (x == 0) {
             for (int i = 0; i < vehiculos.length; i++) {
-                vehiculos[i].getMuestra().setBounds(10, (60 * i) + 10, pnlVehiculos.getWidth() - 10, 60);
+                vehiculos[i].getMuestra().setBounds(10, (60 * i) + 10, pnlVehiculos.getWidth() -20, 60);
                 vehiculos[i].iniciarMuestra();
                 pnlVehiculos.add(vehiculos[i].getMuestra());
             }
