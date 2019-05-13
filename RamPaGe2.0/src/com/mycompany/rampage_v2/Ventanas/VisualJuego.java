@@ -242,6 +242,7 @@ public class VisualJuego extends javax.swing.JFrame {
             this.setVisible(false);
             inicio.getJUGADOR().setVisible(true);
             inicio.getJUGADOR().iniciarPnlVehiculos();
+            inicio.getJUGADOR().iniciarComponentes();
             //juego = null;
 
         } catch (Exception e) {

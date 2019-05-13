@@ -137,11 +137,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="T"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_Tienda2MouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_Tienda1">
       <Properties>
         <Property name="text" type="java.lang.String" value="T"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_Tienda1MouseClicked"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="spnl_Armas2">
       <Properties>

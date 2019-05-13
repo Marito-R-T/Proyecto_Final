@@ -233,6 +233,7 @@ public class VisualJuego1vs1 extends javax.swing.JFrame {
             regreso.empezarJugador1();
             regreso.empezarJugador2();
             juego.interrupt();
+            regreso.iniciarNombres();
             //juego = null;
 
         } catch (Exception e) {

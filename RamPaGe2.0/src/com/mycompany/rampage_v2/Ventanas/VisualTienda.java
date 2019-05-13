@@ -19,18 +19,19 @@ import javax.swing.JLabel;
  * @author marito
  */
 public class VisualTienda extends javax.swing.JFrame {
-
+    
     private Jugador jugador;
     private Vehiculo[] porcomprar;
     private Arma[] sincomprar;
     private Listado<Arma> armas;
     private Listado<Vehiculo> vehiculos;
     private VisualJugador visual;
+    private VisualJugadores2 visual2vs2;
     /**
      * Creates new form VisualTienda
      */
     private Inicio inicio;
-
+    
     public VisualTienda(Inicio inicio, Jugador jugador, VisualJugador visual) {
         this.setLocationRelativeTo(null);
         this.visual = visual;
@@ -38,6 +39,18 @@ public class VisualTienda extends javax.swing.JFrame {
         this.jugador = jugador;
         initComponents();
         this.inicio = inicio;
+        revisarArmasPorComprar();
+        revisarVehiculosporComprar();
+        iniciarComponentes();
+    }
+
+    public VisualTienda(VisualJugadores2 visual2vs2, Jugador jugador) {
+        this.setLocationRelativeTo(null);
+        this.visual = visual;
+        this.setResizable(false);
+        this.jugador = jugador;
+        this.visual2vs2 = visual2vs2;
+        initComponents();
         revisarArmasPorComprar();
         revisarVehiculosporComprar();
         iniciarComponentes();
@@ -92,6 +105,11 @@ public class VisualTienda extends javax.swing.JFrame {
         getContentPane().add(spnl_armas);
         spnl_armas.setBounds(480, 10, 310, 400);
 
+        pnlBots.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlBotsMouseClicked(evt);
+            }
+        });
         pnlBots.setLayout(null);
         getContentPane().add(pnlBots);
         pnlBots.setBounds(480, 420, 200, 170);
@@ -115,18 +133,37 @@ public class VisualTienda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
+    }
+
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salirMouseClicked
         // TODO add your handling code here:
-        this.setVisible(false);
-        visual.setVisible(true);
+        if (visual != null) {
+            this.setVisible(false);
+            visual.setVisible(true);
+        } else {
+            this.setVisible(false);
+            visual2vs2.setVisible(true);
+        }
     }//GEN-LAST:event_btn_salirMouseClicked
-        JLabel lbl_armeria;
-        JLabel lbl_garage;
-        JLabel lbl_bots;
+
+    private void pnlBotsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBotsMouseClicked
+        // TODO add your handling code here:
+        if (jugador.getDinero() >= 350) {
+            jugador.agregarBots();
+            lbldinero.setText("Tiene " + Integer.toString(jugador.getDinero()) + " De Oro");
+            lbldinero.repaint();
+        }
+    }//GEN-LAST:event_pnlBotsMouseClicked
+    JLabel lbl_armeria;
+    JLabel lbl_garage;
+    JLabel lbl_bots;
+
     public void iniciarComponentes() {
         lbl_armeria = new JLabel();
         lbl_garage = new JLabel();
@@ -163,7 +200,6 @@ public class VisualTienda extends javax.swing.JFrame {
         pnl_jugador.add(lbldinero);
         pnl_jugador.add(lblnombre);
         
-        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_salir;
@@ -175,11 +211,11 @@ public class VisualTienda extends javax.swing.JFrame {
     private javax.swing.JScrollPane spnl_armas;
     private javax.swing.JScrollPane spnl_vehiculos;
     // End of variables declaration//GEN-END:variables
-
+   
     private JLabel lbldinero;
     private JLabel lblnombre;
-
-    private void revisarArmasPorComprar() {
+    
+    public void revisarArmasPorComprar() {
         Arma[] generales = jugador.getArmeria().ordenarPorFecha();
         int x = 0;
         for (int i = 0; i < generales.length; i++) {
@@ -195,8 +231,8 @@ public class VisualTienda extends javax.swing.JFrame {
             }
         }
     }
-
-    private void revisarVehiculosporComprar() {
+    
+    public void revisarVehiculosporComprar() {
         Vehiculo[] generales = jugador.getGarage().ordenarPorFecha();
         for (int i = 0; i < generales.length; i++) {
             int x = 0;

@@ -286,6 +286,7 @@ public final class Inicio extends javax.swing.JFrame {
             VS2.empezarJugador1();
             VS2.empezarJugador2();
             VS2.setBiblioteca(biblioteca);
+            VS2.iniciarNombres();
             /*for (int k = 0; k < 2; k++) {
              int m = k;
              JDialog cargar = new JDialog(this);

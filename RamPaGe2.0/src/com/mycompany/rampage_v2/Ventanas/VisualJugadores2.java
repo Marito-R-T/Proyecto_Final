@@ -15,6 +15,7 @@ import com.mycompany.rampage_v2.Juego.Mapas.Mapa8x9;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,6 +34,7 @@ public class VisualJugadores2 extends javax.swing.JFrame {
     private final Vehiculo[] vehiculos2;
     private final VisualJuego1vs1 jugar;
     private Bibliotecario biblioteca;
+    private VisualTienda tienda;
 
     /**
      * Creates new form VisualJugadores2
@@ -103,8 +105,18 @@ public class VisualJugadores2 extends javax.swing.JFrame {
         );
 
         btn_Tienda2.setText("T");
+        btn_Tienda2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_Tienda2MouseClicked(evt);
+            }
+        });
 
         btn_Tienda1.setText("T");
+        btn_Tienda1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_Tienda1MouseClicked(evt);
+            }
+        });
 
         spnl_Armas2.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -347,6 +359,26 @@ public class VisualJugadores2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_JugarMouseClicked
 
+    private void btn_Tienda1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Tienda1MouseClicked
+        // TODO add your handling code here:
+        tienda = new VisualTienda(this, primero);
+        tienda.setJugador(primero);
+        tienda.revisarArmasPorComprar();
+        tienda.revisarVehiculosporComprar();
+        tienda.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_Tienda1MouseClicked
+
+    private void btn_Tienda2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Tienda2MouseClicked
+        // TODO add your handling code here:
+        tienda = new VisualTienda(this, segundo);
+        tienda.setJugador(segundo);
+        tienda.revisarArmasPorComprar();
+        tienda.revisarVehiculosporComprar();
+        tienda.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_Tienda2MouseClicked
+
     public Jugador getPrimero() {
         return primero;
     }
@@ -355,6 +387,20 @@ public class VisualJugadores2 extends javax.swing.JFrame {
         return segundo;
     }
 
+    public void iniciarNombres(){
+        JLabel nombre1 = new JLabel();
+        JLabel nombre2 = new JLabel();
+        nombre1.setSize(jugador1.getSize());
+        nombre2.setSize(jugador2.getSize());
+        nombre1.setText(primero.getNombre() + primero.getNO() + "  ha hecho: " + primero.getKills() + " Kills");
+        nombre2.setText(segundo.getNombre() + segundo.getNO() + "  ha hecho: " + segundo.getKills() + " Kills");
+        nombre1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        nombre1.setFont(new java.awt.Font("Comic Sans MS", 1, 22));
+        nombre2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        nombre2.setFont(new java.awt.Font("Comic Sans MS", 1, 22));
+        jugador1.add(nombre1);
+        jugador2.add(nombre2);
+    }
     public void iniciarComponentes() {
         modelo1 = new DefaultTableModel(
                 new Object[][]{},
