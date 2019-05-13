@@ -54,7 +54,7 @@ public final class Comodin {
     public double maximizarDañoEscudo() {
         if (x <= 3) {
             x++;
-            return 1.5;
+            return 0.5;
         } 
         return 1;
     }

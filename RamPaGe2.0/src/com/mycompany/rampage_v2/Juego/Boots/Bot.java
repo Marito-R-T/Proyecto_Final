@@ -38,7 +38,7 @@ public class Bot extends JLabel implements Runnable, MouseListener {
     public Bot(float daño) {
         turnos = 0;
         porcentaje = daño;
-        this.daño = 5 * (1 + (daño/100));
+        this.daño = 5 * (1 + (porcentaje/100));
         this.setSize(200, 200);
         imagen = new ImageIcon(getClass().getResource("/Imagenes/bot.png"));
         this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_FAST)));
@@ -108,7 +108,7 @@ public class Bot extends JLabel implements Runnable, MouseListener {
                 Integer columnas = ref.getColumnas() - terreno.getColumnas();
                 if ((filas < 3 && filas > -3) && (columnas < 3 && columnas > -3)) {
                     if (ref.getEnemigo() != null) {
-                        ref.getEnemigo().dañadoporBot(40, dueño);
+                        ref.getEnemigo().dañadoporBot(30*(1+(porcentaje/100)), dueño);
                     } else if (ref.getVehiculo() != null) {
                         ref.getVehiculo().dañadoporBot(40);
                     }

@@ -290,6 +290,7 @@ public class Jugador extends JLabel {
     
     public void agregarBots(){
         bots++;
+        dinero -=250;
     }
     
     public void eliminarBots(){

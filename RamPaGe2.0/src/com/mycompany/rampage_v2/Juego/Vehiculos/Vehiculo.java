@@ -212,7 +212,7 @@ public abstract class Vehiculo extends JLabel implements Serializable {
                 dañoarma = armaAusar.dañoHecho();
             }
         }
-        return daño + dañoarma + dañocomodin;
+        return dañoarma + this.daño + dañocomodin;
     }
 
     public float getDañoEnemigos() {
@@ -265,11 +265,11 @@ public abstract class Vehiculo extends JLabel implements Serializable {
         if (comodin != null) {
             if (comodin.getNumero() == 2 && "defensa".equals(comodin.getDecision())) {
                 JOptionPane.showMessageDialog(null, "tu comodin te esta protegiendo mas!! ");
-                escudocomodin = daño * (float) comodin.maximizarDañoEscudo();
+                escudocomodin = defensa * (float) comodin.maximizarDañoEscudo();
             }
         }
         if (daño > this.defensa) {
-            if (daño > vida) {
+            if (daño > vida + defensa +escudocomodin) {
                 vida = 0;
                 dueño.setMuertes();
                 estaActivo = false;

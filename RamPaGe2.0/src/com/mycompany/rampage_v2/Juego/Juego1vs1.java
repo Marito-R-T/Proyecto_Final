@@ -152,6 +152,9 @@ public class Juego1vs1 implements Runnable {
             if (enjuego.getComodin().getNumero() == 1) {
                 JOptionPane.showMessageDialog(null, "tu comodin te ha curado! ");
                 enjuego.setVida((float) (enjuego.getVida() + enjuego.getVida() * enjuego.getComodin().recuperarVida()));
+                enjuego.setComodin(null);
+            }else if(enjuego.getComodin().getNumero() == 3){
+                enjuego.setComodin(null);
             }
         }
     }

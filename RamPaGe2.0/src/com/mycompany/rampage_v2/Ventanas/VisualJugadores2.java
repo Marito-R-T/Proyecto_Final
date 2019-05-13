@@ -30,8 +30,8 @@ public class VisualJugadores2 extends javax.swing.JFrame {
     private Inicio inicio;
     private Jugador primero;
     private Jugador segundo;
-    private final Vehiculo[] vehiculos1;
-    private final Vehiculo[] vehiculos2;
+    private  Vehiculo[] vehiculos1;
+    private Vehiculo[] vehiculos2;
     private final VisualJuego1vs1 jugar;
     private Bibliotecario biblioteca;
     private VisualTienda tienda;
@@ -298,7 +298,16 @@ public class VisualJugadores2 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    public void setVehiculos1(){
+        vehiculos1 = null;
+        vehiculos1 = new Vehiculo[3];
+    }
+    
+    public void setVehiculos2(){
+        vehiculos2 = null;
+        vehiculos2 = new Vehiculo[3];
+    }
+    
     public void setBiblioteca(Bibliotecario biblioteca) {
         this.biblioteca = biblioteca;
     }
@@ -675,7 +684,7 @@ public class VisualJugadores2 extends javax.swing.JFrame {
         int z = 0;
         Vehiculo vehiculo = segundo.getVehiculos().devolver(no);
         if (vehiculo.isComprada() && vehiculo.isEstaActivo()) {
-            while (vehiculos2[z] != null && z < 3) {
+            while ( z < 3 && vehiculos2[z] != null ) {
                 if (vehiculos2[z] == vehiculo) {
                     break;
                 }
@@ -695,7 +704,7 @@ public class VisualJugadores2 extends javax.swing.JFrame {
         int z = 0;
         Vehiculo vehiculo = primero.getVehiculos().devolver(no);
         if (vehiculo.isComprada() && vehiculo.isEstaActivo()) {
-            while (vehiculos1[z] != null && z < 3) {
+            while ( z < 3 && vehiculos1[z] != null) {
                 if (vehiculos1[z] == vehiculo) {
                     break;
                 }

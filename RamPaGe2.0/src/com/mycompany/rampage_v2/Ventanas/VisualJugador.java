@@ -354,7 +354,7 @@ public class VisualJugador extends javax.swing.JFrame {
     public void ingresarVehiculo(Vehiculo vehiculo) {
         int z = 0;
         if (vehiculo.isComprada() && vehiculo.isEstaActivo()) {
-            while (elegidos[z] != null && z < 3) {
+            while ( z < 3 && elegidos[z] != null) {
                 if (elegidos[z] == vehiculo) {
                     break;
                 }
@@ -368,6 +368,11 @@ public class VisualJugador extends javax.swing.JFrame {
                 elegidos[2] = vehiculo;
             }
         }
+    }
+
+    public void setElegidos() {
+        this.elegidos = null;
+        this.elegidos = new Vehiculo[3];
     }
     private void btnjugarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnjugarMouseClicked
         // TODO add your handling code here:

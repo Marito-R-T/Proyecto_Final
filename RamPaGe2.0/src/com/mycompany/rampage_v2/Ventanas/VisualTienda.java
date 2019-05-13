@@ -13,13 +13,14 @@ import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author marito
  */
 public class VisualTienda extends javax.swing.JFrame {
-    
+
     private Jugador jugador;
     private Vehiculo[] porcomprar;
     private Arma[] sincomprar;
@@ -31,7 +32,7 @@ public class VisualTienda extends javax.swing.JFrame {
      * Creates new form VisualTienda
      */
     private Inicio inicio;
-    
+
     public VisualTienda(Inicio inicio, Jugador jugador, VisualJugador visual) {
         this.setLocationRelativeTo(null);
         this.visual = visual;
@@ -72,6 +73,7 @@ public class VisualTienda extends javax.swing.JFrame {
         pnl_armas = new javax.swing.JPanel();
         pnlBots = new javax.swing.JPanel();
         btn_salir = new javax.swing.JButton();
+        btn_refresh = new javax.swing.JButton();
         lblfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,7 +85,7 @@ public class VisualTienda extends javax.swing.JFrame {
         pnl_jugador.setLayout(pnl_jugadorLayout);
         pnl_jugadorLayout.setHorizontalGroup(
             pnl_jugadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
+            .addGap(0, 360, Short.MAX_VALUE)
         );
         pnl_jugadorLayout.setVerticalGroup(
             pnl_jugadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +93,7 @@ public class VisualTienda extends javax.swing.JFrame {
         );
 
         getContentPane().add(pnl_jugador);
-        pnl_jugador.setBounds(10, 10, 460, 100);
+        pnl_jugador.setBounds(10, 10, 360, 100);
 
         pnl_vehiculos.setLayout(null);
         spnl_vehiculos.setViewportView(pnl_vehiculos);
@@ -127,6 +129,15 @@ public class VisualTienda extends javax.swing.JFrame {
         });
         getContentPane().add(btn_salir);
         btn_salir.setBounds(690, 420, 100, 170);
+
+        btn_refresh.setText("refresh");
+        btn_refresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_refreshMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btn_refresh);
+        btn_refresh.setBounds(370, 10, 100, 100);
         getContentPane().add(lblfondo);
         lblfondo.setBounds(0, 0, 800, 600);
 
@@ -155,11 +166,19 @@ public class VisualTienda extends javax.swing.JFrame {
     private void pnlBotsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBotsMouseClicked
         // TODO add your handling code here:
         if (jugador.getDinero() >= 350) {
-            jugador.agregarBots();
-            lbldinero.setText("Tiene " + Integer.toString(jugador.getDinero()) + " De Oro");
-            lbldinero.repaint();
+            if (JOptionPane.showConfirmDialog(this, "seguro quiere comprar un bot??", toString(), JOptionPane.OK_OPTION) == 0) {
+                jugador.agregarBots();
+                lbldinero.setText("Tiene " + Integer.toString(jugador.getDinero()) + " De Oro");
+                lbldinero.repaint();
+            }
         }
     }//GEN-LAST:event_pnlBotsMouseClicked
+
+    private void btn_refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseClicked
+        // TODO add your handling code here:
+        lbldinero.setText("Tiene " + Integer.toString(jugador.getDinero()) + " De Oro");
+        lbldinero.repaint();
+    }//GEN-LAST:event_btn_refreshMouseClicked
     JLabel lbl_armeria;
     JLabel lbl_garage;
     JLabel lbl_bots;
@@ -199,9 +218,10 @@ public class VisualTienda extends javax.swing.JFrame {
         lblnombre.setBackground(Color.LIGHT_GRAY);
         pnl_jugador.add(lbldinero);
         pnl_jugador.add(lblnombre);
-        
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_refresh;
     private javax.swing.JButton btn_salir;
     private javax.swing.JLabel lblfondo;
     private javax.swing.JPanel pnlBots;
@@ -211,10 +231,10 @@ public class VisualTienda extends javax.swing.JFrame {
     private javax.swing.JScrollPane spnl_armas;
     private javax.swing.JScrollPane spnl_vehiculos;
     // End of variables declaration//GEN-END:variables
-   
+
     private JLabel lbldinero;
     private JLabel lblnombre;
-    
+
     public void revisarArmasPorComprar() {
         Arma[] generales = jugador.getArmeria().ordenarPorFecha();
         int x = 0;
@@ -231,7 +251,7 @@ public class VisualTienda extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public void revisarVehiculosporComprar() {
         Vehiculo[] generales = jugador.getGarage().ordenarPorFecha();
         for (int i = 0; i < generales.length; i++) {
