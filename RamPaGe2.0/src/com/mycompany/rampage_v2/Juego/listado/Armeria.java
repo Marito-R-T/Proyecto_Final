@@ -38,10 +38,13 @@ public class Armeria {
         for (int i = 0; i < nombre.length; i++) {
             int x = i;
             Arma referencia = nombre[i];
-            while((x > 0) && (nombre[x - 1].getPrimerLetra() > referencia.getPrimerLetra())){
+            while((x > 0) && (nombre[x-1].getNombre().compareToIgnoreCase(referencia.getNombre()) > 0)){
                 nombre[x] = nombre[x-1];
                 x--;
             }
+            /*while((x > 0) && (nombre[x - 1].getPrimerLetra() > referencia.getPrimerLetra())){
+                
+            }*/
             nombre[x] = referencia;
         }
         return nombre;

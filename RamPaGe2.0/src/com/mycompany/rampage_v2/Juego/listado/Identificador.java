@@ -87,10 +87,14 @@ public class Identificador {
         for (int i = 0; i < nombre.length; i++) {
             int x = i;
             Jugador referencia = nombre[i];
-            while ((x > 0) && (nombre[x - 1].getPrimerLetra() > referencia.getPrimerLetra())) {
-                nombre[x] = nombre[x - 1];
+            while((x > 0) && (nombre[x-1].getNombre().compareToIgnoreCase(referencia.getNombre()) > 0)){
+                nombre[x] = nombre[x-1];
                 x--;
             }
+            /*while ((x > 0) && (nombre[x - 1].getPrimerLetra() > referencia.getPrimerLetra())) {
+                nombre[x] = nombre[x - 1];
+                x--;
+            }*/
             nombre[x] = referencia;
         }
         return nombre;
