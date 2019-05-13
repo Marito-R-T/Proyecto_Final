@@ -5,6 +5,7 @@
  */
 package com.mycompany.rampage_v2.Juego;
 
+import com.mycompany.rampage_v2.Juego.Boots.Bot;
 import com.mycompany.rampage_v2.Juego.Comodines.Comodin;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
@@ -37,6 +38,7 @@ public class Juego implements Runnable {
     private Vehiculo enjuego;
     private Enemigo[] enemigos;
     private Mapa mapa;
+    private int bots;
 
     public Juego(Vehiculo[] vehiculos, VisualJuego visual) {
         this.posibilidades = new JLabel[4];
@@ -53,6 +55,10 @@ public class Juego implements Runnable {
         this.seperdio = seperdio;
     }
 
+    public void setBots(int bots) {
+        this.bots = bots;
+    }
+
     @Override
     public void run() {
         try {
@@ -65,6 +71,7 @@ public class Juego implements Runnable {
                 if (segano || seperdio) {
                     break;
                 }
+                atacarBot();
                 Thread.sleep(800);
                 if (!segano && !seperdio) {
                     turnoenemigo();
@@ -104,7 +111,7 @@ public class Juego implements Runnable {
             enjuego.getPosicion().setComodin(null);
             if (enjuego.getComodin().getNumero() == 1) {
                 JOptionPane.showMessageDialog(null, "tu comodin te ha curado! ");
-                enjuego.setVida((float) (enjuego.getVida() + enjuego.getVida()*enjuego.getComodin().recuperarVida()));
+                enjuego.setVida((float) (enjuego.getVida() + enjuego.getVida() * enjuego.getComodin().recuperarVida()));
             }
         }
     }
@@ -136,11 +143,11 @@ public class Juego implements Runnable {
     }
 
     private void turnoenemigo() {
+        // disparan todos los enemigos, se manda a la clase donde lo haran,
         for (int i = 0; i < enemigos.length; i++) {
             Random numero = new Random();
             int x = numero.nextInt(100) + 1;
-            int y = numero.nextInt(enemigos.length);
-            atacar.atacaraAliado(enemigos[y], x);
+            atacar.atacaraAliado(enemigos[i], x);
             System.gc();
         }
     }
@@ -170,7 +177,7 @@ public class Juego implements Runnable {
         for (int i = 0; i < enemigos.length; i++) {
             int u = numerorandom.nextInt(3);
             int referencia = vehiculos[u].getNivel();
-            enemigos[i] = new Enemigo(vehiculos[u].getVida() + (10 * referencia), vehiculos[u].getDañoEnemigos() + (2 * referencia), vehiculos[u].getDefensaNeta() + (3 * referencia));
+            enemigos[i] = new Enemigo(referencia);
         }
     }
 
@@ -250,8 +257,8 @@ public class Juego implements Runnable {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 accion = "bot";
-                //escoger.setVisible(false);
-                //escoger.setModal(false);
+                escoger.setVisible(false);
+                escoger.setModal(false);
             }
 
         });
@@ -401,6 +408,7 @@ public class Juego implements Runnable {
                     break;
                 }
             }
+            seperdio = true;
             /*Vehiculo[] nuevos = new Vehiculo[vehiculos.length - 1];
              int j = 0;
              for (int i = 0; i < nuevos.length; i++) {
@@ -410,33 +418,10 @@ public class Juego implements Runnable {
              j++;
              }
              vehiculos = nuevos;*/
-            int debaja = 0;
-            for (int i = 0; i < vehiculos.length; i++) {
-                if (vehiculos[i].getVida() != 0) {
-                    debaja++;
-                }
-            }
-            if (debaja == vehiculos.length) {
-                seperdio = true;
-            } else {
-                //escoge al azar el vehiculo a jugar
-                Random numero = new Random(vehiculos.length);
-                int x = numero.nextInt(vehiculos.length);
-                while (vehiculos[x] == null) {
-                    x = numero.nextInt(vehiculos.length);
-                }
-                //if((vehiculo instanceof Tanque && !(mapa[filarandom][columnarandom] instanceof Agua))|| (vehiculo instanceof Avion && !(mapa[filarandom][columnarandom] instanceof Montaña))){
-                //if{
-                enjuego = vehiculos[x];
-                if (!vehiculos[x].setPosicion(vehiculos[vehiculoderrotado].getPosicion())) {
-                    seperdio = true;
-                }
-                //}
-            }
         }
 
     }
-
+    
     private void perderPartida() {
         visual.getInicio().getJUGADOR().getJugador().setPerdida();
         JOptionPane.showMessageDialog(visual, "Ha perdido \n  Para la siguiente sera!", "perdio", JOptionPane.OK_OPTION);
@@ -446,7 +431,64 @@ public class Juego implements Runnable {
         visual.getInicio().getJUGADOR().getJugador().setGanada();
         JOptionPane.showMessageDialog(visual, "Ha ganado \n  felicidades, ha ganado: \n experiencia!", "perdio", JOptionPane.OK_OPTION);
     }
-
+    private Bot bot;
     private void ingresarBot() {
+        if(bots > 0 && bot == null){
+            bots--;
+            visual.getInicio().getJUGADOR().getJugador().eliminarBots();
+            visual.empezarDado100();
+            while(visual.getDado().isEstaGirando()){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            Bot nuevo = new Bot(visual.getDado().getEscogido());
+            bot = nuevo;
+            nuevo.setEnjuego(mapa);
+            nuevo.setDueño(visual.getInicio().getJUGADOR().getJugador());
+            mapa.addMouseListener(nuevo);
+            JOptionPane.showMessageDialog(null, "Escoja en que casilla colocarse");
+            while (!nuevo.isEmpezo()) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+    }
+
+    /*private boolean hayBots() {
+        //sirve para ver si hay bots para usar aun.
+        int i = 0;
+        for (int j = 0; j < bots.length; j++) {
+            if (bots[j] != null && !bots[i].isActivo()) {
+                i++;
+            }
+            /*if (!bots[j].isActivo()) {
+                bots[j] = null;
+                /*for (int k = 0; k < bots.length; k++) {
+                    bots[k] = bots[k+1];
+                }
+            }
+        }
+        return i != 0;
+    }*/
+
+    private void atacarBot() {
+        if(bot != null && bot.getTurnos() < 4 && bot.isSepuede()){
+            if(bot.isSepuede()){
+                bot.atacar();
+            }
+            if(bot.getTurnos() == 3){
+                bot.explotar();
+                mapa.remove(bot);
+                bot = null;
+            }
+        }
+        mapa.repaint();
     }
 }

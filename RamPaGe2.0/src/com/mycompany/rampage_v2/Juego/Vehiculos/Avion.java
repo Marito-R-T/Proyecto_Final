@@ -75,4 +75,9 @@ public class Avion extends Vehiculo {
         this.setIcon(imagen);
     }
 
+    @Override
+    public String getTipo() {
+        return "Avion";
+    }
+
 }

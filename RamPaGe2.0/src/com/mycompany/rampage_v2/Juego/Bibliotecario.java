@@ -61,6 +61,7 @@ public class Bibliotecario {
                     jugadores.getUltimo().setPosterior(siguiente);
                     jugadores.agregar(siguiente);
                 }
+                x++;
             }
             if (!archivo.exists()) {
                 jugadores = new Listado<>();
@@ -110,9 +111,7 @@ public class Bibliotecario {
             lectura.close();
             return listado;
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Bibliotecario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Bibliotecario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new Listado<>();
     }

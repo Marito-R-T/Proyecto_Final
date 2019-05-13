@@ -52,6 +52,10 @@ public class Arma {
         });
     }
 
+    public float getDaño() {
+        return daño;
+    }
+
     public String getTipo() {
         return tipo;
     }

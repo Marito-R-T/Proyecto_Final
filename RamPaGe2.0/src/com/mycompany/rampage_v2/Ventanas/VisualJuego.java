@@ -260,6 +260,7 @@ public class VisualJuego extends javax.swing.JFrame{
         backendjuego = new Juego(vehiculos, this);
         backendjuego.setMapa(mapa);
         backendjuego.empezarEnemigos();
+        backendjuego.setBots(this.inicio.getJUGADOR().getJugador().getBots());
         pnlDados.add(dado);
         dado.setBounds(0, 0, pnlDados.getWidth(), pnlDados.getHeight());
         juego = new Thread(backendjuego);

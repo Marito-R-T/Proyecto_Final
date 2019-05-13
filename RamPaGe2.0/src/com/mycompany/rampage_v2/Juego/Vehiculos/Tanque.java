@@ -73,6 +73,9 @@ public class Tanque extends Vehiculo {
             }
         }
     }
-
-
+    
+    @Override
+    public String getTipo(){
+        return "Tanque";
+    }
 }

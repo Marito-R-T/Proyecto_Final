@@ -13,10 +13,15 @@ import com.mycompany.rampage_v2.Juego.Mapas.Mapa4x4;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa6x4;
 import com.mycompany.rampage_v2.Juego.Mapas.Mapa8x9;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
+import com.mycompany.rampage_v2.Juego.listado.Listado;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -37,6 +42,7 @@ public class VisualJugador extends javax.swing.JFrame {
     private Jugador jugador;
     private final VisualJuego JUEGO;
     private VisualTienda TIENDA;
+    private Bibliotecario biblioteca;
 
     public VisualJugador(Inicio inicio) {
         this.setLocationRelativeTo(null);
@@ -341,6 +347,10 @@ public class VisualJugador extends javax.swing.JFrame {
     private int mapa;
     private Vehiculo[] elegidos = new Vehiculo[3];
 
+    public void setBiblioteca(Bibliotecario biblioteca) {
+        this.biblioteca = biblioteca;
+    }
+
     public void ingresarVehiculo(Vehiculo vehiculo) {
         int z = 0;
         if (vehiculo.isComprada() && vehiculo.isEstaActivo()) {
@@ -432,9 +442,9 @@ public class VisualJugador extends javax.swing.JFrame {
         inicio.setOrdenado(inicio.getPosicionamiento().ordenarPorFecha());
         jugador.setIU(null);
         jugador.setInicio(null);
-        Bibliotecario guardar = new Bibliotecario();
-        //guardar.guardarJugadores(jugador);
-        guardar.guardarJugadores(jugador);
+        //this.guardarJugador();
+        biblioteca.guardarListado(inicio.getJugadores());
+//guardar.guardarJugadores(jugador);
 
     }//GEN-LAST:event_btnSalirMouseClicked
 
@@ -692,5 +702,30 @@ public class VisualJugador extends javax.swing.JFrame {
 
     public void setU(int u) {
         this.u = u;
+    }
+
+    private FileOutputStream salida;
+    private ObjectOutputStream guardar;
+    private void guardarJugador() {
+       try {
+            File archivo = new File(Integer.toString(jugador.getNO()) + ".rpg");
+            this.salida = new FileOutputStream(archivo);
+            this.guardar = new ObjectOutputStream(this.salida);
+            guardar.writeObject(jugador);
+            guardar.flush();
+            guardar.close();
+        } catch (IOException ex) {
+        }
+    }
+    public void guardarListado() {
+        try {
+            File archivo = new File("jugadores.rpg");
+            this.salida = new FileOutputStream(archivo);
+            this.guardar = new ObjectOutputStream(this.salida);
+            guardar.writeObject(inicio.getJugadores());
+            guardar.flush();
+            guardar.close();
+        } catch (IOException ex) {
+        }
     }
 }

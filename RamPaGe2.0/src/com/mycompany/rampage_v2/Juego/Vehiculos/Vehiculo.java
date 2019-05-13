@@ -243,6 +243,14 @@ public abstract class Vehiculo extends JLabel implements Serializable {
                 + estaActivo + "\n Kills: " + kills, nombre, JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public void dañadoporBot(float daño){
+        if(daño > vida){
+            vida = 0;
+        } else{
+            vida -= daño;
+        }
+    }
+    
     public void serDañado(float daño) {
         float escudocomodin = 0;
         if (comodin != null) {
@@ -305,4 +313,6 @@ public abstract class Vehiculo extends JLabel implements Serializable {
         lleva += porcentajes[0] * 50 + (porcentajes[1]);
         precio = lleva;
     }
+
+    public abstract String getTipo();
 }

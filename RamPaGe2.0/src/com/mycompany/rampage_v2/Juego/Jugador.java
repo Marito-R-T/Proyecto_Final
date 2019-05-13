@@ -7,6 +7,7 @@ package com.mycompany.rampage_v2.Juego;
 
 import com.mycompany.rampage_v2.Juego.*;
 import com.mycompany.rampage_v2.Juego.Armas.Arma;
+import com.mycompany.rampage_v2.Juego.Boots.Bot;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Avion;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Tanque;
 import com.mycompany.rampage_v2.Juego.Vehiculos.Vehiculo;
@@ -18,6 +19,7 @@ import com.mycompany.rampage_v2.Ventanas.VisualJugador;
 import com.sun.java.swing.plaf.windows.WindowsInternalFrameTitlePane;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,7 +28,7 @@ import javax.swing.JOptionPane;
  *
  * @author marito
  */
-public class Jugador extends JLabel{
+public class Jugador extends JLabel {
 
     private final int NO;
     private Jugador a, p;
@@ -39,8 +41,10 @@ public class Jugador extends JLabel{
     private final Listado<Arma> armas;
     private final Armeria armeria;
     private int nivel, experiencia, experienciaTope, kills, muertes, perdidas, ganadas, dinero;
+    private int bots;
 
     public Jugador(int no) {
+        bots = 2;
         dinero = 600;
         this.perdidas = 0;
         this.ganadas = 0;
@@ -70,7 +74,11 @@ public class Jugador extends JLabel{
     public Jugador getPosterior() {
         return p;
     }
-
+    
+    @Override
+    public String toString(){
+        return nombre + " " + Integer.toString(NO) ;
+    }
     public void setPosterior(Jugador posterior) {
         this.p = posterior;
     }
@@ -82,6 +90,7 @@ public class Jugador extends JLabel{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     public void perzonalizarlbl() {
         lblnombre.setFont(new java.awt.Font("Comic Sans MS", 1, 16));
         lblnombre.setText(nombre);
@@ -277,4 +286,17 @@ public class Jugador extends JLabel{
             dinero -= valor;
         }
     }
+
+    public int getBots() {
+        return bots;
+    }
+    
+    public void agregarBots(){
+        bots++;
+    }
+    
+    public void eliminarBots(){
+        bots--;
+    }
+    
 }

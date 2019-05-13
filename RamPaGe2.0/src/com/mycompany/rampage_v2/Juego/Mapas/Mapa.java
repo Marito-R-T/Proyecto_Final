@@ -5,6 +5,7 @@
  */
 package com.mycompany.rampage_v2.Juego.Mapas;
 
+import com.mycompany.rampage_v2.Juego.Boots.Bot;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Llanura;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Montaña;
@@ -20,7 +21,7 @@ import javax.swing.JPanel;
  *
  * @author marito
  */
-public class Mapa extends JPanel{
+public class Mapa extends JPanel {
 
     private int No;
     protected Terreno[][] mapa;

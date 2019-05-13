@@ -5,6 +5,7 @@
  */
 package com.mycompany.rampage_v2.Juego.Vehiculos;
 
+import com.mycompany.rampage_v2.Juego.Jugador;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Agua;
 import com.mycompany.rampage_v2.Juego.Mapas.Terrenos.Terreno;
 import java.awt.Image;
@@ -24,11 +25,11 @@ public class Enemigo extends JLabel {
     private Terreno terreno;
     private String agua = "";
 
-    public Enemigo(float vida, float defensa, float daño) {
-        this.vidaTope = vida;
-        this.vida = vida;
-        this.defensa = defensa - 6;
-        this.daño = daño;
+    public Enemigo(int nivel) {
+        this.vidaTope = 55*nivel;
+        this.vida = 55*nivel;
+        this.defensa = 4*nivel;
+        this.daño = 12*nivel;
         this.setSize(200, 200);
         imagen = new ImageIcon(getClass().getResource("/Imagenes/Enemigos/enemigo" + agua + ".png"));
         this.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
@@ -44,7 +45,17 @@ public class Enemigo extends JLabel {
         this.setLocation(((this.terreno.getColumnas() - 1) * 200) + 10, ((this.terreno.getFilas() - 1) * 200) + 10);
         this.terreno.getMapa().agregarEnemigos(this);
     }
-
+    
+    public void dañadoporBot(float daño, Jugador jugador){
+        if (daño > vida){
+            vida = 0;
+            jugador.setKills();
+        } else{
+            vida -= daño;
+        }
+        JOptionPane.showMessageDialog(null, "El bot ha dañado a un enemigo, \n  le ha quitado: " + daño + "  de vida! \n y su vida total es de: " + vidaTope + " \n ahora tiene : " + vida + " de vida"+ "\n defensa: " + defensa);
+        comprobarImagen();
+    }
     public void serDañado(float daño, Vehiculo vehiculo) {
         if (daño > this.defensa) {
             if (daño > vida) {

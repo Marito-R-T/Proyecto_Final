@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author marito
  */
-public class CampoBatalla{
+public class CampoBatalla {
 
     private Vehiculo enjuego;
     private Enemigo enemigo;
@@ -71,6 +71,8 @@ public class CampoBatalla{
             enemigo.comprobarImagen();
             if (referencia.getEnemigo().getVida() == 0) {
                 referencia.setEnemigo(null);
+                referencia.getMapa().remove(enemigo);
+                referencia.getMapa().repaint();
                 enemigo = null;
             }
         }
@@ -100,6 +102,8 @@ public class CampoBatalla{
             enemigo.comprobarImagen();
             if (referencia.getEnemigo().getVida() == 0) {
                 referencia.setEnemigo(null);
+                referencia.getMapa().remove(enemigo);
+                referencia.getMapa().repaint();
                 enemigo = null;
             }
         }
@@ -129,6 +133,8 @@ public class CampoBatalla{
             enemigo.comprobarImagen();
             if (referencia.getEnemigo().getVida() == 0) {
                 referencia.setEnemigo(null);
+                referencia.getMapa().remove(enemigo);
+                referencia.getMapa().repaint();
                 enemigo = null;
             }
         }
@@ -159,6 +165,8 @@ public class CampoBatalla{
             enemigo.comprobarImagen();
             if (referencia.getEnemigo().getVida() == 0) {
                 referencia.setEnemigo(null);
+                referencia.getMapa().remove(enemigo);
+                referencia.getMapa().repaint();
                 enemigo = null;
             }
         }
@@ -198,6 +206,8 @@ public class CampoBatalla{
                 referencia.getVehiculo().serDañado(dañoahacer);
                 if (referencia.getVehiculo().getVida() == 0) {
                     referencia.setVehiculo(null);
+                    referencia.getMapa().remove(enjuego);
+                    referencia.getMapa().repaint();
                     enjuego = null;
                 }
             }
@@ -212,6 +222,8 @@ public class CampoBatalla{
                 referencia.getVehiculo().serDañado(dañoahacer);
                 if (referencia.getVehiculo().getVida() == 0) {
                     referencia.setVehiculo(null);
+                    referencia.getMapa().remove(enjuego);
+                    referencia.getMapa().repaint();
                     enjuego = null;
                 }
             }
@@ -226,6 +238,8 @@ public class CampoBatalla{
                 referencia.getVehiculo().serDañado(dañoahacer);
                 if (referencia.getVehiculo().getVida() == 0) {
                     referencia.setVehiculo(null);
+                    referencia.getMapa().remove(enjuego);
+                    referencia.getMapa().repaint();
                     enjuego = null;
                 }
             }
@@ -240,6 +254,8 @@ public class CampoBatalla{
                 referencia.getVehiculo().serDañado(dañoahacer);
                 if (referencia.getVehiculo().getVida() == 0) {
                     referencia.setVehiculo(null);
+                    referencia.getMapa().remove(enjuego);
+                    referencia.getMapa().repaint();
                     enjuego = null;
                 }
             }

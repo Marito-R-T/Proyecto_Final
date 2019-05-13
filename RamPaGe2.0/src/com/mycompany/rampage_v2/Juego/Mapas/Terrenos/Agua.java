@@ -25,16 +25,17 @@ public class Agua extends Terreno {
     public void quitarVida() {
         if (vida > 0) {
             vida -= 3;
-        } else{
+        }if(vida == 0){
             convertirenLLanura();
         }
-    }
+  }
 
     public void convertirenLLanura() {
         if (vida == 0) {
             Terreno terreno = new Llanura();
             terreno.setColumnas(super.getColumnas());
             terreno.setFilas(super.getFilas());
+            terreno.setMapa(super.getMapa());
             if(super.getEnemigo() != null){
                 terreno.setEnemigo(super.getEnemigo());
             }
@@ -70,10 +71,10 @@ public class Agua extends Terreno {
                 terreno.setSO(this.getSO());
                 terreno.getSO().setNE(terreno);
             }
-            terreno.setBounds(10 + (200*(this.getColumnas()-1)),10 + (200*(this.getFilas()-1)), 2000, 200);
+            terreno.setBounds(10 + (200*(this.getColumnas()-1)),10 + (200*(this.getFilas()-1)), 200, 200);
             super.getMapa().add(terreno);
             super.getMapa().remove(this);
-            super.getMapa().getMapa()[this.getColumnas()-1][this.getFilas()-1] = terreno;
+            super.getMapa().getMapa()[this.getFilas()-1][this.getColumnas()-1] = terreno;
             System.gc();
         }
     }
